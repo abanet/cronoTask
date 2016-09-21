@@ -10,8 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
   
-  var startTime = NSTimeInterval()
-  var timer = NSTimer()
+  var startTime = TimeInterval()
+  var timer = Timer()
 
 
   
@@ -28,30 +28,30 @@ class ViewController: UIViewController {
     // Dispose of any resources that can be recreated.
   }
   
-  @IBAction func iniciarCronometro(sender: AnyObject) {
+  @IBAction func iniciarCronometro(_ sender: AnyObject) {
     
     let aSelector : Selector = #selector(ViewController.updateTime)
-    timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: aSelector, userInfo: nil, repeats: true)
-    startTime = NSDate.timeIntervalSinceReferenceDate()
+    timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: aSelector, userInfo: nil, repeats: true)
+    startTime = Date.timeIntervalSinceReferenceDate
     
     
   }
   
-  @IBAction func pararCronometro(sender: AnyObject) {
+  @IBAction func pararCronometro(_ sender: AnyObject) {
     timer.invalidate()
   }
 
   
   func updateTime(){
-    let currentTime = NSDate.timeIntervalSinceReferenceDate()
-    var tiempoPasado: NSTimeInterval = currentTime - startTime
+    let currentTime = Date.timeIntervalSinceReferenceDate
+    var tiempoPasado: TimeInterval = currentTime - startTime
     
     
     let minutos = UInt8(tiempoPasado/60.0)
-    tiempoPasado -= (NSTimeInterval(minutos)*60)
+    tiempoPasado -= (TimeInterval(minutos)*60)
     
     let segundos = UInt8(tiempoPasado)
-    tiempoPasado -= NSTimeInterval(segundos)
+    tiempoPasado -= TimeInterval(segundos)
     
     let fraccion = UInt8(tiempoPasado * 100)
   

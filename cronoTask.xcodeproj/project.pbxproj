@@ -12,6 +12,7 @@
 		C0A5E1F61D905F4D00B66568 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0A5E1F41D905F4D00B66568 /* Main.storyboard */; };
 		C0A5E1F81D905F4D00B66568 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0A5E1F71D905F4D00B66568 /* Assets.xcassets */; };
 		C0A5E1FB1D905F4D00B66568 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0A5E1F91D905F4D00B66568 /* LaunchScreen.storyboard */; };
+		C0A5E2031D90625100B66568 /* Spring in Resources */ = {isa = PBXBuildFile; fileRef = C0A5E2021D90625100B66568 /* Spring */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		C0A5E1F71D905F4D00B66568 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C0A5E1FA1D905F4D00B66568 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C0A5E1FC1D905F4D00B66568 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C0A5E2021D90625100B66568 /* Spring */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Spring; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 		C0A5E1EF1D905F4D00B66568 /* cronoTask */ = {
 			isa = PBXGroup;
 			children = (
+				C0A5E2021D90625100B66568 /* Spring */,
 				C0A5E1F01D905F4D00B66568 /* AppDelegate.swift */,
 				C0A5E1F21D905F4D00B66568 /* ViewController.swift */,
 				C0A5E1F41D905F4D00B66568 /* Main.storyboard */,
@@ -123,6 +126,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0A5E1FB1D905F4D00B66568 /* LaunchScreen.storyboard in Resources */,
+				C0A5E2031D90625100B66568 /* Spring in Resources */,
 				C0A5E1F81D905F4D00B66568 /* Assets.xcassets in Resources */,
 				C0A5E1F61D905F4D00B66568 /* Main.storyboard in Resources */,
 			);
@@ -180,6 +184,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Alberto Banet Masa (E596P9AF2H)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -225,6 +230,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Alberto Banet Masa (E596P9AF2H)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -286,6 +292,7 @@
 				C0A5E2011D905F4D00B66568 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

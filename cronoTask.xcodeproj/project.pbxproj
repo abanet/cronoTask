@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C03579AE1D944F9D00DC03B0 /* CronometroViewCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03579AD1D944F9D00DC03B0 /* CronometroViewCellTableViewCell.swift */; };
 		C0A5E1F11D905F4D00B66568 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A5E1F01D905F4D00B66568 /* AppDelegate.swift */; };
 		C0A5E1F31D905F4D00B66568 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A5E1F21D905F4D00B66568 /* ViewController.swift */; };
 		C0A5E1F61D905F4D00B66568 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0A5E1F41D905F4D00B66568 /* Main.storyboard */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C03579AD1D944F9D00DC03B0 /* CronometroViewCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CronometroViewCellTableViewCell.swift; sourceTree = "<group>"; };
 		C0A5E1ED1D905F4D00B66568 /* cronoTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cronoTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0A5E1F01D905F4D00B66568 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0A5E1F21D905F4D00B66568 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -40,6 +42,7 @@
 		C0A5E1E41D905F4D00B66568 = {
 			isa = PBXGroup;
 			children = (
+				C03579AD1D944F9D00DC03B0 /* CronometroViewCellTableViewCell.swift */,
 				C0A5E1EF1D905F4D00B66568 /* cronoTask */,
 				C0A5E1EE1D905F4D00B66568 /* Products */,
 			);
@@ -143,6 +146,7 @@
 			files = (
 				C0A5E1F31D905F4D00B66568 /* ViewController.swift in Sources */,
 				C0A5E1F11D905F4D00B66568 /* AppDelegate.swift in Sources */,
+				C03579AE1D944F9D00DC03B0 /* CronometroViewCellTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

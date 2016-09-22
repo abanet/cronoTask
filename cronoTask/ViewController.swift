@@ -10,8 +10,11 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
   
-  
+  // Tabla que contiene los cronómetros
   @IBOutlet weak var tabla: UITableView!
+    
+  // Cronómetro en funcionamiento
+  var indiceCronometroFuncionando = IndexPath(row:0, section:0)
     
     
   var startTime = TimeInterval()
@@ -33,6 +36,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
   }
 
+    
+
+    override func viewWillAppear(_ animated: Bool) {
+        // Para probar arrancamos timer a mano.
+        let aSelector : Selector = #selector(ViewController.updateTime)
+        timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: aSelector, userInfo: nil, repeats: true)
+        startTime = Date.timeIntervalSinceReferenceDate
+    }
+    
+    
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
@@ -69,6 +82,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     let strSegundos = String(format:"%02d", segundos)
     let strFracciones = String(format:"%02d",fraccion)
     
+    let cronoActual = self.tabla.cellForRow(at: self.indiceCronometroFuncionando) as! CronometroViewCellTableViewCell
+    cronoActual.lblPrimerContador.text = strMinutos
+    cronoActual.lblSegundoContador.text = strSegundos
+    cronoActual.lblTercerContador.text = strFracciones
+    
+    self.tabla.reloadRows(at: [indiceCronometroFuncionando], with: UITableViewRowAnimation.none)
+    
 //    lblHoras.text = strMinutos
 //    lblMinutos.text = strSegundos
 //    lblSegundos.text = strFracciones
@@ -89,9 +109,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.backgroundColor = UIColor(white: 1, alpha: 0.0)
     }
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "celda")! as UITableViewCell
+        
         return cell
+    }
+    
+// MARK: TableViewDelegate
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        <#code#>
     }
 }
 

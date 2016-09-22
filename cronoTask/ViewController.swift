@@ -8,19 +8,29 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
   
+  
+  @IBOutlet weak var tabla: UITableView!
+    
+    
   var startTime = TimeInterval()
   var timer = Timer()
 
-
-  
   
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    self.tabla.delegate = self
+    self.tabla.dataSource = self
+    
+// Para que ocupe toda la pantalla al desplazar las celdas se superpondría con el status bar.
+//    let backgroundImage = UIImage(named: "background")
+//    let imageView = UIImageView(image: backgroundImage)
+//    self.tabla.backgroundView = imageView
+    
   }
 
   override func didReceiveMemoryWarning() {
@@ -64,5 +74,24 @@ class ViewController: UIViewController {
 //    lblSegundos.text = strFracciones
   }
 
+
+// MARK: TableViewDataSource
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor(white: 1, alpha: 0.0)
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "celda")! as UITableViewCell
+        return cell
+    }
 }
 

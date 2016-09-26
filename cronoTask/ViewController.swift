@@ -8,13 +8,25 @@
 
 import UIKit
 
+
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
   
   // Tabla que contiene los cronómetros
   @IBOutlet weak var tabla: UITableView!
+ 
+    
+  // Cronómetro
+    @IBOutlet weak var lblPrimerContador: UILabel!
+    @IBOutlet weak var lblSegundoContador: UILabel!
+    @IBOutlet weak var lblTercerContador: UILabel!
+    
+    @IBOutlet weak var lblPrimerIdentificador: UILabel!
+    @IBOutlet weak var lblSegundoIdentificador: UILabel!
+    @IBOutlet weak var lblTercerIdentificador: UILabel!
     
   // Cronómetro en funcionamiento
-  var indiceCronometroFuncionando = IndexPath(row:0, section:0)
+    var indiceCronometroFuncionando: IndexPath = IndexPath()
+    var cronometrando: Bool = false
     
     
   var startTime = TimeInterval()
@@ -25,42 +37,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    
     self.tabla.delegate = self
     self.tabla.dataSource = self
     
-// Para que ocupe toda la pantalla al desplazar las celdas se superpondría con el status bar.
-//    let backgroundImage = UIImage(named: "background")
-//    let imageView = UIImageView(image: backgroundImage)
-//    self.tabla.backgroundView = imageView
     
   }
 
-    
-
-    override func viewWillAppear(_ animated: Bool) {
-        // Para probar arrancamos timer a mano.
-        let aSelector : Selector = #selector(ViewController.updateTime)
-        timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: aSelector, userInfo: nil, repeats: true)
-        startTime = Date.timeIntervalSinceReferenceDate
-    }
-    
-    
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
-  }
-  
-  @IBAction func iniciarCronometro(_ sender: AnyObject) {
-    
+// MARK: Funciones que manejan el timer de la app.
+func iniciarCronometro() {
     let aSelector : Selector = #selector(ViewController.updateTime)
-    timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: aSelector, userInfo: nil, repeats: true)
+    timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: aSelector, userInfo: nil, repeats: true)
     startTime = Date.timeIntervalSinceReferenceDate
-    
-    
-  }
+}
   
-  @IBAction func pararCronometro(_ sender: AnyObject) {
+func pararCronometro() {
     timer.invalidate()
   }
 
@@ -70,24 +60,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var tiempoPasado: TimeInterval = currentTime - startTime
     
     
+    let horas = UInt8(tiempoPasado/3600.0)
+    tiempoPasado -= TimeInterval(horas)*3600.0
+    
     let minutos = UInt8(tiempoPasado/60.0)
     tiempoPasado -= (TimeInterval(minutos)*60)
     
     let segundos = UInt8(tiempoPasado)
     tiempoPasado -= TimeInterval(segundos)
     
-    let fraccion = UInt8(tiempoPasado * 100)
-  
+    //let fraccion = UInt8(tiempoPasado * 100)
+    let strHoras = String(format:"%02d", horas)
     let strMinutos = String(format:"%02d",minutos)
     let strSegundos = String(format:"%02d", segundos)
-    let strFracciones = String(format:"%02d",fraccion)
+    //let strFracciones = String(format:"%02d",fraccion)
     
-    let cronoActual = self.tabla.cellForRow(at: self.indiceCronometroFuncionando) as! CronometroViewCellTableViewCell
-    cronoActual.lblPrimerContador.text = strMinutos
-    cronoActual.lblSegundoContador.text = strSegundos
-    cronoActual.lblTercerContador.text = strFracciones
-    
-    self.tabla.reloadRows(at: [indiceCronometroFuncionando], with: UITableViewRowAnimation.none)
+    self.lblPrimerContador.text = strHoras
+    self.lblSegundoContador.text = strMinutos
+    self.lblTercerContador.text = strSegundos
     
 //    lblHoras.text = strMinutos
 //    lblMinutos.text = strSegundos
@@ -118,9 +108,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
 // MARK: TableViewDelegate
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        <#code#>
+        self.indiceCronometroFuncionando = indexPath
+        if cronometrando {
+            cronometrando = false
+            pararCronometro()
+        } else {
+            cronometrando = true
+            iniciarCronometro()
+        }
+        
     }
-}
+    
+    
+   }
 

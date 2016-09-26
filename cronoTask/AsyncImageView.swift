@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015 Meng To (meng@designcode.io)
+// Copyright (c) 2015 James Tang (j@jamztang.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,30 @@
 
 import UIKit
 
-public extension UIViewController {
-    @IBAction public func unwindToViewController (sender: UIStoryboardSegue){}
+public class AsyncImageView: UIImageView {
+
+    public var placeholderImage : UIImage?
+
+    public var url : NSURL? {
+        didSet {
+            self.image = placeholderImage
+            if let urlString = url?.absoluteString {
+                ImageLoader.sharedLoader.imageForUrl(urlString: urlString) { [weak self] image, url in
+                    if let strongSelf = self {
+                        DispatchQueue.main.async(execute: { () -> Void in
+                            if strongSelf.url?.absoluteString == url {
+                                strongSelf.image = image ?? strongSelf.placeholderImage
+                            }
+                        })
+                    }
+                }
+            }
+        }
+    }
+
+    public func setURL(url: NSURL?, placeholderImage: UIImage?) {
+        self.placeholderImage = placeholderImage
+        self.url = url
+    }
+
 }

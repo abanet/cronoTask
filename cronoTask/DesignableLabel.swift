@@ -22,6 +22,22 @@
 
 import UIKit
 
-public extension UIViewController {
-    @IBAction public func unwindToViewController (sender: UIStoryboardSegue){}
+@IBDesignable public class DesignableLabel: SpringLabel {
+
+    @IBInspectable public var lineHeight: CGFloat = 1.5 {
+        didSet {
+            let font = UIFont(name: self.font.fontName, size: self.font.pointSize)
+            let text = self.text
+            
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineSpacing = lineHeight
+            
+            let attributedString = NSMutableAttributedString(string: text!)
+            attributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
+            attributedString.addAttribute(NSFontAttributeName, value: font!, range: NSMakeRange(0, attributedString.length))
+            
+            self.attributedText = attributedString
+        }
+    }
+
 }

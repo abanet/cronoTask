@@ -7,17 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C03579AE1D944F9D00DC03B0 /* CronometroViewCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03579AD1D944F9D00DC03B0 /* CronometroViewCellTableViewCell.swift */; };
+		C03257091D995B5F0023BD42 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03257081D995B5F0023BD42 /* TaskTableViewCell.swift */; };
+		C032570B1D995E220023BD42 /* Configuracion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C032570A1D995E220023BD42 /* Configuracion.swift */; };
 		C0A5E1F11D905F4D00B66568 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A5E1F01D905F4D00B66568 /* AppDelegate.swift */; };
 		C0A5E1F31D905F4D00B66568 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A5E1F21D905F4D00B66568 /* ViewController.swift */; };
 		C0A5E1F61D905F4D00B66568 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0A5E1F41D905F4D00B66568 /* Main.storyboard */; };
 		C0A5E1F81D905F4D00B66568 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0A5E1F71D905F4D00B66568 /* Assets.xcassets */; };
 		C0A5E1FB1D905F4D00B66568 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0A5E1F91D905F4D00B66568 /* LaunchScreen.storyboard */; };
-		C0A5E2031D90625100B66568 /* Spring in Resources */ = {isa = PBXBuildFile; fileRef = C0A5E2021D90625100B66568 /* Spring */; };
+		C0E8A3FB1D9975240054C0B0 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = C0E8A3FA1D9975240054C0B0 /* TPKeyboardAvoidingScrollView.m */; };
+		C0E8A3FF1D99756F0054C0B0 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C0E8A3FE1D99756F0054C0B0 /* UIScrollView+TPKeyboardAvoidingAdditions.m */; };
+		C0E8A4011D9976DF0054C0B0 /* NuevaTareaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E8A4001D9976DF0054C0B0 /* NuevaTareaViewController.swift */; };
+		C0E8A4031D99820D0054C0B0 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E8A4021D99820D0054C0B0 /* StringExtensions.swift */; };
+		C0E8A4051D9984630054C0B0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C0E8A4041D9984630054C0B0 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C03579AD1D944F9D00DC03B0 /* CronometroViewCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CronometroViewCellTableViewCell.swift; sourceTree = "<group>"; };
+		C03257081D995B5F0023BD42 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
+		C032570A1D995E220023BD42 /* Configuracion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Configuracion.swift; path = ../Configuracion.swift; sourceTree = "<group>"; };
 		C0A5E1ED1D905F4D00B66568 /* cronoTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cronoTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0A5E1F01D905F4D00B66568 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0A5E1F21D905F4D00B66568 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -25,7 +31,15 @@
 		C0A5E1F71D905F4D00B66568 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C0A5E1FA1D905F4D00B66568 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C0A5E1FC1D905F4D00B66568 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C0A5E2021D90625100B66568 /* Spring */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Spring; sourceTree = "<group>"; };
+		C0E8A3F61D996A430054C0B0 /* Spring */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Spring; sourceTree = "<group>"; };
+		C0E8A3F81D9975230054C0B0 /* cronoTask-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cronoTask-Bridging-Header.h"; sourceTree = "<group>"; };
+		C0E8A3F91D9975240054C0B0 /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
+		C0E8A3FA1D9975240054C0B0 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
+		C0E8A3FD1D99756F0054C0B0 /* UIScrollView+TPKeyboardAvoidingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+TPKeyboardAvoidingAdditions.h"; sourceTree = "<group>"; };
+		C0E8A3FE1D99756F0054C0B0 /* UIScrollView+TPKeyboardAvoidingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+TPKeyboardAvoidingAdditions.m"; sourceTree = "<group>"; };
+		C0E8A4001D9976DF0054C0B0 /* NuevaTareaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NuevaTareaViewController.swift; sourceTree = "<group>"; };
+		C0E8A4021D99820D0054C0B0 /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
+		C0E8A4041D9984630054C0B0 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = ../Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,7 +56,6 @@
 		C0A5E1E41D905F4D00B66568 = {
 			isa = PBXGroup;
 			children = (
-				C03579AD1D944F9D00DC03B0 /* CronometroViewCellTableViewCell.swift */,
 				C0A5E1EF1D905F4D00B66568 /* cronoTask */,
 				C0A5E1EE1D905F4D00B66568 /* Products */,
 			);
@@ -59,15 +72,33 @@
 		C0A5E1EF1D905F4D00B66568 /* cronoTask */ = {
 			isa = PBXGroup;
 			children = (
-				C0A5E2021D90625100B66568 /* Spring */,
+				C0E8A3FC1D9975300054C0B0 /* TPKeyboardAvoiding */,
+				C0E8A3F61D996A430054C0B0 /* Spring */,
+				C032570A1D995E220023BD42 /* Configuracion.swift */,
 				C0A5E1F01D905F4D00B66568 /* AppDelegate.swift */,
 				C0A5E1F21D905F4D00B66568 /* ViewController.swift */,
 				C0A5E1F41D905F4D00B66568 /* Main.storyboard */,
+				C0E8A4021D99820D0054C0B0 /* StringExtensions.swift */,
+				C0E8A4001D9976DF0054C0B0 /* NuevaTareaViewController.swift */,
 				C0A5E1F71D905F4D00B66568 /* Assets.xcassets */,
 				C0A5E1F91D905F4D00B66568 /* LaunchScreen.storyboard */,
 				C0A5E1FC1D905F4D00B66568 /* Info.plist */,
+				C03257081D995B5F0023BD42 /* TaskTableViewCell.swift */,
+				C0E8A3F81D9975230054C0B0 /* cronoTask-Bridging-Header.h */,
+				C0E8A4041D9984630054C0B0 /* Localizable.strings */,
 			);
 			path = cronoTask;
+			sourceTree = "<group>";
+		};
+		C0E8A3FC1D9975300054C0B0 /* TPKeyboardAvoiding */ = {
+			isa = PBXGroup;
+			children = (
+				C0E8A3FD1D99756F0054C0B0 /* UIScrollView+TPKeyboardAvoidingAdditions.h */,
+				C0E8A3FE1D99756F0054C0B0 /* UIScrollView+TPKeyboardAvoidingAdditions.m */,
+				C0E8A3F91D9975240054C0B0 /* TPKeyboardAvoidingScrollView.h */,
+				C0E8A3FA1D9975240054C0B0 /* TPKeyboardAvoidingScrollView.m */,
+			);
+			name = TPKeyboardAvoiding;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -131,7 +162,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0A5E1FB1D905F4D00B66568 /* LaunchScreen.storyboard in Resources */,
-				C0A5E2031D90625100B66568 /* Spring in Resources */,
+				C0E8A4051D9984630054C0B0 /* Localizable.strings in Resources */,
 				C0A5E1F81D905F4D00B66568 /* Assets.xcassets in Resources */,
 				C0A5E1F61D905F4D00B66568 /* Main.storyboard in Resources */,
 			);
@@ -144,9 +175,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0E8A4031D99820D0054C0B0 /* StringExtensions.swift in Sources */,
 				C0A5E1F31D905F4D00B66568 /* ViewController.swift in Sources */,
+				C0E8A3FF1D99756F0054C0B0 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,
+				C0E8A3FB1D9975240054C0B0 /* TPKeyboardAvoidingScrollView.m in Sources */,
+				C032570B1D995E220023BD42 /* Configuracion.swift in Sources */,
+				C0E8A4011D9976DF0054C0B0 /* NuevaTareaViewController.swift in Sources */,
 				C0A5E1F11D905F4D00B66568 /* AppDelegate.swift in Sources */,
-				C03579AE1D944F9D00DC03B0 /* CronometroViewCellTableViewCell.swift in Sources */,
+				C03257091D995B5F0023BD42 /* TaskTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,11 +302,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = FLU98JG66T;
 				INFOPLIST_FILE = cronoTask/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = es.codigoswift.cronoTask;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "cronoTask/cronoTask-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -279,11 +318,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = FLU98JG66T;
 				INFOPLIST_FILE = cronoTask/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = es.codigoswift.cronoTask;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "cronoTask/cronoTask-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

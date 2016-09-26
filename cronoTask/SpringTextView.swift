@@ -22,7 +22,7 @@
 
 import UIKit
 
-open class SpringTextView: UITextView, Springable {
+public class SpringTextView: UITextView, Springable {
     @IBInspectable public var autostart: Bool = false
     @IBInspectable public var autohide: Bool = false
     @IBInspectable public var animation: String = ""
@@ -43,12 +43,12 @@ open class SpringTextView: UITextView, Springable {
 
     lazy private var spring : Spring = Spring(self)
 
-    override open func awakeFromNib() {
+    override public func awakeFromNib() {
         super.awakeFromNib()
         self.spring.customAwakeFromNib()
     }
 
-    open override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         spring.customLayoutSubviews()
     }

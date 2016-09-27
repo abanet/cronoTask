@@ -1,0 +1,15 @@
+/* 
+  Localizable.strings
+  cronoTask
+
+  Created by Alberto Banet on 26/9/16.
+  Copyright © 2016 Alberto Banet Masa. All rights reserved.
+*/
+
+/* Pantalla de nuevo evento */
+"Create a" = "Crea una";
+"New Task" = "Nueva Tarea";
+"Name of the new task" = "Nombre la nueva tarea";
+
+// Visualización de fechas
+"MM-dd-yyyy" = "dd-MM-yyyy";

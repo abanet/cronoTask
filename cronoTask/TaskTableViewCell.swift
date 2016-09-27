@@ -10,9 +10,13 @@ import UIKit
 
 class TaskTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var lblTarea: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        lblTarea.textColor = UIColor.white
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

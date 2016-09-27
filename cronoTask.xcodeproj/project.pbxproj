@@ -14,11 +14,23 @@
 		C0A5E1F61D905F4D00B66568 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0A5E1F41D905F4D00B66568 /* Main.storyboard */; };
 		C0A5E1F81D905F4D00B66568 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0A5E1F71D905F4D00B66568 /* Assets.xcassets */; };
 		C0A5E1FB1D905F4D00B66568 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0A5E1F91D905F4D00B66568 /* LaunchScreen.storyboard */; };
+		C0C7AA5D1D9AAC9A00060885 /* Tarea.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C7AA5C1D9AAC9A00060885 /* Tarea.swift */; };
+		C0C7AA5F1D9AACAC00060885 /* Ocurrencia.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C7AA5E1D9AACAC00060885 /* Ocurrencia.swift */; };
+		C0C7AA631D9AAFCD00060885 /* TaskDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C7AA621D9AAFCD00060885 /* TaskDatabase.swift */; };
+		C0C7AA671D9ACD2900060885 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C0C7AA661D9ACD2900060885 /* libsqlite3.tbd */; };
+		C0C7AA691D9ACDDF00060885 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C0C7AA681D9ACDDF00060885 /* libsqlite3.0.tbd */; };
+		C0C7AA851D9ACEBE00060885 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = C0C7AA7B1D9ACEBE00060885 /* FMDatabase.m */; };
+		C0C7AA861D9ACEBE00060885 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C0C7AA7D1D9ACEBE00060885 /* FMDatabaseAdditions.m */; };
+		C0C7AA871D9ACEBE00060885 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = C0C7AA7F1D9ACEBE00060885 /* FMDatabasePool.m */; };
+		C0C7AA881D9ACEBE00060885 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C0C7AA811D9ACEBE00060885 /* FMDatabaseQueue.m */; };
+		C0C7AA891D9ACEBE00060885 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = C0C7AA841D9ACEBE00060885 /* FMResultSet.m */; };
+		C0C7AA8F1D9AD5FE00060885 /* Fecha.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C7AA8D1D9AD5FE00060885 /* Fecha.swift */; };
 		C0E8A3FB1D9975240054C0B0 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = C0E8A3FA1D9975240054C0B0 /* TPKeyboardAvoidingScrollView.m */; };
 		C0E8A3FF1D99756F0054C0B0 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C0E8A3FE1D99756F0054C0B0 /* UIScrollView+TPKeyboardAvoidingAdditions.m */; };
 		C0E8A4011D9976DF0054C0B0 /* NuevaTareaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E8A4001D9976DF0054C0B0 /* NuevaTareaViewController.swift */; };
 		C0E8A4031D99820D0054C0B0 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E8A4021D99820D0054C0B0 /* StringExtensions.swift */; };
-		C0E8A4051D9984630054C0B0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C0E8A4041D9984630054C0B0 /* Localizable.strings */; };
+		C0E8A4081D9985120054C0B0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C0E8A40A1D9985120054C0B0 /* Localizable.strings */; };
+		C0E8A4111D999E650054C0B0 /* VistaRedondeada.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E8A4101D999E650054C0B0 /* VistaRedondeada.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +43,23 @@
 		C0A5E1F71D905F4D00B66568 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C0A5E1FA1D905F4D00B66568 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C0A5E1FC1D905F4D00B66568 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C0E8A3F61D996A430054C0B0 /* Spring */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Spring; sourceTree = "<group>"; };
+		C0C7AA5C1D9AAC9A00060885 /* Tarea.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tarea.swift; sourceTree = "<group>"; };
+		C0C7AA5E1D9AACAC00060885 /* Ocurrencia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ocurrencia.swift; sourceTree = "<group>"; };
+		C0C7AA621D9AAFCD00060885 /* TaskDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDatabase.swift; sourceTree = "<group>"; };
+		C0C7AA661D9ACD2900060885 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		C0C7AA681D9ACDDF00060885 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		C0C7AA7A1D9ACEBE00060885 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		C0C7AA7B1D9ACEBE00060885 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		C0C7AA7C1D9ACEBE00060885 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		C0C7AA7D1D9ACEBE00060885 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		C0C7AA7E1D9ACEBE00060885 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		C0C7AA7F1D9ACEBE00060885 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		C0C7AA801D9ACEBE00060885 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		C0C7AA811D9ACEBE00060885 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		C0C7AA821D9ACEBE00060885 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
+		C0C7AA831D9ACEBE00060885 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		C0C7AA841D9ACEBE00060885 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		C0C7AA8D1D9AD5FE00060885 /* Fecha.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fecha.swift; sourceTree = "<group>"; };
 		C0E8A3F81D9975230054C0B0 /* cronoTask-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cronoTask-Bridging-Header.h"; sourceTree = "<group>"; };
 		C0E8A3F91D9975240054C0B0 /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
 		C0E8A3FA1D9975240054C0B0 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
@@ -39,7 +67,9 @@
 		C0E8A3FE1D99756F0054C0B0 /* UIScrollView+TPKeyboardAvoidingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+TPKeyboardAvoidingAdditions.m"; sourceTree = "<group>"; };
 		C0E8A4001D9976DF0054C0B0 /* NuevaTareaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NuevaTareaViewController.swift; sourceTree = "<group>"; };
 		C0E8A4021D99820D0054C0B0 /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
-		C0E8A4041D9984630054C0B0 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = ../Localizable.strings; sourceTree = "<group>"; };
+		C0E8A40C1D9985320054C0B0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C0E8A40F1D9985DC0054C0B0 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C0E8A4101D999E650054C0B0 /* VistaRedondeada.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VistaRedondeada.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +77,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0C7AA691D9ACDDF00060885 /* libsqlite3.0.tbd in Frameworks */,
+				C0C7AA671D9ACD2900060885 /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,6 +90,7 @@
 			children = (
 				C0A5E1EF1D905F4D00B66568 /* cronoTask */,
 				C0A5E1EE1D905F4D00B66568 /* Products */,
+				C0C7AA651D9ACD2900060885 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -72,10 +105,13 @@
 		C0A5E1EF1D905F4D00B66568 /* cronoTask */ = {
 			isa = PBXGroup;
 			children = (
+				C0C7AA8B1D9ACF0200060885 /* FMDB */,
 				C0E8A3FC1D9975300054C0B0 /* TPKeyboardAvoiding */,
-				C0E8A3F61D996A430054C0B0 /* Spring */,
-				C032570A1D995E220023BD42 /* Configuracion.swift */,
 				C0A5E1F01D905F4D00B66568 /* AppDelegate.swift */,
+				C032570A1D995E220023BD42 /* Configuracion.swift */,
+				C0E8A4101D999E650054C0B0 /* VistaRedondeada.swift */,
+				C0C7AA8D1D9AD5FE00060885 /* Fecha.swift */,
+				C0C7AA641D9AAFDC00060885 /* bbdd */,
 				C0A5E1F21D905F4D00B66568 /* ViewController.swift */,
 				C0A5E1F41D905F4D00B66568 /* Main.storyboard */,
 				C0E8A4021D99820D0054C0B0 /* StringExtensions.swift */,
@@ -85,9 +121,46 @@
 				C0A5E1FC1D905F4D00B66568 /* Info.plist */,
 				C03257081D995B5F0023BD42 /* TaskTableViewCell.swift */,
 				C0E8A3F81D9975230054C0B0 /* cronoTask-Bridging-Header.h */,
-				C0E8A4041D9984630054C0B0 /* Localizable.strings */,
+				C0E8A40A1D9985120054C0B0 /* Localizable.strings */,
 			);
 			path = cronoTask;
+			sourceTree = "<group>";
+		};
+		C0C7AA641D9AAFDC00060885 /* bbdd */ = {
+			isa = PBXGroup;
+			children = (
+				C0C7AA5C1D9AAC9A00060885 /* Tarea.swift */,
+				C0C7AA621D9AAFCD00060885 /* TaskDatabase.swift */,
+				C0C7AA5E1D9AACAC00060885 /* Ocurrencia.swift */,
+			);
+			name = bbdd;
+			sourceTree = "<group>";
+		};
+		C0C7AA651D9ACD2900060885 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C0C7AA681D9ACDDF00060885 /* libsqlite3.0.tbd */,
+				C0C7AA661D9ACD2900060885 /* libsqlite3.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C0C7AA8B1D9ACF0200060885 /* FMDB */ = {
+			isa = PBXGroup;
+			children = (
+				C0C7AA7A1D9ACEBE00060885 /* FMDatabase.h */,
+				C0C7AA7B1D9ACEBE00060885 /* FMDatabase.m */,
+				C0C7AA7C1D9ACEBE00060885 /* FMDatabaseAdditions.h */,
+				C0C7AA7D1D9ACEBE00060885 /* FMDatabaseAdditions.m */,
+				C0C7AA7E1D9ACEBE00060885 /* FMDatabasePool.h */,
+				C0C7AA7F1D9ACEBE00060885 /* FMDatabasePool.m */,
+				C0C7AA801D9ACEBE00060885 /* FMDatabaseQueue.h */,
+				C0C7AA811D9ACEBE00060885 /* FMDatabaseQueue.m */,
+				C0C7AA821D9ACEBE00060885 /* FMDB.h */,
+				C0C7AA831D9ACEBE00060885 /* FMResultSet.h */,
+				C0C7AA841D9ACEBE00060885 /* FMResultSet.m */,
+			);
+			name = FMDB;
 			sourceTree = "<group>";
 		};
 		C0E8A3FC1D9975300054C0B0 /* TPKeyboardAvoiding */ = {
@@ -145,6 +218,7 @@
 			knownRegions = (
 				en,
 				Base,
+				es,
 			);
 			mainGroup = C0A5E1E41D905F4D00B66568;
 			productRefGroup = C0A5E1EE1D905F4D00B66568 /* Products */;
@@ -162,7 +236,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0A5E1FB1D905F4D00B66568 /* LaunchScreen.storyboard in Resources */,
-				C0E8A4051D9984630054C0B0 /* Localizable.strings in Resources */,
+				C0E8A4081D9985120054C0B0 /* Localizable.strings in Resources */,
 				C0A5E1F81D905F4D00B66568 /* Assets.xcassets in Resources */,
 				C0A5E1F61D905F4D00B66568 /* Main.storyboard in Resources */,
 			);
@@ -177,12 +251,22 @@
 			files = (
 				C0E8A4031D99820D0054C0B0 /* StringExtensions.swift in Sources */,
 				C0A5E1F31D905F4D00B66568 /* ViewController.swift in Sources */,
+				C0C7AA851D9ACEBE00060885 /* FMDatabase.m in Sources */,
 				C0E8A3FF1D99756F0054C0B0 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,
+				C0C7AA8F1D9AD5FE00060885 /* Fecha.swift in Sources */,
 				C0E8A3FB1D9975240054C0B0 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				C032570B1D995E220023BD42 /* Configuracion.swift in Sources */,
+				C0C7AA891D9ACEBE00060885 /* FMResultSet.m in Sources */,
+				C0E8A4111D999E650054C0B0 /* VistaRedondeada.swift in Sources */,
 				C0E8A4011D9976DF0054C0B0 /* NuevaTareaViewController.swift in Sources */,
 				C0A5E1F11D905F4D00B66568 /* AppDelegate.swift in Sources */,
 				C03257091D995B5F0023BD42 /* TaskTableViewCell.swift in Sources */,
+				C0C7AA861D9ACEBE00060885 /* FMDatabaseAdditions.m in Sources */,
+				C0C7AA631D9AAFCD00060885 /* TaskDatabase.swift in Sources */,
+				C0C7AA881D9ACEBE00060885 /* FMDatabaseQueue.m in Sources */,
+				C0C7AA871D9ACEBE00060885 /* FMDatabasePool.m in Sources */,
+				C0C7AA5D1D9AAC9A00060885 /* Tarea.swift in Sources */,
+				C0C7AA5F1D9AACAC00060885 /* Ocurrencia.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,6 +289,16 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		C0E8A40A1D9985120054C0B0 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C0E8A40C1D9985320054C0B0 /* en */,
+				C0E8A40F1D9985DC0054C0B0 /* es */,
+			);
+			name = Localizable.strings;
+			path = ..;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -212,6 +306,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -260,6 +355,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";

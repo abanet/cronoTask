@@ -29,6 +29,7 @@
 }
 
 -(void)awakeFromNib {
+    [super awakeFromNib]; //añadido por advertencia compilador
     [self setup];
 }
 

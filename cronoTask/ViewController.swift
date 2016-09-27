@@ -9,8 +9,12 @@
 import UIKit
 
 
+
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
   
+  // Base de datos
+    var bbdd: TaskDatabase!
+    
   // Tabla que contiene los cronómetros
   @IBOutlet weak var tabla: UITableView!
  
@@ -39,6 +43,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     self.tabla.delegate = self
     self.tabla.dataSource = self
+    self.bbdd.delegate = self
+    
     
     
   }
@@ -92,7 +98,7 @@ func pararCronometro() {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+            return bbdd.tareas.count
     }
     
     
@@ -102,8 +108,8 @@ func pararCronometro() {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "celda")! as UITableViewCell
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "celda")! as! TaskTableViewCell
+        cell.lblTarea.text = bbdd.tareas[indexPath.row].descripcion
         return cell
     }
     
@@ -121,5 +127,41 @@ func pararCronometro() {
     }
     
     
-   }
+    
+    // MARK: Preparación del segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "segueNuevaTarea") {
+            // pass data to next view
+            let destinoVC = segue.destination as! NuevaTareaViewController
+            destinoVC.delegate = self
+            
+        }
+    }
+    
 
+} // class ViewController
+
+
+
+
+// MARK: writeValueBackDelegate
+// Protocolo definido en NuevaTareaViewController
+extension ViewController: writeValueBackDelegate {
+    func writeValueBack(value: String) {
+        print("Recibiendo por el protocolo la tarea \(value)")
+        let task: Tarea = Tarea(descripcion: value)
+        bbdd.tareas.insert(task, at: 0) // la insertamos al comienzo del array. Insertar antes de añadir a la base de datos.
+        bbdd.addTask(tarea: task)  // insertamos en la base de datos
+        
+        print("tareas: \(bbdd.tareas)")
+    }
+}
+
+
+// MARK: protocoloActualizarBBDD
+// Protocolo definido en TaskDatabase
+extension ViewController: protocoloActualizarBBDD {
+    func actualizarBBDD() {
+        self.tabla.reloadData()
+    }
+}

@@ -52,7 +52,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 // MARK: Funciones que manejan el timer de la app.
 func iniciarCronometro() {
     let aSelector : Selector = #selector(ViewController.updateTime)
-    timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: aSelector, userInfo: nil, repeats: true)
+    timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: aSelector, userInfo: nil, repeats: true)
     startTime = Date.timeIntervalSinceReferenceDate
 }
   
@@ -75,15 +75,15 @@ func pararCronometro() {
     let segundos = UInt8(tiempoPasado)
     tiempoPasado -= TimeInterval(segundos)
     
-    //let fraccion = UInt8(tiempoPasado * 100)
+    let fraccion = UInt8(tiempoPasado * 100)
     let strHoras = String(format:"%02d", horas)
     let strMinutos = String(format:"%02d",minutos)
     let strSegundos = String(format:"%02d", segundos)
-    //let strFracciones = String(format:"%02d",fraccion)
+    let strFracciones = String(format:"%02d",fraccion)
     
     self.lblPrimerContador.text = strHoras
-    self.lblSegundoContador.text = strMinutos
-    self.lblTercerContador.text = strSegundos
+    self.lblSegundoContador.text = strSegundos
+    self.lblTercerContador.text = strFracciones
     
 //    lblHoras.text = strMinutos
 //    lblMinutos.text = strSegundos
@@ -110,6 +110,17 @@ func pararCronometro() {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "celda")! as! TaskTableViewCell
         cell.lblTarea.text = bbdd.tareas[indexPath.row].descripcion
+        
+        //configure left buttons
+        cell.leftButtons = [MGSwipeButton(title: "", icon: UIImage(named:"check.png"), backgroundColor: UIColor.green)
+            ,MGSwipeButton(title: "", icon: UIImage(named:"fav.png"), backgroundColor: UIColor.blue)]
+        cell.leftSwipeSettings.transition = MGSwipeTransition.rotate3D
+        
+        //configure right buttons
+        cell.rightButtons = [MGSwipeButton(title: "Delete", backgroundColor: UIColor.red)
+            ,MGSwipeButton(title: "More",backgroundColor: UIColor.lightGray)]
+        cell.rightSwipeSettings.transition = MGSwipeTransition.rotate3D
+        
         return cell
     }
     

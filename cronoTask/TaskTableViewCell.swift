@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TaskTableViewCell: UITableViewCell {
+class TaskTableViewCell: MGSwipeTableCell {
 
     @IBOutlet weak var lblTarea: UILabel!
     

@@ -3,4 +3,5 @@
 //
 
 #import "TPKeyboardAvoidingScrollView.h"
+#import "MGSwipeTableCell.h"
 #import "FMDB.h"

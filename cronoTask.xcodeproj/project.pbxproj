@@ -25,6 +25,8 @@
 		C0C7AA881D9ACEBE00060885 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C0C7AA811D9ACEBE00060885 /* FMDatabaseQueue.m */; };
 		C0C7AA891D9ACEBE00060885 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = C0C7AA841D9ACEBE00060885 /* FMResultSet.m */; };
 		C0C7AA8F1D9AD5FE00060885 /* Fecha.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C7AA8D1D9AD5FE00060885 /* Fecha.swift */; };
+		C0E6E4E21D9C05280076D2BD /* MGSwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C0E6E4DF1D9C05280076D2BD /* MGSwipeButton.m */; };
+		C0E6E4E31D9C05280076D2BD /* MGSwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C0E6E4E11D9C05280076D2BD /* MGSwipeTableCell.m */; };
 		C0E8A3FB1D9975240054C0B0 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = C0E8A3FA1D9975240054C0B0 /* TPKeyboardAvoidingScrollView.m */; };
 		C0E8A3FF1D99756F0054C0B0 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C0E8A3FE1D99756F0054C0B0 /* UIScrollView+TPKeyboardAvoidingAdditions.m */; };
 		C0E8A4011D9976DF0054C0B0 /* NuevaTareaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E8A4001D9976DF0054C0B0 /* NuevaTareaViewController.swift */; };
@@ -60,6 +62,10 @@
 		C0C7AA831D9ACEBE00060885 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		C0C7AA841D9ACEBE00060885 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		C0C7AA8D1D9AD5FE00060885 /* Fecha.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fecha.swift; sourceTree = "<group>"; };
+		C0E6E4DE1D9C05280076D2BD /* MGSwipeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSwipeButton.h; sourceTree = "<group>"; };
+		C0E6E4DF1D9C05280076D2BD /* MGSwipeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSwipeButton.m; sourceTree = "<group>"; };
+		C0E6E4E01D9C05280076D2BD /* MGSwipeTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSwipeTableCell.h; sourceTree = "<group>"; };
+		C0E6E4E11D9C05280076D2BD /* MGSwipeTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSwipeTableCell.m; sourceTree = "<group>"; };
 		C0E8A3F81D9975230054C0B0 /* cronoTask-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cronoTask-Bridging-Header.h"; sourceTree = "<group>"; };
 		C0E8A3F91D9975240054C0B0 /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
 		C0E8A3FA1D9975240054C0B0 /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
@@ -105,6 +111,7 @@
 		C0A5E1EF1D905F4D00B66568 /* cronoTask */ = {
 			isa = PBXGroup;
 			children = (
+				C0E6E4E41D9C05340076D2BD /* MGSwipeCell */,
 				C0C7AA8B1D9ACF0200060885 /* FMDB */,
 				C0E8A3FC1D9975300054C0B0 /* TPKeyboardAvoiding */,
 				C0A5E1F01D905F4D00B66568 /* AppDelegate.swift */,
@@ -161,6 +168,17 @@
 				C0C7AA841D9ACEBE00060885 /* FMResultSet.m */,
 			);
 			name = FMDB;
+			sourceTree = "<group>";
+		};
+		C0E6E4E41D9C05340076D2BD /* MGSwipeCell */ = {
+			isa = PBXGroup;
+			children = (
+				C0E6E4DE1D9C05280076D2BD /* MGSwipeButton.h */,
+				C0E6E4DF1D9C05280076D2BD /* MGSwipeButton.m */,
+				C0E6E4E01D9C05280076D2BD /* MGSwipeTableCell.h */,
+				C0E6E4E11D9C05280076D2BD /* MGSwipeTableCell.m */,
+			);
+			name = MGSwipeCell;
 			sourceTree = "<group>";
 		};
 		C0E8A3FC1D9975300054C0B0 /* TPKeyboardAvoiding */ = {
@@ -258,6 +276,8 @@
 				C032570B1D995E220023BD42 /* Configuracion.swift in Sources */,
 				C0C7AA891D9ACEBE00060885 /* FMResultSet.m in Sources */,
 				C0E8A4111D999E650054C0B0 /* VistaRedondeada.swift in Sources */,
+				C0E6E4E31D9C05280076D2BD /* MGSwipeTableCell.m in Sources */,
+				C0E6E4E21D9C05280076D2BD /* MGSwipeButton.m in Sources */,
 				C0E8A4011D9976DF0054C0B0 /* NuevaTareaViewController.swift in Sources */,
 				C0A5E1F11D905F4D00B66568 /* AppDelegate.swift in Sources */,
 				C03257091D995B5F0023BD42 /* TaskTableViewCell.swift in Sources */,

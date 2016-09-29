@@ -47,10 +47,28 @@ class Reloj {
     
     init() {
         self.tiempo = "00:00,00" // Estado inicial de un reloj nuevo
+        tipo = tipoReloj()
+        horas = horasInt()
+        minutos = minutosInt()
+        segundos = segundosInt()
+        centesimas = centesimasInt()
     }
     
     init(tiempo:String) {
         self.tiempo = tiempo
+        tipo = tipoReloj()
+        horas = horasInt()
+        minutos = minutosInt()
+        segundos = segundosInt()
+        centesimas = centesimasInt()
+    }
+    
+    func actualizaTiemposReloj() {
+        tipo = tipoReloj()
+        horas = horasInt()
+        minutos = minutosInt()
+        segundos = segundosInt()
+        centesimas = centesimasInt()
     }
     
     func incrementarTiempoUnaCentesima() {
@@ -71,11 +89,31 @@ class Reloj {
             }
         
         // Generamos la nueva cadena
+        let horasCompletadas, minutosCompletados, segundosCompletados, centesimasCompletadas: String
+        
+        if String(horas).characters.count == 1 {
+            horasCompletadas = "0\(horas)"
+        } else { horasCompletadas = "\(horas)" }
+        
+        if String(minutos).characters.count == 1 {
+            minutosCompletados = "0\(minutos)"
+        } else { minutosCompletados = "\(minutos)" }
+            
+        if String(segundos).characters.count == 1 {
+            segundosCompletados = "0\(segundos)"
+        } else { segundosCompletados = "\(segundos)" }
+                
+        if String(centesimas).characters.count == 1 {
+            centesimasCompletadas = "0\(centesimas)"
+        } else { centesimasCompletadas = "\(centesimas)" }
+        
          if tipo == .horaMinutosSegundos {
-            tiempo = "\(horas):\(minutos):\(segundos)"
+            tiempo = "\(horasCompletadas):\(minutosCompletados):\(segundosCompletados)"
          } else {
-            tiempo = "\(minutos):\(segundos),\(centesimas)"
+            tiempo = "\(minutosCompletados):\(segundosCompletados),\(centesimasCompletadas)"
         }
+        
+        self.actualizaTiemposReloj()
     }
     
     // Identificación del tipo de reloj que estamos tratando

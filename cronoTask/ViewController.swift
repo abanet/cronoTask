@@ -25,8 +25,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
   // Cronómetro en funcionamiento
-    var indiceCronometroFuncionando: IndexPath = IndexPath()
+    var indiceCronometroFuncionando: IndexPath = IndexPath(row:-1,section:-1)
     var cronometrando: Bool = false
+    var ocurrenciaActual: Ocurrencia = Ocurrencia()
     
     
   var startTime = TimeInterval()
@@ -58,26 +59,26 @@ func pararCronometro() {
 
   
   func updateTime(){
-    let currentTime = Date.timeIntervalSinceReferenceDate
-    var tiempoPasado: TimeInterval = currentTime - startTime
-    
-    
-    let horas = UInt8(tiempoPasado/3600.0)
-    tiempoPasado -= TimeInterval(horas)*3600.0
-    
-    let minutos = UInt8(tiempoPasado/60.0)
-    tiempoPasado -= (TimeInterval(minutos)*60)
-    
-    let segundos = UInt8(tiempoPasado)
-    tiempoPasado -= TimeInterval(segundos)
-    
-    let fraccion = UInt8(tiempoPasado * 100)
-    let strHoras = String(format:"%02d", horas)
-    let strMinutos = String(format:"%02d",minutos)
-    let strSegundos = String(format:"%02d", segundos)
-    let strFracciones = String(format:"%02d",fraccion)
-    
-    self.lblPrimerContador.text = "\(strMinutos):\(strSegundos),\(strFracciones)"
+//    let currentTime = Date.timeIntervalSinceReferenceDate
+//    var tiempoPasado: TimeInterval = currentTime - startTime
+//    
+//    
+//    let horas = UInt8(tiempoPasado/3600.0)
+//    tiempoPasado -= TimeInterval(horas)*3600.0
+//    
+//    let minutos = UInt8(tiempoPasado/60.0)
+//    tiempoPasado -= (TimeInterval(minutos)*60)
+//    
+//    let segundos = UInt8(tiempoPasado)
+//    tiempoPasado -= TimeInterval(segundos)
+//    
+//    let fraccion = UInt8(tiempoPasado * 100)
+//    let strHoras = String(format:"%02d", horas)
+//    let strMinutos = String(format:"%02d",minutos)
+//    let strSegundos = String(format:"%02d", segundos)
+//    let strFracciones = String(format:"%02d",fraccion)
+    self.ocurrenciaActual.reloj.incrementarTiempoUnaCentesima()
+    self.lblPrimerContador.text = "\(ocurrenciaActual.reloj.tiempo)"
     self.lblSegundoContador.text = self.lblPrimerContador.text
     
     
@@ -114,19 +115,55 @@ func pararCronometro() {
     
 // MARK: TableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.indiceCronometroFuncionando = indexPath
-        if cronometrando {
-            cronometrando = false
-            pararCronometro()
+        if indiceCronometroFuncionando.row == indexPath.row { // se ha pulsado sobre la misma entrada
+            if cronometrando {
+                cronometrando = false
+                pararCronometro()
+                // Guardamos la ocurrencia
+                let descrTarea = bbdd.tareas[indexPath.row].descripcion // La descripción será única
+                if let id = bbdd.idParaTarea(descrip: descrTarea) {
+                    let ocurrencia = Ocurrencia(idTask: id, tiempo: self.lblPrimerContador.text!)
+                    bbdd.ocurrencias[id] = ocurrencia
+                }
+            } else {
+                // recuperamos el valor de la ocurrencia
+                let descrTarea = bbdd.tareas[indexPath.row].descripcion
+                if let id = bbdd.idParaTarea(descrip: descrTarea) {
+                    if let ocu = bbdd.ocurrencias[id] {
+                        ocurrenciaActual = ocu
+                    }
+                }
+                iniciarCronometro()
+                cronometrando = true
+            }
         } else {
-            cronometrando = true
-            iniciarCronometro()
+            pararCronometro()
+            cronometrando = false
+            self.indiceCronometroFuncionando = indexPath
+            let descrTarea = bbdd.tareas[indexPath.row].descripcion // La descripción será única
+            if let id = bbdd.idParaTarea(descrip: descrTarea) {
+                if let ocurrenciaTareaSeleccionada = bbdd.ocurrencias[id] {
+                    ocurrenciaActual = ocurrenciaTareaSeleccionada
+                } else {
+                    ocurrenciaActual = Ocurrencia()
+                }
+                 lblPrimerContador.text = ocurrenciaActual.reloj.tiempo
+
+            }
         }
-        
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        // Guardamos la ocurrencia de la que venimos
+        let descrTarea = bbdd.tareas[indexPath.row].descripcion // La descripción será única
+        if let id = bbdd.idParaTarea(descrip: descrTarea) {
+            let ocurrencia = Ocurrencia(idTask: id, tiempo: self.lblPrimerContador.text!)
+            bbdd.ocurrencias[id] = ocurrencia
+        }
     }
     
     
-    
+
     // MARK: Preparación del segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "segueNuevaTarea") {

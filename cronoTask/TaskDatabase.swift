@@ -17,6 +17,7 @@ class TaskDatabase {
     let databaseName = "CronoTask.db"
     let databasePath: String
     var tareas: [Tarea] = [Tarea]()
+    var ocurrencias: [String:Ocurrencia] = [String:Ocurrencia]()
     
     var delegate: protocoloActualizarBBDD?
     
@@ -41,7 +42,7 @@ class TaskDatabase {
                         print("Error: \(taskDB.lastErrorMessage())")
                     }
                     // tabla de ocurrencias
-                    let sql_crear_ocurrencias = "CREATE TABLE IF NOT EXISTS OCURRENCIAS (ID INTEGER PRIMARY KEY AUTOINCREMENT, IDTASK INTEGER, FECHA TEXT, HORA TEXT, DESCRIPCION TEXT)"
+                    let sql_crear_ocurrencias = "CREATE TABLE IF NOT EXISTS OCURRENCIAS (ID INTEGER PRIMARY KEY AUTOINCREMENT, IDTASK INTEGER, FECHA TEXT, HORA TEXT, TIEMPO TEXT)"
                     if !taskDB.executeStatements(sql_crear_ocurrencias) {
                         print("Error: \(taskDB.lastErrorMessage())")
                     }
@@ -119,6 +120,19 @@ class TaskDatabase {
         }
         delegate?.actualizarBBDD()
         return arrayResultado
+    }
+    
+    func idParaTarea(descrip: String) -> String? {
+      if let database = FMDatabase(path: self.databasePath) {
+        if database.open() {
+            let selectSQL = "SELECT ID FROM TASKS WHERE DESCRIPCION = '\(descrip)'"
+            let resultado: FMResultSet? = database.executeQuery(selectSQL, withArgumentsIn: nil)
+            if resultado!.next() {
+                return resultado!.string(forColumn: "ID")
+            }
+        }
+        }
+        return nil
     }
     
     

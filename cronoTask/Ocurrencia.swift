@@ -9,16 +9,27 @@
 import Foundation
 
 class Ocurrencia {
-    var idTask: String  // tarea a la que pertenece
+    var idTask: String?  // tarea a la que pertenece
     var fecha: String
-    var comienzo: TimeInterval
-    var final: TimeInterval
+    var hora: String
+    var reloj: Reloj
     
-    init(idTask: String, fecha: String, comienza: TimeInterval, finaliza: TimeInterval) {
-        self.idTask = idTask
-        self.fecha = fecha
-        self.comienzo = comienza
-        self.final = finaliza
+    init() {
+        self.reloj = Reloj()
+        
+        let unaFecha = Fecha()
+        fecha = unaFecha.fecha
+        hora = unaFecha.hora
         
     }
+    
+    init(idTask: String, tiempo: String) {
+        self.idTask = idTask
+        self.reloj = Reloj(tiempo: tiempo)
+        
+        let unaFecha = Fecha()
+        fecha = unaFecha.fecha
+        hora = unaFecha.hora
+    }
+    
 }

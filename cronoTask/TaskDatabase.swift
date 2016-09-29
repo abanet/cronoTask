@@ -76,6 +76,28 @@ class TaskDatabase {
         }
     }
     
+    
+    // Eliminar Tarea
+    // TODO: eliminar las ocurrencias asociadas a dicha tarea
+    func removeTask(tarea:Tarea)->Bool {
+        if let id = tarea.idTarea { //si no hay identificador se está intentando borrar una tarea que aún no ha sido grabada.
+        if let database = FMDatabase(path: self.databasePath) {
+            if database.open() {
+                let deleteSQL = "DELETE FROM TASKS WHERE ID = '\(id)'"
+                let resultado = database.executeUpdate(deleteSQL, withArgumentsIn: nil)
+                if !resultado {
+                    print("Error: \(database.lastErrorMessage())")
+                    return false
+                } else {
+                    delegate?.actualizarBBDD()
+                    print("Tarea eliminada")
+                }
+            }
+        }
+    }
+        return true
+    }
+    
     // Se leen las tareas que hay almacenadas en la base de datos y se devuelven en un array.
     func leerTareas() -> [Tarea] {
         var arrayResultado = [Tarea]()

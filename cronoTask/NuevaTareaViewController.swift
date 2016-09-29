@@ -73,12 +73,20 @@ class NuevaTareaViewController: UIViewController {
     }
     
     @IBAction func okCreacionTarea(_ sender: AnyObject) {
+        
         if let descripcion = txtNuevaTarea.text {
-            print("Enviando tarea \(txtNuevaTarea.text) al delegado")
-            delegate?.writeValueBack(value: descripcion)
-            self.dismiss(animated: true)
+            let trimmedString = descripcion.trimmingCharacters(in: .whitespacesAndNewlines)
+            if !trimmedString.isEmpty {
+                print("Enviando tarea \(txtNuevaTarea.text) al delegado")
+                delegate?.writeValueBack(value: descripcion)
+            }
         }
+        self.dismiss(animated: true)
         
     }
     
+    
+    
 }
+
+

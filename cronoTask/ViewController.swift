@@ -22,11 +22,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
   // Cronómetro
     @IBOutlet weak var lblPrimerContador: UILabel!
     @IBOutlet weak var lblSegundoContador: UILabel!
-    @IBOutlet weak var lblTercerContador: UILabel!
     
-    @IBOutlet weak var lblPrimerIdentificador: UILabel!
-    @IBOutlet weak var lblSegundoIdentificador: UILabel!
-    @IBOutlet weak var lblTercerIdentificador: UILabel!
     
   // Cronómetro en funcionamiento
     var indiceCronometroFuncionando: IndexPath = IndexPath()
@@ -81,9 +77,9 @@ func pararCronometro() {
     let strSegundos = String(format:"%02d", segundos)
     let strFracciones = String(format:"%02d",fraccion)
     
-    self.lblPrimerContador.text = strHoras
-    self.lblSegundoContador.text = strSegundos
-    self.lblTercerContador.text = strFracciones
+    self.lblPrimerContador.text = "\(strMinutos):\(strSegundos),\(strFracciones)"
+    self.lblSegundoContador.text = self.lblPrimerContador.text
+    
     
 //    lblHoras.text = strMinutos
 //    lblMinutos.text = strSegundos
@@ -109,17 +105,9 @@ func pararCronometro() {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "celda")! as! TaskTableViewCell
+        cell.delegate = self
         cell.lblTarea.text = bbdd.tareas[indexPath.row].descripcion
         
-        //configure left buttons
-        cell.leftButtons = [MGSwipeButton(title: "", icon: UIImage(named:"check.png"), backgroundColor: UIColor.green)
-            ,MGSwipeButton(title: "", icon: UIImage(named:"fav.png"), backgroundColor: UIColor.blue)]
-        cell.leftSwipeSettings.transition = MGSwipeTransition.rotate3D
-        
-        //configure right buttons
-        cell.rightButtons = [MGSwipeButton(title: "Delete", backgroundColor: UIColor.red)
-            ,MGSwipeButton(title: "More",backgroundColor: UIColor.lightGray)]
-        cell.rightSwipeSettings.transition = MGSwipeTransition.rotate3D
         
         return cell
     }
@@ -174,5 +162,21 @@ extension ViewController: writeValueBackDelegate {
 extension ViewController: protocoloActualizarBBDD {
     func actualizarBBDD() {
         self.tabla.reloadData()
+    }
+}
+
+// MARK: MGSwipeTableCellDelegate
+extension ViewController: MGSwipeTableCellDelegate {
+    func swipeTableCell(_ cell: MGSwipeTableCell!, tappedButtonAt index: Int, direction: MGSwipeDirection, fromExpansion: Bool) -> Bool {
+        if (direction == MGSwipeDirection.rightToLeft && index == 0) {
+            print("Button Delete tapped")
+            if let indice = self.tabla.indexPath(for: cell)?.row {
+                let tarea = bbdd.tareas[indice]
+                bbdd.tareas.remove(at: indice)
+                _ = bbdd.removeTask(tarea: tarea)
+            }
+            
+        }
+        return true
     }
 }

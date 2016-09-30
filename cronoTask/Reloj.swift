@@ -63,6 +63,20 @@ class Reloj {
         centesimas = centesimasInt()
     }
     
+    init(horas: Int, minutos:Int, segundos: Int, centesimas: Int) {
+        self.horas = horas
+        self.minutos = minutos
+        self.segundos = segundos
+        self.centesimas = centesimas
+        if horas == 0 {
+            self.tipo = TipoReloj.minutosSegundosDecimas
+        } else {
+            self.tipo = TipoReloj.horaMinutosSegundos
+        }
+        self.tiempo = ""
+        self.tiempo = generarCadenaTiempoCompletadaConCeros(h: horas, m: minutos, s: segundos, c: centesimas, deTipo: self.tipo)
+    }
+    
     func actualizaTiemposReloj() {
         tipo = tipoReloj()
         horas = horasInt()
@@ -89,32 +103,39 @@ class Reloj {
             }
         
         // Generamos la nueva cadena
-        let horasCompletadas, minutosCompletados, segundosCompletados, centesimasCompletadas: String
-        
-        if String(horas).characters.count == 1 {
-            horasCompletadas = "0\(horas)"
-        } else { horasCompletadas = "\(horas)" }
-        
-        if String(minutos).characters.count == 1 {
-            minutosCompletados = "0\(minutos)"
-        } else { minutosCompletados = "\(minutos)" }
-            
-        if String(segundos).characters.count == 1 {
-            segundosCompletados = "0\(segundos)"
-        } else { segundosCompletados = "\(segundos)" }
-                
-        if String(centesimas).characters.count == 1 {
-            centesimasCompletadas = "0\(centesimas)"
-        } else { centesimasCompletadas = "\(centesimas)" }
-        
-         if tipo == .horaMinutosSegundos {
-            tiempo = "\(horasCompletadas):\(minutosCompletados):\(segundosCompletados)"
-         } else {
-            tiempo = "\(minutosCompletados):\(segundosCompletados),\(centesimasCompletadas)"
-        }
-        
+        self.tiempo = generarCadenaTiempoCompletadaConCeros(h: horas,m: minutos,s: segundos,c: centesimas, deTipo:self.tipo)
         self.actualizaTiemposReloj()
     }
+    
+    private func generarCadenaTiempoCompletadaConCeros(h:Int,m:Int,s:Int,c:Int, deTipo tipo: TipoReloj) ->String {
+        // Generamos la nueva cadena
+        let horasCompletadas, minutosCompletados, segundosCompletados, centesimasCompletadas: String
+        
+        if String(h).characters.count == 1 {
+            horasCompletadas = "0\(h)"
+        } else { horasCompletadas = "\(h)" }
+        
+        if String(m).characters.count == 1 {
+            minutosCompletados = "0\(m)"
+        } else { minutosCompletados = "\(m)" }
+        
+        if String(s).characters.count == 1 {
+            segundosCompletados = "0\(s)"
+        } else { segundosCompletados = "\(s)" }
+        
+        if String(c).characters.count == 1 {
+            centesimasCompletadas = "0\(c)"
+        } else { centesimasCompletadas = "\(c)" }
+        
+        var resultado: String
+        if tipo == .horaMinutosSegundos {
+            resultado = "\(horasCompletadas):\(minutosCompletados):\(segundosCompletados)"
+        } else {
+            resultado = "\(minutosCompletados):\(segundosCompletados),\(centesimasCompletadas)"
+        }
+        return resultado
+    }
+    
     
     // Identificación del tipo de reloj que estamos tratando
     private func tipoReloj()->TipoReloj {
@@ -162,6 +183,39 @@ class Reloj {
             let indice = tiempo.index(tiempo.endIndex, offsetBy: -2)
             return Int(tiempo.substring(from: indice))!
         }
+    }
+    
+    
+    class func sumarTiempos(t1:String, t2:String) -> String {
+            let r1 = Reloj(tiempo: t1)
+            let r2 = Reloj(tiempo: t2)
+            let suma = Reloj.sumar(reloj1: r1, reloj2: r2)
+            return suma.tiempo
+    }
+    
+   class func sumar(reloj1: Reloj, reloj2: Reloj) -> Reloj {
+        // sumamos centésimas
+        let centesimasTotal = (reloj1.centesimas+reloj2.centesimas)%100
+        var mellevo = Int((reloj1.centesimas+reloj2.centesimas)/100)
+        
+        let segundosTotal = (reloj1.segundos+reloj2.segundos+mellevo)%60
+        mellevo = Int((reloj1.segundos+reloj2.segundos+mellevo)/60)
+        
+        let minutosTotal = (reloj1.minutos+reloj2.minutos+mellevo)%60
+        mellevo = Int((reloj1.minutos+reloj2.minutos+mellevo)/60)
+        
+        let horasTotal = (reloj1.horas+reloj2.horas+mellevo)%60
+        mellevo = Int((reloj1.horas+reloj2.horas+mellevo)/60) // TODO: ¿contemplar días?
+        
+        return Reloj(horas: horasTotal, minutos: minutosTotal, segundos: segundosTotal, centesimas: centesimasTotal)
+    }
+    
+    private func sumarNRelojes(relojes: [Reloj]) -> Reloj {
+        var relojFinal = Reloj()
+        for unReloj in relojes {
+            relojFinal = Reloj.sumar(reloj1: relojFinal, reloj2:unReloj)
+        }
+        return relojFinal
     }
     
 }

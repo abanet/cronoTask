@@ -18,9 +18,9 @@ class TaskTableViewCell: MGSwipeTableCell {
         
         lblTarea.textColor = UIColor.white
         
-        let botonesIzquierda = [MGSwipeButton(title: "", icon: UIImage(named:"check.png"), backgroundColor: UIColor.green)!
-            ,MGSwipeButton(title: "", icon: UIImage(named:"fav.png"), backgroundColor: UIColor.blue)!]
-        let botonesDerecha = [MGSwipeButton(title: "Delete", backgroundColor: UIColor.red)!]
+        let botonesIzquierda = [MGSwipeButton(title: "Historial", backgroundColor: CronoTaskColores.backgroundViewNewTask)!
+            ,MGSwipeButton(title: "Reset", backgroundColor: CronoTaskColores.backgroundViewNewTask)!]
+        let botonesDerecha = [MGSwipeButton(title: "Delete", backgroundColor: CronoTaskColores.backgroundViewNewTask)!]
         //configure left buttons
         self.leftButtons = botonesIzquierda
         self.leftSwipeSettings.transition = MGSwipeTransition.border

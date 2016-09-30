@@ -14,6 +14,7 @@ class Tarea {
     var fechaCreacion: String
     var horaCreacion: String
     var fechaUltimaVezUtilizada: String
+    var tiempoAcumulado: String?
     
     var ocurrencias: [Ocurrencia]?
     
@@ -35,5 +36,6 @@ class Tarea {
         let unaFecha = Fecha()
         self.init(descripcion: descripcion, fecha: unaFecha.fecha, hora: unaFecha.hora, fechaUltimaVez: unaFecha.fecha)
     }
+    
     
 }

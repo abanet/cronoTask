@@ -58,7 +58,7 @@ class TaskDatabase {
         }
     }
 
-    
+    // MARK: Tratamiento de las tareas
     // Añadir Tareas
     func addTask(tarea:Tarea) {
         if let database = FMDatabase(path: self.databasePath) {
@@ -90,6 +90,7 @@ class TaskDatabase {
                     print("Error: \(database.lastErrorMessage())")
                     return false
                 } else {
+                    removeOcurrencias(idTask: id)
                     delegate?.actualizarBBDD()
                     print("Tarea eliminada")
                 }
@@ -112,6 +113,7 @@ class TaskDatabase {
                                                   fecha: resultados!.string(forColumn: "FECHA"),
                                                   hora: resultados!.string(forColumn: "HORA"),
                                                   fechaUltimaVez: resultados!.string(forColumn: "ULTIMAVEZ"))
+                    tarea.tiempoAcumulado = calcularTiempoAcumulado(idTask: tarea.idTarea!)
                     arrayResultado.append(tarea)
                 }
             } else {
@@ -135,5 +137,75 @@ class TaskDatabase {
         return nil
     }
     
+    // MARK: Tratamiento de las Ocurrencias
     
+    // Graba una Ocurrencia a la base de datos
+    func addOcurrencia(_ ocu: Ocurrencia) {
+        if let database = FMDatabase(path: self.databasePath) {
+            if database.open() {
+                let insertSQL = "INSERT INTO OCURRENCIAS (IDTASK, FECHA, HORA, TIEMPO) VALUES ('\(ocu.idTask!)', '\(ocu.fecha)', '\(ocu.hora)', '\(ocu.reloj.tiempo)')"
+                print("addOcurrencia: \(insertSQL)")
+                let resultado = database.executeUpdate(insertSQL, withArgumentsIn: nil)
+                if !resultado {
+                    print("Error: \(database.lastErrorMessage())")
+                } else {
+                    print("Tarea añadida")
+                    
+                }
+            }
+        }
+    }
+    // Graba el array de ocurrencias a la base de datos
+    func grabarOcurrenciasBBDD() {
+        for (_ , unaOcurrencia) in self.ocurrencias {
+            addOcurrencia(unaOcurrencia)
+        }
+    }
+    
+    // Elimina las ocurrencias asociadas a una tarea concreta.
+    func removeOcurrencias(idTask id:String) {
+            if let database = FMDatabase(path: self.databasePath) {
+                if database.open() {
+                    let deleteSQL = "DELETE FROM OCURRENCIAS WHERE IDTASK = '\(id)'"
+                    let resultado = database.executeUpdate(deleteSQL, withArgumentsIn: nil)
+                    if !resultado {
+                        print("Error: \(database.lastErrorMessage())")
+                    } else {
+                        print("Ocurrencia eliminada")
+                    }
+                }
+            }
+        }
+    
+    
+    // Se leen las ocurrencias que hay almacenadas en la base de datos y se devuelven en un array.
+    func leerOcurrencias(idTask:String) -> [Ocurrencia] {
+        var arrayResultado = [Ocurrencia]()
+        if let database = FMDatabase(path: self.databasePath) {
+            if database.open() {
+                let selectSQL = "SELECT ID, IDTASK, FECHA, HORA, TIEMPO FROM OCURRENCIAS WHERE IDTASK = '\(idTask)'"
+                let resultados: FMResultSet? = database.executeQuery(selectSQL, withArgumentsIn: nil)
+                while resultados?.next() == true {
+                    let ocurrencia: Ocurrencia = Ocurrencia(idTask: resultados!.string(forColumn: "IDTASK"),
+                                             fecha: resultados!.string(forColumn: "FECHA"),
+                                             hora: resultados!.string(forColumn: "HORA"),
+                                             tiempo: resultados!.string(forColumn: "TIEMPO"))
+                    arrayResultado.append(ocurrencia)
+                }
+            } else {
+                // problemas al abrir la base de datos
+            }
+        }
+        return arrayResultado
+    }
+    
+    // Calcular un String con el tiempo acumulado de todas las ocurrencias para añadir al acumulado de la tarea
+    func calcularTiempoAcumulado(idTask:String) -> String {
+        let ocurrencias = self.leerOcurrencias(idTask: idTask)
+        var relojFinal = Reloj()
+        for unaOcurrencia in ocurrencias {
+            relojFinal = Reloj.sumar(reloj1: relojFinal, reloj2:unaOcurrencia.reloj)
+        }
+        return relojFinal.tiempo
+    }
 }

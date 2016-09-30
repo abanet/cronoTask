@@ -32,4 +32,13 @@ class Ocurrencia {
         hora = unaFecha.hora
     }
     
+    init(idTask: String, fecha: String, hora:String, tiempo:String) {
+        self.idTask = idTask
+        self.fecha = fecha
+        self.hora = hora
+        self.reloj = Reloj(tiempo: tiempo)
+    }
+    
+    
+    
 }

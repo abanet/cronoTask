@@ -28,7 +28,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var indiceCronometroFuncionando: IndexPath = IndexPath(row:-1,section:-1)
     var cronometrando: Bool = false
     var ocurrenciaActual: Ocurrencia = Ocurrencia()
-    
+    var relojTiempoTotal: Reloj = Reloj()
     
   var startTime = TimeInterval()
   var timer = Timer()
@@ -59,28 +59,10 @@ func pararCronometro() {
 
   
   func updateTime(){
-//    let currentTime = Date.timeIntervalSinceReferenceDate
-//    var tiempoPasado: TimeInterval = currentTime - startTime
-//    
-//    
-//    let horas = UInt8(tiempoPasado/3600.0)
-//    tiempoPasado -= TimeInterval(horas)*3600.0
-//    
-//    let minutos = UInt8(tiempoPasado/60.0)
-//    tiempoPasado -= (TimeInterval(minutos)*60)
-//    
-//    let segundos = UInt8(tiempoPasado)
-//    tiempoPasado -= TimeInterval(segundos)
-//    
-//    let fraccion = UInt8(tiempoPasado * 100)
-//    let strHoras = String(format:"%02d", horas)
-//    let strMinutos = String(format:"%02d",minutos)
-//    let strSegundos = String(format:"%02d", segundos)
-//    let strFracciones = String(format:"%02d",fraccion)
     self.ocurrenciaActual.reloj.incrementarTiempoUnaCentesima()
+    self.relojTiempoTotal.incrementarTiempoUnaCentesima()
     self.lblPrimerContador.text = "\(ocurrenciaActual.reloj.tiempo)"
-    self.lblSegundoContador.text = self.lblPrimerContador.text
-    
+    self.lblSegundoContador.text = "\(relojTiempoTotal.tiempo)"
     
 //    lblHoras.text = strMinutos
 //    lblMinutos.text = strSegundos
@@ -130,7 +112,7 @@ func pararCronometro() {
                 let descrTarea = bbdd.tareas[indexPath.row].descripcion
                 if let id = bbdd.idParaTarea(descrip: descrTarea) {
                     if let ocu = bbdd.ocurrencias[id] {
-                        ocurrenciaActual = ocu
+                        ocurrenciaActual = ocu // valor de la ocurrencia en la sesión abierta
                     }
                 }
                 iniciarCronometro()
@@ -148,7 +130,10 @@ func pararCronometro() {
                     ocurrenciaActual = Ocurrencia()
                 }
                  lblPrimerContador.text = ocurrenciaActual.reloj.tiempo
-
+                if let acumulado = bbdd.tareas[indexPath.row].tiempoAcumulado {
+                    relojTiempoTotal = Reloj.sumar(reloj1: ocurrenciaActual.reloj, reloj2: Reloj(tiempo: acumulado))
+                    lblSegundoContador.text = relojTiempoTotal.tiempo
+                }
             }
         }
     }
@@ -174,7 +159,6 @@ func pararCronometro() {
         }
     }
     
-
 } // class ViewController
 
 
@@ -207,13 +191,30 @@ extension ViewController: MGSwipeTableCellDelegate {
     func swipeTableCell(_ cell: MGSwipeTableCell!, tappedButtonAt index: Int, direction: MGSwipeDirection, fromExpansion: Bool) -> Bool {
         if (direction == MGSwipeDirection.rightToLeft && index == 0) {
             print("Button Delete tapped")
+            cronometrando = false
+            pararCronometro()
+            
             if let indice = self.tabla.indexPath(for: cell)?.row {
-                let tarea = bbdd.tareas[indice]
-                bbdd.tareas.remove(at: indice)
-                _ = bbdd.removeTask(tarea: tarea)
+                let alert = UIAlertController(title: "Borrar Tarea",
+                                              message: "La tarea y todo su historial se eliminarán de la base de datos",
+                                              preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                let action = UIAlertAction(title: "Ok", style: .default) { [unowned self] action in
+                    let tarea = self.bbdd.tareas[indice]
+                    self.bbdd.tareas.remove(at: indice)
+                    _ = self.bbdd.removeTask(tarea: tarea)
+                    self.lblPrimerContador.text = "--:--,--"
+                    self.lblSegundoContador.text = "--:--,--"
+                }
+                alert.addAction(action)
+                present(alert, animated: true)
+
+                
             }
             
         }
         return true
     }
+    
+    
 }

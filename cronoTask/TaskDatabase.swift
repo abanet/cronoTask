@@ -17,7 +17,7 @@ class TaskDatabase {
     let databaseName = "CronoTask.db"
     let databasePath: String
     var tareas: [Tarea] = [Tarea]()
-    var ocurrencias: [String:Ocurrencia] = [String:Ocurrencia]()
+    var ocurrencias: [String:Ocurrencia] = [String:Ocurrencia]() // diccionario que mantiene los acumulados de ocurrencias.
     
     var delegate: protocoloActualizarBBDD?
     
@@ -69,7 +69,7 @@ class TaskDatabase {
                 if !resultado {
                     print("Error: \(database.lastErrorMessage())")
                 } else {
-                    delegate?.actualizarBBDD()
+                    //delegate?.actualizarBBDD()
                     print("Tarea añadida")
                     
                 }
@@ -196,8 +196,12 @@ class TaskDatabase {
                 // problemas al abrir la base de datos
             }
         }
+        delegate?.actualizarBBDD()
+        print("Ocurrencias leídas:\(arrayResultado)")
         return arrayResultado
     }
+    
+    
     
     // Calcular un String con el tiempo acumulado de todas las ocurrencias para añadir al acumulado de la tarea
     func calcularTiempoAcumulado(idTask:String) -> String {

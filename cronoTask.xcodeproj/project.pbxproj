@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		C03257091D995B5F0023BD42 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03257081D995B5F0023BD42 /* TaskTableViewCell.swift */; };
 		C032570B1D995E220023BD42 /* Configuracion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C032570A1D995E220023BD42 /* Configuracion.swift */; };
+		C056D99A1DA2A67D00F234EB /* HistoricoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C056D9991DA2A67D00F234EB /* HistoricoViewController.swift */; };
+		C056D99C1DA2BA5000F234EB /* HistoricoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C056D99B1DA2BA5000F234EB /* HistoricoTableViewCell.swift */; };
 		C0A5E1F11D905F4D00B66568 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A5E1F01D905F4D00B66568 /* AppDelegate.swift */; };
 		C0A5E1F31D905F4D00B66568 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A5E1F21D905F4D00B66568 /* ViewController.swift */; };
 		C0A5E1F61D905F4D00B66568 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0A5E1F41D905F4D00B66568 /* Main.storyboard */; };
@@ -39,6 +41,8 @@
 /* Begin PBXFileReference section */
 		C03257081D995B5F0023BD42 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		C032570A1D995E220023BD42 /* Configuracion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Configuracion.swift; path = ../Configuracion.swift; sourceTree = "<group>"; };
+		C056D9991DA2A67D00F234EB /* HistoricoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoricoViewController.swift; sourceTree = "<group>"; };
+		C056D99B1DA2BA5000F234EB /* HistoricoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoricoTableViewCell.swift; sourceTree = "<group>"; };
 		C0A5E1ED1D905F4D00B66568 /* cronoTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cronoTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0A5E1F01D905F4D00B66568 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0A5E1F21D905F4D00B66568 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -93,6 +97,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C056D99D1DA2BA7A00F234EB /* Clases Externas */ = {
+			isa = PBXGroup;
+			children = (
+				C0E6E4E41D9C05340076D2BD /* MGSwipeCell */,
+				C0C7AA8B1D9ACF0200060885 /* FMDB */,
+				C0E8A3FC1D9975300054C0B0 /* TPKeyboardAvoiding */,
+			);
+			name = "Clases Externas";
+			sourceTree = "<group>";
+		};
+		C056D99E1DA2BABC00F234EB /* Pantalla Principal */ = {
+			isa = PBXGroup;
+			children = (
+				C0A5E1F21D905F4D00B66568 /* ViewController.swift */,
+				C03257081D995B5F0023BD42 /* TaskTableViewCell.swift */,
+			);
+			name = "Pantalla Principal";
+			sourceTree = "<group>";
+		};
+		C056D99F1DA2BACD00F234EB /* Pantalla Historico */ = {
+			isa = PBXGroup;
+			children = (
+				C056D9991DA2A67D00F234EB /* HistoricoViewController.swift */,
+				C056D99B1DA2BA5000F234EB /* HistoricoTableViewCell.swift */,
+			);
+			name = "Pantalla Historico";
+			sourceTree = "<group>";
+		};
+		C056D9A01DA2BAE500F234EB /* Pantalla Nueva Tarea */ = {
+			isa = PBXGroup;
+			children = (
+				C0E8A4101D999E650054C0B0 /* VistaRedondeada.swift */,
+				C0E8A4001D9976DF0054C0B0 /* NuevaTareaViewController.swift */,
+			);
+			name = "Pantalla Nueva Tarea";
+			sourceTree = "<group>";
+		};
 		C0A5E1E41D905F4D00B66568 = {
 			isa = PBXGroup;
 			children = (
@@ -113,22 +154,19 @@
 		C0A5E1EF1D905F4D00B66568 /* cronoTask */ = {
 			isa = PBXGroup;
 			children = (
-				C0E6E4E41D9C05340076D2BD /* MGSwipeCell */,
-				C0C7AA8B1D9ACF0200060885 /* FMDB */,
-				C0E8A3FC1D9975300054C0B0 /* TPKeyboardAvoiding */,
+				C056D99D1DA2BA7A00F234EB /* Clases Externas */,
+				C0C7AA641D9AAFDC00060885 /* bbdd */,
 				C0A5E1F01D905F4D00B66568 /* AppDelegate.swift */,
 				C032570A1D995E220023BD42 /* Configuracion.swift */,
-				C0E8A4101D999E650054C0B0 /* VistaRedondeada.swift */,
 				C0C7AA8D1D9AD5FE00060885 /* Fecha.swift */,
-				C0C7AA641D9AAFDC00060885 /* bbdd */,
-				C0A5E1F21D905F4D00B66568 /* ViewController.swift */,
+				C056D99E1DA2BABC00F234EB /* Pantalla Principal */,
+				C056D9A01DA2BAE500F234EB /* Pantalla Nueva Tarea */,
+				C056D99F1DA2BACD00F234EB /* Pantalla Historico */,
 				C0A5E1F41D905F4D00B66568 /* Main.storyboard */,
 				C0E8A4021D99820D0054C0B0 /* StringExtensions.swift */,
-				C0E8A4001D9976DF0054C0B0 /* NuevaTareaViewController.swift */,
 				C0A5E1F71D905F4D00B66568 /* Assets.xcassets */,
 				C0A5E1F91D905F4D00B66568 /* LaunchScreen.storyboard */,
 				C0A5E1FC1D905F4D00B66568 /* Info.plist */,
-				C03257081D995B5F0023BD42 /* TaskTableViewCell.swift */,
 				C0E8A3F81D9975230054C0B0 /* cronoTask-Bridging-Header.h */,
 				C0E8A40A1D9985120054C0B0 /* Localizable.strings */,
 			);
@@ -279,7 +317,9 @@
 				C0E8A3FB1D9975240054C0B0 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				C032570B1D995E220023BD42 /* Configuracion.swift in Sources */,
 				C0C7AA891D9ACEBE00060885 /* FMResultSet.m in Sources */,
+				C056D99A1DA2A67D00F234EB /* HistoricoViewController.swift in Sources */,
 				C0E8A4111D999E650054C0B0 /* VistaRedondeada.swift in Sources */,
+				C056D99C1DA2BA5000F234EB /* HistoricoTableViewCell.swift in Sources */,
 				C0E6E4E31D9C05280076D2BD /* MGSwipeTableCell.m in Sources */,
 				C0E6E4E21D9C05280076D2BD /* MGSwipeButton.m in Sources */,
 				C0E8A4011D9976DF0054C0B0 /* NuevaTareaViewController.swift in Sources */,

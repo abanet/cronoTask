@@ -39,6 +39,12 @@ class Ocurrencia {
         self.reloj = Reloj(tiempo: tiempo)
     }
     
-    
+    // Al resetear una ocurrencia ponemos su reloj a cero y la fecha y hora se actualizan a la actual.
+    func resetearOcurrencia() {
+        self.reloj.resetearReloj()
+        let unaFecha = Fecha()
+        fecha = unaFecha.fecha
+        hora = unaFecha.hora
+    }
     
 }

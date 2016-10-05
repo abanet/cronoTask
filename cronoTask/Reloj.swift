@@ -77,6 +77,21 @@ class Reloj {
         self.tiempo = generarCadenaTiempoCompletadaConCeros(h: horas, m: minutos, s: segundos, c: centesimas, deTipo: self.tipo)
     }
     
+    // Poner reloj a cero
+    func resetearReloj() {
+        self.tiempo = "00:00,00" 
+        tipo = tipoReloj()
+        horas = horasInt()
+        minutos = minutosInt()
+        segundos = segundosInt()
+        centesimas = centesimasInt()
+    }
+    
+    func aCero() -> Bool {
+        let suma = horas + minutos + segundos + centesimas
+        return suma == 0
+    }
+    
     func actualizaTiemposReloj() {
         tipo = tipoReloj()
         horas = horasInt()

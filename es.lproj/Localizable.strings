@@ -13,3 +13,13 @@
 
 // Visualización de fechas
 "MM-dd-yyyy" = "dd-MM-yyyy";
+
+
+// Alertas
+"Ok"     = "Ok";
+"Cancel" = "Cancelar";
+
+
+    // Alerta de delete
+"Borrar Tarea" = "Borrar Tarea";
+"mensajeBorrarTarea" = "La tarea '%@' y todo su historial se eliminará de la base de datos";

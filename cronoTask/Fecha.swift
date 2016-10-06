@@ -23,7 +23,7 @@ class Fecha: NSObject {
         super.init()
     }
     
-    func devolverFechaLocalizada(fecha: String)-> String?{
+    class func devolverFechaLocalizada(fecha: String)-> String?{
         let formateador = DateFormatter()
         // se guardó en formato MM-dd-yyyy
         formateador.dateFormat = "MM-dd-yyyy"

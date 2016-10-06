@@ -47,4 +47,25 @@ class Ocurrencia {
         hora = unaFecha.hora
     }
     
+    
+    // Dado un array de ocurrencias devuelve un diccionario cuya clave es el día y su valor un array de las ocurrencias correspondientes a la fecha dada.
+    class func categorizarOcurrencias(_ ocurrencias:[Ocurrencia]) -> [[Ocurrencia]] {
+        var fechaActual = ""
+        var posicionActual = -1
+        var resultado = [[Ocurrencia]]()
+        
+        for ocurrencia in ocurrencias {
+            if ocurrencia.fecha == fechaActual { // seguimos en la misma clave
+                resultado[posicionActual].append(ocurrencia)
+            } else { // hay cambio de fecha
+                posicionActual += 1
+                resultado.append([Ocurrencia]())
+                resultado[posicionActual].append(ocurrencia)
+                fechaActual = ocurrencia.fecha
+                
+            }
+        }
+        return resultado
+    }
+    
 }

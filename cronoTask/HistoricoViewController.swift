@@ -17,6 +17,7 @@ class HistoricoViewController: UIViewController {
     var bbdd: TaskDatabase!
     var literalTarea: String!
     var totalOcurrencias = [Ocurrencia]()
+    var ocurrenciasPorFecha: [[Ocurrencia]]!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +35,8 @@ class HistoricoViewController: UIViewController {
         if let ultimaOcurrencia = bbdd.ocurrencias[idTarea] {
             totalOcurrencias.append(ultimaOcurrencia)        }
         totalOcurrencias = bbdd.leerOcurrencias(idTask: idTarea)
-        totalOcurrencias = totalOcurrencias.reversed()
+        totalOcurrencias = totalOcurrencias.reversed() // quedarán de más reciente a menos
+        ocurrenciasPorFecha = Ocurrencia.categorizarOcurrencias(totalOcurrencias)
         
     }
 
@@ -55,11 +57,13 @@ class HistoricoViewController: UIViewController {
 extension HistoricoViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return ocurrenciasPorFecha.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return totalOcurrencias.count    }
+        return ocurrenciasPorFecha[section].count
+        //return totalOcurrencias.count
+    }
     
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -69,12 +73,14 @@ extension HistoricoViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CeldaOcurrencia")! as! HistoricoTableViewCell
-        
-        cell.lblOcurrencia.text = "\(totalOcurrencias[indexPath.row].fecha), \(totalOcurrencias[indexPath.row].hora),\(totalOcurrencias[indexPath.row].reloj.tiempo)."
+        cell.lblOcurrencia.text = "\(totalOcurrencias[indexPath.row].hora), \(totalOcurrencias[indexPath.row].reloj.tiempo)."
         return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let fecha = ocurrenciasPorFecha[section][0].fecha
+        return Fecha.devolverFechaLocalizada(fecha: fecha)
+    }
 
 }
 

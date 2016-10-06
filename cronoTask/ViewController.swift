@@ -102,14 +102,11 @@ func pararCronometro() {
         let cell = tableView.dequeueReusableCell(withIdentifier: "celda")! as! TaskTableViewCell
         cell.delegate = self
         cell.lblTarea.text = bbdd.tareas[indexPath.row].descripcion
-        
-        
         return cell
     }
     
 // MARK: TableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         if indiceCronometroFuncionando.row == indexPath.row { // se ha pulsado sobre la misma entrada
             if cronometrando {
                 cronometrando = false
@@ -131,6 +128,10 @@ func pararCronometro() {
                 if !volviendoDeAddTarea  {
                     iniciarCronometro()
                     cronometrando = true
+                } else {
+                    ocurrenciaActual = Ocurrencia() // caso de que se haya creado una nueva tarea
+                    lblPrimerContador.text = ocurrenciaActual.reloj.tiempo
+                    lblSegundoContador.text = ocurrenciaActual.reloj.tiempo
                 }
             }
         } else {
@@ -154,6 +155,11 @@ func pararCronometro() {
             }
         }
                volviendoDeAddTarea = false
+    }
+    
+    func marcarCelda(_ tableView: UITableView, celdaSeleccionadaEn indexPath: IndexPath) {
+        let celda = tableView.cellForRow(at: indexPath) as! TaskTableViewCell
+        celda.contenedorView.backgroundColor = CronoTaskColores.backgroundCell
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -233,11 +239,12 @@ extension ViewController: MGSwipeTableCellDelegate {
            
             
             if let indice = self.tabla.indexPath(for: cell)?.row {
-                let alert = UIAlertController(title: "Borrar Tarea",
-                                              message: "La tarea y todo su historial se eliminarán de la base de datos",
+                let descripcionTarea = self.bbdd.tareas[indice].descripcion
+                let alert = UIAlertController(title: "Borrar Tarea".localized,
+                                              message: String.localizedStringWithFormat(NSLocalizedString("mensajeBorrarTarea",comment:""),descripcionTarea),
                                               preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-                let action = UIAlertAction(title: "Ok", style: .default) { [unowned self] action in
+                alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel))
+                let action = UIAlertAction(title: "Ok".localized, style: .default) { [unowned self] action in
                     self.indiceCronometroFuncionando = self.tabla.indexPath(for: cell)! // Al hacer un swipe sobre la celda el cronómetro que estaba funcionando tiene que perder el foco.
                     let tarea = self.bbdd.tareas[indice]
                     self.bbdd.tareas.remove(at: indice)

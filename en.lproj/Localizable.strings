@@ -14,3 +14,13 @@
 
 // Visualización de fechas
 "MM-dd-yyyy" = "MM-dd-yyyy";
+
+
+// Alertas
+"Ok"     = "Ok";
+"Cancel" = "Cancel";
+
+
+// Alerta de delete
+"Borrar Tarea" = "Delete Task";
+"mensajeBorrarTarea" = "The Task '%@' and all her associated data will be deleted from de database.";

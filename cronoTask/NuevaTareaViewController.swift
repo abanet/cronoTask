@@ -39,6 +39,8 @@ class NuevaTareaViewController: UIViewController {
         lblCrear.text = "Create a".localized
         lblNuevaTarea.text = "New Task".localized
         txtNuevaTarea.placeholder = "Name of the new task".localized
+        btnOk.setTitle("Ok".localized, for: .normal)
+        btnCancel.setTitle("Cancel".localized, for: .normal)
         
     }
 

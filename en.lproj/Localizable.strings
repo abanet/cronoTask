@@ -24,3 +24,6 @@
 // Alerta de delete
 "Borrar Tarea" = "Delete Task";
 "mensajeBorrarTarea" = "The Task '%@' and all her associated data will be deleted from de database.";
+
+// Formato para las fechas
+"identificadorLocalFecha" = "en_US";

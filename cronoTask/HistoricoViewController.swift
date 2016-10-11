@@ -22,6 +22,7 @@ class HistoricoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabla.dataSource = self
+        self.tabla.delegate = self
         
     }
 
@@ -64,12 +65,7 @@ extension HistoricoViewController: UITableViewDataSource {
         return ocurrenciasPorFecha[section].count
         //return totalOcurrencias.count
     }
-    
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = UIColor(white: 1, alpha: 0.0)
-    }
-    
+ 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CeldaOcurrencia")! as! HistoricoTableViewCell
@@ -79,10 +75,34 @@ extension HistoricoViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let fecha = ocurrenciasPorFecha[section][0].fecha
-        return Fecha.devolverFechaLocalizada(fecha: fecha)
+        let fechaResultado = Fecha().literalFechaLocalizada(fecha: fecha)
+        return fechaResultado
+        //return Fecha.devolverFechaLocalizada(fecha: fecha)
     }
+    
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        
+        let acumulado = Ocurrencia.acumuladoOcurrenciasSeccion(ocurrenciasPorFecha[section])
+        return "Acumulado -> \(acumulado)"
+    }
+    
 
 }
+
+extension HistoricoViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        // fondo de celdas transparentes
+        cell.backgroundColor = UIColor(white: 1, alpha: 0.0)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        let headerView: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
+        headerView.textLabel?.textColor = UIColor(white: 1.0, alpha: 1.0)
+        headerView.backgroundView?.backgroundColor = UIColor(white: 1, alpha: 0.0)
+    }
+}
+
 
 extension HistoricoViewController: protocoloActualizarBBDD {
     func actualizarBBDD() {

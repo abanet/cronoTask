@@ -33,6 +33,15 @@ class Fecha: NSObject {
         return formateador.string(from: date!)
     }
     
+    // dada una fecha en formato MM-dd-yyy se devuelve el literal localizado: Lunes, 10 de octubre de 2016.
+    func literalFechaLocalizada(fecha: String) -> String? {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier:"identificadorLocalFecha".localized)
+        formatter.dateStyle = .full
+        let fechaNSDate = self.fechaStringToDate(fecha: fecha)
+        return formatter.string(from:fechaNSDate)
+    }
+    
     func fechaStringToDate(fecha: String)->Date{
         // IMPORTANTE: Se supone que el formato en que se pasa la fecha es el original en el que está grabada.
         let formateador = DateFormatter()

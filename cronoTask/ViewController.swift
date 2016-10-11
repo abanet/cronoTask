@@ -49,11 +49,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // posición inicial
     // intentamos coger la última que hubiera
     loadPreviousState()
+    
     self.tabla.selectRow(at: indiceCronometroFuncionando, animated: true, scrollPosition: UITableViewScrollPosition.none)
+    self.tabla.cellForRow(at: indiceCronometroFuncionando)?.setSelected(true, animated: true)
     
-    
+    if let acumulado = bbdd.tareas[indiceCronometroFuncionando.row].tiempoAcumulado {
+        relojTiempoTotal = Reloj(tiempo: acumulado)
+        lblSegundoContador.text = relojTiempoTotal.tiempo
+    }
   }
+   
     
+  
   deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -102,6 +109,7 @@ func pararCronometro() {
         let cell = tableView.dequeueReusableCell(withIdentifier: "celda")! as! TaskTableViewCell
         cell.delegate = self
         cell.lblTarea.text = bbdd.tareas[indexPath.row].descripcion
+        
         return cell
     }
     
@@ -112,7 +120,7 @@ func pararCronometro() {
                 cronometrando = false
                 pararCronometro()
                 // Guardamos la ocurrencia
-                let descrTarea = bbdd.tareas[indexPath.row].descripcion // TODO: La descripción será única
+                let descrTarea = bbdd.tareas[indexPath.row].descripcion // TODO: La descripción tiene que ser única
                 if let id = bbdd.idParaTarea(descrip: descrTarea) {
                     let ocurrencia = Ocurrencia(idTask: id, tiempo: self.lblPrimerContador.text!)
                     bbdd.ocurrencias[id] = ocurrencia
@@ -130,8 +138,9 @@ func pararCronometro() {
                     cronometrando = true
                 } else {
                     ocurrenciaActual = Ocurrencia() // caso de que se haya creado una nueva tarea
+                    relojTiempoTotal = Reloj()
                     lblPrimerContador.text = ocurrenciaActual.reloj.tiempo
-                    lblSegundoContador.text = ocurrenciaActual.reloj.tiempo
+                    lblSegundoContador.text = relojTiempoTotal.tiempo
                 }
             }
         } else {
@@ -161,6 +170,7 @@ func pararCronometro() {
         let celda = tableView.cellForRow(at: indexPath) as! TaskTableViewCell
         celda.contenedorView.backgroundColor = CronoTaskColores.backgroundCell
     }
+    
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         // Guardamos la ocurrencia de la que venimos
@@ -206,7 +216,9 @@ extension ViewController: writeValueBackDelegate {
         let task: Tarea = Tarea(descripcion: value)
         bbdd.tareas.insert(task, at: 0) // la insertamos al comienzo del array. Insertar antes de añadir a la base de datos.
         self.tabla.reloadData()
-        self.tabla.selectRow(at: IndexPath(row:0, section:0), animated: true, scrollPosition: UITableViewScrollPosition.top) // cronómetro parado y seleccionada la primera celda (nueva tarea)
+        indiceCronometroFuncionando = IndexPath(row:0, section:0)
+        self.tabla.selectRow(at: indiceCronometroFuncionando, animated: true, scrollPosition: UITableViewScrollPosition.top) // cronómetro parado y seleccionada la primera celda (nueva tarea)
+        self.tabla.cellForRow(at: indiceCronometroFuncionando)?.setSelected(true, animated: true)
         self.tableView(self.tabla, didSelectRowAt: IndexPath(row:0, section:0))
         bbdd.addTask(tarea: task)  // insertamos en la base de datos
         print("tareas: \(bbdd.tareas)")

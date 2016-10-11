@@ -20,7 +20,7 @@ class TaskTableViewCell: MGSwipeTableCell {
         
         self.selectionStyle = .none
         
-        colorOriginal = self.contenedorView.backgroundColor!
+        colorOriginal = self.contenedorView.backgroundColor
         
         
         lblTarea.textColor = UIColor.white
@@ -40,17 +40,12 @@ class TaskTableViewCell: MGSwipeTableCell {
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+//        super.setSelected(selected, animated: animated)
         if selected {
             self.contenedorView.backgroundColor = CronoTaskColores.backgroundCell
         } else {
             self.contenedorView.backgroundColor = colorOriginal
         }
-        // Configure the view for the selected state
-//        let backView = UIView(frame: self.frame)
-//        backView.backgroundColor = CronoTaskColores.backgroundCell
-//        self.selectedBackgroundView = backView
-       
     }
     
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {

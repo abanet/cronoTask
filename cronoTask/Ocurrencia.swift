@@ -68,4 +68,11 @@ class Ocurrencia {
         return resultado
     }
     
+    class func acumuladoOcurrenciasSeccion(_ ocurrencias:[Ocurrencia])->String {
+        var relojTotal = Reloj()
+        for ocurrencia in ocurrencias {
+            relojTotal = Reloj.sumar(reloj1: relojTotal,reloj2: ocurrencia.reloj)
+        }
+        return relojTotal.tiempo
+    }
 }

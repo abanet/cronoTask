@@ -15,6 +15,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
   // Base de datos
     var bbdd: TaskDatabase!
     
+
+    
   // Tabla que contiene los cronómetros
   @IBOutlet weak var tabla: UITableView!
  
@@ -30,10 +32,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var ocurrenciaActual: Ocurrencia = Ocurrencia()
     var relojTiempoTotal: Reloj = Reloj()
     var volviendoDeAddTarea = false
-   
+    var renombrandoTarea = false
     
-  var startTime = TimeInterval()
-  var timer = Timer()
+   var startTime = TimeInterval()
+   var timer = Timer()
+   
 
   
   
@@ -50,12 +53,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // intentamos coger la última que hubiera
     loadPreviousState()
     
+    if indiceCronometroFuncionando.row >= 0 {
     self.tabla.selectRow(at: indiceCronometroFuncionando, animated: true, scrollPosition: UITableViewScrollPosition.none)
     self.tabla.cellForRow(at: indiceCronometroFuncionando)?.setSelected(true, animated: true)
     
-    if let acumulado = bbdd.tareas[indiceCronometroFuncionando.row].tiempoAcumulado {
-        relojTiempoTotal = Reloj(tiempo: acumulado)
-        lblSegundoContador.text = relojTiempoTotal.tiempo
+        if bbdd.tareas.count > 0, let acumulado = bbdd.tareas[indiceCronometroFuncionando.row].tiempoAcumulado {
+            relojTiempoTotal = Reloj(tiempo: acumulado)
+            lblSegundoContador.text = relojTiempoTotal.tiempo
+    }
     }
   }
    
@@ -194,9 +199,19 @@ func pararCronometro() {
             let destinoVC = segue.destination as! NuevaTareaViewController
             destinoVC.delegate = self
             
+            if self.renombrandoTarea {
+                destinoVC.renombrando = true
+                destinoVC.nombreInicial = bbdd.tareas[(tabla.indexPathForSelectedRow?.row)!].descripcion
+            } else {
+                destinoVC.nombreInicial = ""
+            }
+            
         }
     }
     
+    @IBAction func btnCrearNuevaTareaPulsado(_ sender: AnyObject) {
+        self.renombrandoTarea = false
+    }
     
 } // class ViewController
 
@@ -204,24 +219,51 @@ func pararCronometro() {
 
 
 // MARK: writeValueBackDelegate
+// Volviendo del viewController de Nueva Tarea
+//
 // Protocolo definido en NuevaTareaViewController
 extension ViewController: writeValueBackDelegate {
-    func writeValueBack(value: String) {
+    func writeValueBack(value: String, renombrando: Bool, nombreInicial: String?) {
         volviendoDeAddTarea = true
         if cronometrando {
             cronometrando = false
             pararCronometro()
         }
+        
         print("Recibiendo por el protocolo la tarea \(value)")
-        let task: Tarea = Tarea(descripcion: value)
-        bbdd.tareas.insert(task, at: 0) // la insertamos al comienzo del array. Insertar antes de añadir a la base de datos.
-        self.tabla.reloadData()
-        indiceCronometroFuncionando = IndexPath(row:0, section:0)
-        self.tabla.selectRow(at: indiceCronometroFuncionando, animated: true, scrollPosition: UITableViewScrollPosition.top) // cronómetro parado y seleccionada la primera celda (nueva tarea)
-        self.tabla.cellForRow(at: indiceCronometroFuncionando)?.setSelected(true, animated: true)
-        self.tableView(self.tabla, didSelectRowAt: IndexPath(row:0, section:0))
-        bbdd.addTask(tarea: task)  // insertamos en la base de datos
-        print("tareas: \(bbdd.tareas)")
+        let task: Tarea = Tarea(descripcion: value.sinEspaciosExtremos)
+        if bbdd.existeTarea(t: task) {
+            // Informar de que la tarea ya existe
+            let alert = UIAlertController(title: "TareaExiste".localized,
+                                          message: String.localizedStringWithFormat(NSLocalizedString("MensajeTareaExiste",comment:""),task.descripcion),
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel))
+            let action = UIAlertAction(title: "Ok".localized, style: .default) { [unowned self] action in
+                self.performSegue(withIdentifier: "segueNuevaTarea", sender: nil)
+            }
+            alert.addAction(action)
+            self.present(alert, animated: true)
+            
+        } else { // La tarea no existe
+            if renombrandoTarea {
+                // renombrar la tarea
+                if let nombreAnteriorTarea = nombreInicial {
+                    if let tareaAntigua = bbdd.tareaConDescripcion(nombreInicial!) {
+                        bbdd.renombrarTarea(tareaAntigua, anteriorNombre: nombreAnteriorTarea, nuevoNombre:value)
+                    }
+                }
+            } else {
+                // Añadiendo tarea
+                bbdd.tareas.insert(task, at: 0) // la insertamos al comienzo del array. Insertar antes de añadir a la base de datos.
+                self.tabla.reloadData()
+                indiceCronometroFuncionando = IndexPath(row:0, section:0)
+                self.tabla.selectRow(at: indiceCronometroFuncionando, animated: true, scrollPosition: UITableViewScrollPosition.top) // cronómetro parado y seleccionada la primera celda (nueva tarea)
+                self.tabla.cellForRow(at: indiceCronometroFuncionando)?.setSelected(true, animated: true)
+                self.tableView(self.tabla, didSelectRowAt: IndexPath(row:0, section:0))
+                bbdd.addTask(tarea: task)  // insertamos en la base de datos
+                print("tareas: \(bbdd.tareas)")
+            }
+            }
     }
 }
 
@@ -304,6 +346,10 @@ extension ViewController: MGSwipeTableCellDelegate {
                 }
                 self.ocurrenciaActual.resetearOcurrencia()
                 self.lblPrimerContador.text = self.ocurrenciaActual.reloj.tiempo
+            case 2:
+                print("Presionado el botón de Rename")
+                self.renombrandoTarea = true
+                self.performSegue(withIdentifier: "segueNuevaTarea", sender: nil)
             default:
                 print("Esto no debería de salir nunca")
                 

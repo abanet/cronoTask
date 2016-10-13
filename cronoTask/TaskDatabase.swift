@@ -59,6 +59,27 @@ class TaskDatabase {
     }
 
     // MARK: Tratamiento de las tareas
+    
+    // ¿Existe una tarea con esa misma descripcion en la base de datos?
+    func existeTarea(t:Tarea) -> Bool {
+        for unaTarea in tareas {
+            if unaTarea == t {
+                return true
+            }
+        }
+        return false
+    }
+    
+    // Encontrar una tarea dada la descripción
+    func tareaConDescripcion(_ descripcion: String) -> Tarea? {
+        for unaTarea in tareas {
+            if unaTarea.descripcion == descripcion {
+                return unaTarea
+            }
+        }
+        return nil
+    }
+    
     // Añadir Tareas
     func addTask(tarea:Tarea) {
         if let database = FMDatabase(path: self.databasePath) {
@@ -136,6 +157,35 @@ class TaskDatabase {
         }
         return nil
     }
+    
+    func renombrarTarea(_ task:Tarea, anteriorNombre: String, nuevoNombre:String) {
+        // cambiamos el nombre en el array
+        for (indice, unaTarea) in tareas.enumerated() {
+            if unaTarea.descripcion == anteriorNombre {
+                unaTarea.descripcion = nuevoNombre
+                tareas[indice] = unaTarea
+                break
+            }
+        }
+        
+            // Realizamos el cambio en la base de datos
+        if let id = task.idTarea {
+            if let database = FMDatabase(path: self.databasePath) {
+                if database.open() {
+                    let modifySQL = "UPDATE TASKS SET DESCRIPCION = '\(task.descripcion)' WHERE ID = '\(id)'"
+                    print("Modificando Tarea: \(modifySQL)")
+                    let resultado = database.executeUpdate(modifySQL, withArgumentsIn: nil)
+                    if !resultado {
+                        print("Error: \(database.lastErrorMessage())")
+                    } else {
+                        print("Tarea modificada.")
+                        delegate?.actualizarBBDD()
+                    }
+                }
+            }
+        }
+    }
+    
     
     // MARK: Tratamiento de las Ocurrencias
     

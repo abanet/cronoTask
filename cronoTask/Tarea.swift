@@ -39,3 +39,9 @@ class Tarea {
     
     
 }
+
+extension Tarea: Equatable {
+    static func == (lhs: Tarea, rhs: Tarea) -> Bool {
+        return lhs.descripcion == rhs.descripcion
+    }
+}

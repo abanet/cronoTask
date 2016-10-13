@@ -9,13 +9,15 @@
 import UIKit
 
 protocol writeValueBackDelegate {
-    func writeValueBack(value: String)
+    func writeValueBack(value: String, renombrando:Bool, nombreInicial: String?)
 }
 
 
 class NuevaTareaViewController: UIViewController {
     
     var delegate: writeValueBackDelegate?
+    var renombrando: Bool = false
+    var nombreInicial: String?
     
     @IBOutlet weak var viewNuevaTarea: UIView!
     
@@ -50,6 +52,7 @@ class NuevaTareaViewController: UIViewController {
         UIView.animate(withDuration: 1, delay: 0.1, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: .curveEaseInOut, animations: {
             self.viewNuevaTarea.alpha = 1.0
         })
+        txtNuevaTarea.text = nombreInicial
     }
     
     
@@ -80,7 +83,9 @@ class NuevaTareaViewController: UIViewController {
             let trimmedString = descripcion.trimmingCharacters(in: .whitespacesAndNewlines)
             if !trimmedString.isEmpty {
                 print("Enviando tarea \(txtNuevaTarea.text) al delegado")
-                delegate?.writeValueBack(value: descripcion)
+                self.dismiss(animated: true) // eliminamos antes de ir al delegado el controlador ya que en writeValueBack puede que lancemos un alert.
+                delegate?.writeValueBack(value: descripcion, renombrando: false, nombreInicial: self.nombreInicial)
+                return
             }
         }
         self.dismiss(animated: true)

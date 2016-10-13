@@ -69,7 +69,7 @@ extension HistoricoViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CeldaOcurrencia")! as! HistoricoTableViewCell
-        cell.lblOcurrencia.text = "\(totalOcurrencias[indexPath.row].hora), \(totalOcurrencias[indexPath.row].reloj.tiempo)."
+        cell.lblOcurrencia.text = "\(totalOcurrencias[indexPath.row].hora) -> \(totalOcurrencias[indexPath.row].reloj.tiempo)."
         return cell
     }
     

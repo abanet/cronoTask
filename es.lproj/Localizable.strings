@@ -20,9 +20,13 @@
 "Cancel" = "Cancelar";
 
 
-    // Alerta de delete
+// Alerta de borrado
 "Borrar Tarea" = "Borrar Tarea";
 "mensajeBorrarTarea" = "La tarea '%@' y todo su historial se eliminará de la base de datos";
+
+// Alerta de tarea existente
+"TareaExiste" = "La tarea ya existe";
+"MensajeTareaExiste" = "La tarea '%@' ya existe en la base de datos.";
 
 // Formato para las fechas
 "identificadorLocalFecha" = "es_ES";

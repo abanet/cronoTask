@@ -68,6 +68,7 @@
                                 </constraints>
                                 <state key="normal" image="btnNuevoCronometro"/>
                                 <connections>
+                                    <action selector="btnCrearNuevaTareaPulsado:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cEp-ke-ynh"/>
                                     <segue destination="LU0-86-F0B" kind="presentation" identifier="segueNuevaTarea" modalPresentationStyle="currentContext" modalTransitionStyle="crossDissolve" id="5Oy-nz-Xk8"/>
                                 </connections>
                             </button>

@@ -13,6 +13,7 @@ class TaskTableViewCell: MGSwipeTableCell {
     @IBOutlet weak var lblTarea: UILabel!
     @IBOutlet weak var contenedorView: VistaRedondeada!
     var colorOriginal: UIColor!
+    var estado: EstadoCelda = EstadoCelda.noSeleccionada // por defecto la celda no está seleccionada
     
         
     override func awakeFromNib() {
@@ -39,6 +40,17 @@ class TaskTableViewCell: MGSwipeTableCell {
         
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        switch estado {
+        case .seleccionada:
+            self.contenedorView.backgroundColor = CronoTaskColores.backgroundCell
+        case .noSeleccionada:
+            self.contenedorView.backgroundColor = colorOriginal
+        }
+    }
+    
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
 //        super.setSelected(selected, animated: animated)
         if selected {

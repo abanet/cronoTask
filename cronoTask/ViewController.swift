@@ -8,7 +8,10 @@
 
 import UIKit
 
-
+enum EstadoCelda {
+    case seleccionada
+    case noSeleccionada
+}
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
   
@@ -111,6 +114,7 @@ func pararCronometro() {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "celda")! as! TaskTableViewCell
         cell.delegate = self
         cell.lblTarea.text = bbdd.tareas[indexPath.row].descripcion
@@ -120,6 +124,10 @@ func pararCronometro() {
     
 // MARK: TableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Estado de la celda = seleccionada
+        let celda = tableView.cellForRow(at: indexPath) as! TaskTableViewCell
+        celda.estado = .seleccionada
+        
         if indiceCronometroFuncionando.row == indexPath.row { // se ha pulsado sobre la misma entrada
             if cronometrando {
                 cronometrando = false
@@ -171,13 +179,12 @@ func pararCronometro() {
                volviendoDeAddTarea = false
     }
     
-    func marcarCelda(_ tableView: UITableView, celdaSeleccionadaEn indexPath: IndexPath) {
-        let celda = tableView.cellForRow(at: indexPath) as! TaskTableViewCell
-        celda.contenedorView.backgroundColor = CronoTaskColores.backgroundCell
-    }
-    
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        // Estado de la celda = noSeleccionada
+        let celda = tableView.cellForRow(at: indexPath) as! TaskTableViewCell
+        celda.estado = .noSeleccionada
+        
         // Guardamos la ocurrencia de la que venimos
         let descrTarea = bbdd.tareas[indexPath.row].descripcion // La descripción será única
         if let id = bbdd.idParaTarea(descrip: descrTarea) {
@@ -257,11 +264,21 @@ extension ViewController: writeValueBackDelegate {
                 indiceCronometroFuncionando = IndexPath(row:0, section:0)
                 self.tabla.selectRow(at: indiceCronometroFuncionando, animated: true, scrollPosition: UITableViewScrollPosition.top) // cronómetro parado y seleccionada la primera celda (nueva tarea)
                 self.tabla.cellForRow(at: indiceCronometroFuncionando)?.setSelected(true, animated: true)
+                
+                self.deseleccionarCeldasTabla() // para evitar que queden selecciones marcadas
                 self.tableView(self.tabla, didSelectRowAt: IndexPath(row:0, section:0))
                 bbdd.addTask(tarea: task)  // insertamos en la base de datos
                 print("tareas: \(bbdd.tareas)")
             }
             }
+    }
+    
+    func deseleccionarCeldasTabla() {
+        // Recorre las celdas de la tabla y las pone con el estado a no seleccionadas
+        for cell in tabla.visibleCells {
+            let celda = cell as! TaskTableViewCell
+            celda.estado = EstadoCelda.noSeleccionada
+        }
     }
 }
 

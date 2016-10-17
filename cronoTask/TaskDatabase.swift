@@ -171,22 +171,29 @@ class TaskDatabase {
                         print("Error: \(database.lastErrorMessage())")
                     } else {
                         // cambiamos el nombre en el array
-                        for (indice, unaTarea) in tareas.enumerated() {
-                            if unaTarea.descripcion == anteriorNombre {
-                                unaTarea.descripcion = nuevoNombre
-                                tareas[indice] = unaTarea
-                                break
-                            }
-                        }
+                        renombrarTareaEnArray(anteriorNombre: anteriorNombre, nuevoNombre: nuevoNombre)
                         print("Tarea modificada.")
                         delegate?.actualizarBBDD()
                     }
                 }
             }
+        } else {
+            // cambiamos el nombre en el array
+            renombrarTareaEnArray(anteriorNombre: anteriorNombre, nuevoNombre: nuevoNombre)
         }
     }
     
     
+    // Recorre el array de tareas y realiza un cambio de nombre.
+    func renombrarTareaEnArray(anteriorNombre: String, nuevoNombre:String) {
+        for (indice, unaTarea) in tareas.enumerated() {
+            if unaTarea.descripcion == anteriorNombre {
+                unaTarea.descripcion = nuevoNombre
+                tareas[indice] = unaTarea
+                break
+            }
+        }
+    }
     // MARK: Tratamiento de las Ocurrencias
     
     // Graba una Ocurrencia a la base de datos

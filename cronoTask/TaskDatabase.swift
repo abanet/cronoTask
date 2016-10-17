@@ -159,16 +159,8 @@ class TaskDatabase {
     }
     
     func renombrarTarea(_ task:Tarea, anteriorNombre: String, nuevoNombre:String) {
-        // cambiamos el nombre en el array
-        for (indice, unaTarea) in tareas.enumerated() {
-            if unaTarea.descripcion == anteriorNombre {
-                unaTarea.descripcion = nuevoNombre
-                tareas[indice] = unaTarea
-                break
-            }
-        }
         
-            // Realizamos el cambio en la base de datos
+        // Realizamos el cambio en la base de datos
         if let id = task.idTarea {
             if let database = FMDatabase(path: self.databasePath) {
                 if database.open() {
@@ -178,6 +170,14 @@ class TaskDatabase {
                     if !resultado {
                         print("Error: \(database.lastErrorMessage())")
                     } else {
+                        // cambiamos el nombre en el array
+                        for (indice, unaTarea) in tareas.enumerated() {
+                            if unaTarea.descripcion == anteriorNombre {
+                                unaTarea.descripcion = nuevoNombre
+                                tareas[indice] = unaTarea
+                                break
+                            }
+                        }
                         print("Tarea modificada.")
                         delegate?.actualizarBBDD()
                     }

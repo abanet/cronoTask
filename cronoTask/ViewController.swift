@@ -202,9 +202,7 @@ func pararCronometro() {
             if self.renombrandoTarea {
                 destinoVC.renombrando = true
                 destinoVC.nombreInicial = bbdd.tareas[(tabla.indexPathForSelectedRow?.row)!].descripcion
-            } else {
-                destinoVC.nombreInicial = ""
-            }
+            } 
             
         }
     }

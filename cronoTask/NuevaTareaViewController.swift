@@ -12,6 +12,19 @@ protocol writeValueBackDelegate {
     func writeValueBack(value: String, renombrando:Bool, nombreInicial: String?)
 }
 
+enum CampoVentana: Int {
+    case accion
+    case objeto
+}
+
+enum TiposMensajesVentana: String {
+    case nuevaTarea
+    case modificarTarea
+}
+
+struct MensajesVentana {
+    let mensajes = ["nuevaTarea":["Create a","New Task"], "modificarTarea":["Modifying","Task"]]
+}
 
 class NuevaTareaViewController: UIViewController {
     
@@ -36,11 +49,7 @@ class NuevaTareaViewController: UIViewController {
 
         self.viewNuevaTarea.backgroundColor = CronoTaskColores.backgroundViewNewTask
         
-        // Asignación localizada de las etiquetas
-        // Se utiliza la extensión de String definida en StringExtensions para hacerlo más Swifty...
-        lblCrear.text = "Create a".localized
-        lblNuevaTarea.text = "New Task".localized
-        txtNuevaTarea.placeholder = "Name of the new task".localized
+        
         btnOk.setTitle("Ok".localized, for: .normal)
         btnCancel.setTitle("Cancel".localized, for: .normal)
         
@@ -48,11 +57,29 @@ class NuevaTareaViewController: UIViewController {
 
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        // Asignar etiquetas
+        let tipoMensaje = (renombrando) ? TiposMensajesVentana.modificarTarea.rawValue:TiposMensajesVentana.nuevaTarea.rawValue
+        let mensajesVentana = MensajesVentana()
+        let mensajes = mensajesVentana.mensajes[tipoMensaje]!
+        let mensajeAccion = mensajes[CampoVentana.accion.rawValue]
+        let mensajeObjeto = mensajes[CampoVentana.objeto.rawValue]
+        
+        // Asignación localizada de las etiquetas
+        // Se utiliza la extensión de String definida en StringExtensions para hacerlo más Swifty...
+        lblCrear.text = mensajeAccion.localized
+        lblNuevaTarea.text = mensajeObjeto.localized
+        if let contenidoCampoTexto = nombreInicial {
+            txtNuevaTarea.text = contenidoCampoTexto
+        } else {
+            txtNuevaTarea.placeholder = "Name of the new task".localized
+        }
+        
         viewNuevaTarea.alpha = 0.0
         UIView.animate(withDuration: 1, delay: 0.1, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: .curveEaseInOut, animations: {
             self.viewNuevaTarea.alpha = 1.0
         })
-        txtNuevaTarea.text = nombreInicial
+        
     }
     
     

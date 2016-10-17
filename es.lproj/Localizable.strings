@@ -9,7 +9,12 @@
 /* Pantalla de nuevo evento */
 "Create a" = "Crea una";
 "New Task" = "Nueva Tarea";
-"Name of the new task" = "Nombre la nueva tarea";
+"Name of the new task" = "Nombre de la nueva tarea";
+
+/* Pantalla de modificación de nombre de tarea */
+"Modifying" = "Modificando";
+"Task" = "Tarea";
+
 
 // Visualización de fechas
 "MM-dd-yyyy" = "dd-MM-yyyy";

@@ -7,10 +7,15 @@
 */
 
 
-/* Pantalla de nuevo evento */
+/* Pantalla de nueva tarea */
 "Create a" = "Create a";
 "New Task" = "New Task";
 "Name of the new task" = "Name of the new task";
+
+/* Pantalla de modificación de nombre de tarea */
+"Modifying" = "Modifying";
+"Task" = "Task";
+
 
 // Visualización de fechas
 "MM-dd-yyyy" = "MM-dd-yyyy";

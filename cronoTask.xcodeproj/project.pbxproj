@@ -177,9 +177,9 @@
 			isa = PBXGroup;
 			children = (
 				C0C7AA5C1D9AAC9A00060885 /* Tarea.swift */,
-				C0C7AA621D9AAFCD00060885 /* TaskDatabase.swift */,
 				C0C7AA5E1D9AACAC00060885 /* Ocurrencia.swift */,
 				C0E488D11D9D572600892214 /* Reloj.swift */,
+				C0C7AA621D9AAFCD00060885 /* TaskDatabase.swift */,
 			);
 			name = bbdd;
 			sourceTree = "<group>";

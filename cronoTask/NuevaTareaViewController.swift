@@ -49,7 +49,6 @@ class NuevaTareaViewController: UIViewController {
 
         self.viewNuevaTarea.backgroundColor = CronoTaskColores.backgroundViewNewTask
         
-        
         btnOk.setTitle("Ok".localized, for: .normal)
         btnCancel.setTitle("Cancel".localized, for: .normal)
         
@@ -79,6 +78,8 @@ class NuevaTareaViewController: UIViewController {
         UIView.animate(withDuration: 1, delay: 0.1, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: .curveEaseInOut, animations: {
             self.viewNuevaTarea.alpha = 1.0
         })
+        
+        txtNuevaTarea.becomeFirstResponder()
         
     }
     

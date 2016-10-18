@@ -146,14 +146,25 @@ class TaskDatabase {
     }
     
     func idParaTarea(descrip: String) -> String? {
-      if let database = FMDatabase(path: self.databasePath) {
-        if database.open() {
-            let selectSQL = "SELECT ID FROM TASKS WHERE DESCRIPCION = '\(descrip)'"
-            let resultado: FMResultSet? = database.executeQuery(selectSQL, withArgumentsIn: nil)
-            if resultado!.next() {
-                return resultado!.string(forColumn: "ID")
+      // Primero buscamos en el array de tareas
+        var encontradoEnArray = false
+        for tarea in self.tareas {
+            if tarea.descripcion == descrip {
+                encontradoEnArray = true
+                return tarea.idTarea
             }
         }
+        if !encontradoEnArray {
+            if let database = FMDatabase(path: self.databasePath) {
+                if database.open() {
+                    let selectSQL = "SELECT ID FROM TASKS WHERE DESCRIPCION = '\(descrip)'"
+                    let resultado: FMResultSet? = database.executeQuery(selectSQL, withArgumentsIn: nil)
+                    if resultado!.next() {
+                        return resultado!.string(forColumn: "ID")
+                    }
+                    database.close()
+                }
+            }
         }
         return nil
     }
@@ -206,7 +217,7 @@ class TaskDatabase {
                 if !resultado {
                     print("Error: \(database.lastErrorMessage())")
                 } else {
-                    print("Tarea añadida")
+                    print("Ocurrencia añadida")
                     
                 }
             }

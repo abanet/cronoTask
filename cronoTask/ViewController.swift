@@ -13,6 +13,8 @@ enum EstadoCelda {
     case noSeleccionada
 }
 
+
+
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
   
   // Base de datos
@@ -35,6 +37,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var ocurrenciaActual: Ocurrencia = Ocurrencia()
     var relojTiempoTotal: Reloj = Reloj()
     var volviendoDeAddTarea = false
+    var volviendoDeAddOcurrencia = false
     var renombrandoTarea = false
     
    var startTime = TimeInterval()
@@ -50,24 +53,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     self.tabla.dataSource = self
     self.bbdd.delegate = self
     
-    NotificationCenter.default.addObserver(self, selector:#selector(ViewController.saveCurrentState), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
-    
-    // posición inicial
-    // intentamos coger la última que hubiera
-    loadPreviousState()
-    
-    if indiceCronometroFuncionando.row >= 0 {
-    self.tabla.selectRow(at: indiceCronometroFuncionando, animated: true, scrollPosition: UITableViewScrollPosition.none)
-    self.tabla.cellForRow(at: indiceCronometroFuncionando)?.setSelected(true, animated: true)
-    
-        if bbdd.tareas.count > 0, let acumulado = bbdd.tareas[indiceCronometroFuncionando.row].tiempoAcumulado {
-            relojTiempoTotal = Reloj(tiempo: acumulado)
-            lblSegundoContador.text = relojTiempoTotal.tiempo
-    }
-    }
+//    self.tableView(self.tabla, didSelectRowAt: indiceCronometroFuncionando)
+//    if bbdd.tareas.count > 0, let acumulado = bbdd.tareas[indiceCronometroFuncionando.row].tiempoAcumulado {
+//        relojTiempoTotal = Reloj(tiempo: acumulado)
+//        lblSegundoContador.text = relojTiempoTotal.tiempo
+//    }
   }
-   
-    
+
   
   deinit {
         NotificationCenter.default.removeObserver(self)
@@ -128,35 +120,34 @@ func pararCronometro() {
         let celda = tableView.cellForRow(at: indexPath) as! TaskTableViewCell
         celda.estado = .seleccionada
         
-        if indiceCronometroFuncionando.row == indexPath.row { // se ha pulsado sobre la misma entrada
-            if cronometrando {
-                cronometrando = false
-                pararCronometro()
-                // Guardamos la ocurrencia
-                let descrTarea = bbdd.tareas[indexPath.row].descripcion // TODO: La descripción tiene que ser única
-                if let id = bbdd.idParaTarea(descrip: descrTarea) {
-                    let ocurrencia = Ocurrencia(idTask: id, tiempo: self.lblPrimerContador.text!)
-                    bbdd.ocurrencias[id] = ocurrencia
-                }
-            } else {
-                // recuperamos el valor de la ocurrencia
-                let descrTarea = bbdd.tareas[indexPath.row].descripcion
-                if let id = bbdd.idParaTarea(descrip: descrTarea) {
-                    if let ocu = bbdd.ocurrencias[id] {
-                        ocurrenciaActual = ocu // valor de la ocurrencia en la sesión abierta
-                    }
-                }
-                if !volviendoDeAddTarea  {
-                    iniciarCronometro()
-                    cronometrando = true
-                } else {
-                    ocurrenciaActual = Ocurrencia() // caso de que se haya creado una nueva tarea
-                    relojTiempoTotal = Reloj()
-                    lblPrimerContador.text = ocurrenciaActual.reloj.tiempo
-                    lblSegundoContador.text = relojTiempoTotal.tiempo
-                }
+        if volviendoDeAddTarea  {
+            //ocurrenciaActual = Ocurrencia() // caso de que se haya creado una nueva tarea
+            //Recien añadida la tarea ponemos los contadores a cero
+            relojTiempoTotal = Reloj()
+            lblPrimerContador.text = relojTiempoTotal.tiempo
+            lblSegundoContador.text = relojTiempoTotal.tiempo
+            volviendoDeAddTarea = false
+        } else if volviendoDeAddOcurrencia {
+            let descrTarea = bbdd.tareas[indexPath.row].descripcion // La descripción será única
+            if let id = bbdd.idParaTarea(descrip: descrTarea) {
+                ocurrenciaActual = Ocurrencia(idTask:id) // se añadió una ocurrencia y al volver tienen que actualizarse los relojes.
+                lblPrimerContador.text = ocurrenciaActual.reloj.tiempo
+                lblSegundoContador.text = relojTiempoTotal.tiempo
+                volviendoDeAddOcurrencia = false
             }
-        } else {
+            
+        } else if indiceCronometroFuncionando.row == indexPath.row { // se ha pulsado sobre la misma entrada
+            
+                    if cronometrando {
+                        pararCronometro()
+                        cronometrando = false
+                    } else { // no se estaba cronometrando
+                            iniciarCronometro()
+                            cronometrando = true
+                    }
+            
+        } else { // se ha pulsado sobre una celda no seleccionada
+            
             pararCronometro()
             cronometrando = false
             self.indiceCronometroFuncionando = indexPath
@@ -165,7 +156,7 @@ func pararCronometro() {
                 if let ocurrenciaTareaSeleccionada = bbdd.ocurrencias[id] {
                     ocurrenciaActual = ocurrenciaTareaSeleccionada
                 } else {
-                    ocurrenciaActual = Ocurrencia()
+                    ocurrenciaActual = Ocurrencia(idTask:id)
                 }
                  lblPrimerContador.text = ocurrenciaActual.reloj.tiempo
                 if let acumulado = bbdd.tareas[indexPath.row].tiempoAcumulado {
@@ -175,8 +166,8 @@ func pararCronometro() {
                     lblSegundoContador.text = ocurrenciaActual.reloj.tiempo
                 }
             }
+            
         }
-               volviendoDeAddTarea = false
     }
     
     
@@ -229,7 +220,7 @@ func pararCronometro() {
 // Protocolo definido en NuevaTareaViewController
 extension ViewController: writeValueBackDelegate {
     func writeValueBack(value: String, renombrando: Bool, nombreInicial: String?) {
-        volviendoDeAddTarea = true
+        
         if cronometrando {
             cronometrando = false
             pararCronometro()
@@ -259,6 +250,7 @@ extension ViewController: writeValueBackDelegate {
                 }
             } else {
                 // Añadiendo tarea
+                volviendoDeAddTarea = true
                 bbdd.tareas.insert(task, at: 0) // la insertamos al comienzo del array. Insertar antes de añadir a la base de datos.
                 self.tabla.reloadData()
                 indiceCronometroFuncionando = IndexPath(row:0, section:0)
@@ -345,6 +337,28 @@ extension ViewController: MGSwipeTableCellDelegate {
              // se ha desplazado la celda de izquiera a derecha. Botones de Reset e Historial
             switch index {
             case 0:
+                print("Presionado botón de Añadir ")
+                // Añadir ocurrencia a la base de datos y poner el reloj a cero
+                if !ocurrenciaActual.reloj.aCero() {
+                    if ocurrenciaActual.idTask != nil {
+                        self.bbdd.addOcurrencia(ocurrenciaActual)
+                    } else { // es la primera vez que se añade la ocurrencia y todavía no tiene idTask.
+                        if let indice = self.tabla.indexPath(for: cell)?.row {
+                            let descripcionTarea = self.bbdd.tareas[indice].descripcion
+                            if let id = bbdd.idParaTarea(descrip: descripcionTarea) {
+                                ocurrenciaActual.idTask = id
+                                self.bbdd.addOcurrencia(ocurrenciaActual)
+                            }
+                        }
+                    }
+                    volviendoDeAddOcurrencia = true
+                     if let indice = self.tabla.indexPath(for: cell) {
+                        self.tableView(self.tabla, didSelectRowAt: indice)
+                    }
+
+                }
+     
+            case 1:
                 print("Presionado botón de Historial")
                 if let indice = self.tabla.indexPath(for: cell)?.row {
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -353,14 +367,7 @@ extension ViewController: MGSwipeTableCellDelegate {
                     historicoVC.literalTarea = bbdd.tareas[indice].descripcion
                     self.present(historicoVC, animated: true, completion: nil)
                 }
-            case 1:
-                print("Presionado botón de Reset")
-                // El reset consiste en poner a cero la última medición (se mantiene acumulado y ocurrencias)
-                if !ocurrenciaActual.reloj.aCero() {
-                    self.bbdd.addOcurrencia(ocurrenciaActual)
-                }
-                self.ocurrenciaActual.resetearOcurrencia()
-                self.lblPrimerContador.text = self.ocurrenciaActual.reloj.tiempo
+                
             case 2:
                 print("Presionado el botón de Rename")
                 self.renombrandoTarea = true
@@ -384,14 +391,13 @@ extension ViewController: MGSwipeTableCellDelegate {
     }
     
     // MARK: Memento Pattern Design
-    func saveCurrentState() {
-        UserDefaults.standard.set(indiceCronometroFuncionando.row, forKey: "tareaActual")
-    }
-    
-    func loadPreviousState() {
-        // Si no existe lo situa en la 0,0
-        indiceCronometroFuncionando = IndexPath(row:UserDefaults.standard.integer(forKey: "tareaActual"), section:0)
-   
-    }
+//    func saveCurrentState() {
+//        UserDefaults.standard.set(indiceCronometroFuncionando.row, forKey: "tareaActual")
+//    }
+//    
+//    func loadPreviousState() {
+//        // Si no existe lo situa en la 0,0
+//        indiceCronometroFuncionando = IndexPath(row:UserDefaults.standard.integer(forKey: "tareaActual"), section:0)
+//    }
     
 }

@@ -36,3 +36,12 @@
 
 // Formato para las fechas
 "identificadorLocalFecha" = "en_US";
+
+/*
+ * botones al desplazar la celda de tareas.
+ */
+"Delete" = "Delete";
+"Rename" = "Rename";
+"Reset"  = "Reset";
+"Log"    = "Log";
+"Add"    = "Add";

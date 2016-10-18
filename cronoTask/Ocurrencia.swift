@@ -23,6 +23,11 @@ class Ocurrencia {
         
     }
     
+    convenience init(idTask: String) {
+        self.init()
+        self.idTask = idTask
+    }
+    
     init(idTask: String, tiempo: String) {
         self.idTask = idTask
         self.reloj = Reloj(tiempo: tiempo)

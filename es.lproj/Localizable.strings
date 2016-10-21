@@ -39,8 +39,8 @@
 /*
  * botones al desplazar la celda de tareas.
  */
-"Delete" = "Borrar";
-"Rename" = "Renombrar";
-"Reset"  = "Resetear";
-"Log"    = "Historial";
-"Add"    = "Añadir";
+"Delete" = "Delete";
+"Rename" = "Edit";
+"Reset"  = "Reset";
+"Log"    = "Log";
+"Add"    = "Save";

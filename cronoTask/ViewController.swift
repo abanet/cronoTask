@@ -133,8 +133,8 @@ func pararCronometro() {
                 ocurrenciaActual = Ocurrencia(idTask:id) // se añadió una ocurrencia y al volver tienen que actualizarse los relojes.
                 lblPrimerContador.text = ocurrenciaActual.reloj.tiempo
                 lblSegundoContador.text = relojTiempoTotal.tiempo
-                volviendoDeAddOcurrencia = false
             }
+            volviendoDeAddOcurrencia = false
             
         } else if indiceCronometroFuncionando.row == indexPath.row { // se ha pulsado sobre la misma entrada
             

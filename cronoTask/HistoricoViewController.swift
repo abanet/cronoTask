@@ -12,6 +12,8 @@ class HistoricoViewController: UIViewController {
 
     @IBOutlet weak var tabla: UITableView!
     
+    @IBOutlet weak var lblTarea: UILabel!
+    @IBOutlet weak var lblTiempoTotal: UILabel!
     
     // Base de datos
     var bbdd: TaskDatabase!
@@ -32,7 +34,7 @@ class HistoricoViewController: UIViewController {
         }
         bbdd.delegate = self
         
-        //las ocurrencias a mostras son las almacenadas en la base de datos.
+        //las ocurrencias a mostrar son las almacenadas en la base de datos.
         
         totalOcurrencias = bbdd.leerOcurrencias(idTask: idTarea)
         guard totalOcurrencias.count > 0 else {
@@ -41,6 +43,8 @@ class HistoricoViewController: UIViewController {
         totalOcurrencias = totalOcurrencias.reversed() // quedarán de más reciente a menos
         ocurrenciasPorFecha = Ocurrencia.categorizarOcurrencias(totalOcurrencias)
         
+        lblTarea.text = literalTarea
+        lblTiempoTotal.text = Ocurrencia.acumuladoTodasOcurrencias(totalOcurrencias)
     }
 
     
@@ -87,7 +91,17 @@ extension HistoricoViewController: UITableViewDataSource {
         return "Acumulado -> \(acumulado)"
     }
     
-
+    func crearVistaHeaderTabla() {
+        let vista = UIView(frame: CGRect(x: 0, y: 0, width: 800, height: 100))
+        let texto = UILabel(frame: CGRect(x:0, y:0, width:200, height:50))
+        texto.text = "skjfaksd"
+        vista.addSubview(texto)
+            
+        self.tabla.tableHeaderView = vista
+        
+        
+    }
+    
 }
 
 extension HistoricoViewController: UITableViewDelegate {
@@ -97,11 +111,6 @@ extension HistoricoViewController: UITableViewDelegate {
         cell.backgroundColor = UIColor(white: 1, alpha: 0.0)
     }
     
-    func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
-        let headerView: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
-        headerView.textLabel?.textColor = UIColor(white: 1.0, alpha: 1.0)
-        headerView.backgroundView?.backgroundColor = UIColor(white: 1, alpha: 0.0)
-    }
 }
 
 

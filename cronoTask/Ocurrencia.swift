@@ -80,4 +80,12 @@ class Ocurrencia {
         }
         return relojTotal.tiempo
     }
+    
+    class func acumuladoTodasOcurrencias(_ ocurrencias:[Ocurrencia])->String {
+        var relojTotal = Reloj()
+        for ocurrencia in ocurrencias {
+            relojTotal = Reloj.sumar(reloj1: relojTotal, reloj2: ocurrencia.reloj)
+        }
+        return relojTotal.tiempo
+    }
 }

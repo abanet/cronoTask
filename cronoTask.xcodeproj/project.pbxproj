@@ -11,6 +11,7 @@
 		C032570B1D995E220023BD42 /* Configuracion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C032570A1D995E220023BD42 /* Configuracion.swift */; };
 		C056D99A1DA2A67D00F234EB /* HistoricoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C056D9991DA2A67D00F234EB /* HistoricoViewController.swift */; };
 		C056D99C1DA2BA5000F234EB /* HistoricoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C056D99B1DA2BA5000F234EB /* HistoricoTableViewCell.swift */; };
+		C0799D311DB9582D007F4E3D /* cronoTaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0799D301DB9582D007F4E3D /* cronoTaskTests.swift */; };
 		C0A5E1F11D905F4D00B66568 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A5E1F01D905F4D00B66568 /* AppDelegate.swift */; };
 		C0A5E1F31D905F4D00B66568 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A5E1F21D905F4D00B66568 /* ViewController.swift */; };
 		C0A5E1F61D905F4D00B66568 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0A5E1F41D905F4D00B66568 /* Main.storyboard */; };
@@ -38,11 +39,24 @@
 		C0E8A4111D999E650054C0B0 /* VistaRedondeada.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E8A4101D999E650054C0B0 /* VistaRedondeada.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		C0799D331DB9582D007F4E3D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C0A5E1E51D905F4D00B66568 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C0A5E1EC1D905F4D00B66568;
+			remoteInfo = cronoTask;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		C03257081D995B5F0023BD42 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		C032570A1D995E220023BD42 /* Configuracion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Configuracion.swift; path = ../Configuracion.swift; sourceTree = "<group>"; };
 		C056D9991DA2A67D00F234EB /* HistoricoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoricoViewController.swift; sourceTree = "<group>"; };
 		C056D99B1DA2BA5000F234EB /* HistoricoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoricoTableViewCell.swift; sourceTree = "<group>"; };
+		C0799D2E1DB9582D007F4E3D /* cronoTaskTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = cronoTaskTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0799D301DB9582D007F4E3D /* cronoTaskTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cronoTaskTests.swift; sourceTree = "<group>"; };
+		C0799D321DB9582D007F4E3D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C0A5E1ED1D905F4D00B66568 /* cronoTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cronoTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0A5E1F01D905F4D00B66568 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0A5E1F21D905F4D00B66568 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -85,6 +99,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		C0799D2B1DB9582D007F4E3D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C0A5E1EA1D905F4D00B66568 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -134,10 +155,20 @@
 			name = "Pantalla Nueva Tarea";
 			sourceTree = "<group>";
 		};
+		C0799D2F1DB9582D007F4E3D /* cronoTaskTests */ = {
+			isa = PBXGroup;
+			children = (
+				C0799D301DB9582D007F4E3D /* cronoTaskTests.swift */,
+				C0799D321DB9582D007F4E3D /* Info.plist */,
+			);
+			path = cronoTaskTests;
+			sourceTree = "<group>";
+		};
 		C0A5E1E41D905F4D00B66568 = {
 			isa = PBXGroup;
 			children = (
 				C0A5E1EF1D905F4D00B66568 /* cronoTask */,
+				C0799D2F1DB9582D007F4E3D /* cronoTaskTests */,
 				C0A5E1EE1D905F4D00B66568 /* Products */,
 				C0C7AA651D9ACD2900060885 /* Frameworks */,
 			);
@@ -147,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				C0A5E1ED1D905F4D00B66568 /* cronoTask.app */,
+				C0799D2E1DB9582D007F4E3D /* cronoTaskTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -236,6 +268,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		C0799D2D1DB9582D007F4E3D /* cronoTaskTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C0799D371DB9582D007F4E3D /* Build configuration list for PBXNativeTarget "cronoTaskTests" */;
+			buildPhases = (
+				C0799D2A1DB9582D007F4E3D /* Sources */,
+				C0799D2B1DB9582D007F4E3D /* Frameworks */,
+				C0799D2C1DB9582D007F4E3D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C0799D341DB9582D007F4E3D /* PBXTargetDependency */,
+			);
+			name = cronoTaskTests;
+			productName = cronoTaskTests;
+			productReference = C0799D2E1DB9582D007F4E3D /* cronoTaskTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		C0A5E1EC1D905F4D00B66568 /* cronoTask */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C0A5E1FF1D905F4D00B66568 /* Build configuration list for PBXNativeTarget "cronoTask" */;
@@ -259,10 +309,16 @@
 		C0A5E1E51D905F4D00B66568 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0730;
+				LastSwiftUpdateCheck = 0800;
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Alberto Banet Masa";
 				TargetAttributes = {
+					C0799D2D1DB9582D007F4E3D = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = FLU98JG66T;
+						ProvisioningStyle = Automatic;
+						TestTargetID = C0A5E1EC1D905F4D00B66568;
+					};
 					C0A5E1EC1D905F4D00B66568 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = FLU98JG66T;
@@ -285,11 +341,19 @@
 			projectRoot = "";
 			targets = (
 				C0A5E1EC1D905F4D00B66568 /* cronoTask */,
+				C0799D2D1DB9582D007F4E3D /* cronoTaskTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		C0799D2C1DB9582D007F4E3D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C0A5E1EB1D905F4D00B66568 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -304,6 +368,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		C0799D2A1DB9582D007F4E3D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C0799D311DB9582D007F4E3D /* cronoTaskTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C0A5E1E91D905F4D00B66568 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -336,6 +408,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		C0799D341DB9582D007F4E3D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C0A5E1EC1D905F4D00B66568 /* cronoTask */;
+			targetProxy = C0799D331DB9582D007F4E3D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		C0A5E1F41D905F4D00B66568 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -358,6 +438,41 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		C0799D351DB9582D007F4E3D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				DEVELOPMENT_TEAM = FLU98JG66T;
+				INFOPLIST_FILE = cronoTaskTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = es.codigoswift.cronoTaskTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/cronoTask.app/cronoTask";
+			};
+			name = Debug;
+		};
+		C0799D361DB9582D007F4E3D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				DEVELOPMENT_TEAM = FLU98JG66T;
+				INFOPLIST_FILE = cronoTaskTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = es.codigoswift.cronoTaskTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/cronoTask.app/cronoTask";
+			};
+			name = Release;
+		};
 		C0A5E1FD1D905F4D00B66568 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -488,6 +603,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		C0799D371DB9582D007F4E3D /* Build configuration list for PBXNativeTarget "cronoTaskTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C0799D351DB9582D007F4E3D /* Debug */,
+				C0799D361DB9582D007F4E3D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		C0A5E1E81D905F4D00B66568 /* Build configuration list for PBXProject "cronoTask" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

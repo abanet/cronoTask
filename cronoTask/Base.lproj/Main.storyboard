@@ -24,10 +24,10 @@
                                 <color key="separatorColor" red="1" green="0.99481761599999996" blue="0.01442513829" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="celda" rowHeight="46" id="haS-g1-Ncw" customClass="TaskTableViewCell" customModule="cronoTask" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="46"/>
+                                        <rect key="frame" x="0.0" y="28" width="1000" height="46"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="haS-g1-Ncw" id="lpz-jo-OLE">
-                                            <frame key="frameInset" width="375" height="46"/>
+                                            <frame key="frameInset" width="1000" height="46"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fc5-kz-rM6" customClass="VistaRedondeada" customModule="cronoTask" customModuleProvider="target">
@@ -280,9 +280,31 @@
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jf0-KL-yuw">
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="0h3-g2-m6S">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sR6-py-9L2">
+                                            <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="20"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sx0-HA-hsd">
+                                            <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="20"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="sx0-HA-hsd" firstAttribute="leading" secondItem="sR6-py-9L2" secondAttribute="trailing" constant="8" symbolic="YES" id="7ty-cJ-Oh4"/>
+                                        <constraint firstItem="sR6-py-9L2" firstAttribute="centerY" secondItem="0h3-g2-m6S" secondAttribute="centerY" id="B1B-SD-cnh"/>
+                                        <constraint firstAttribute="trailing" secondItem="sx0-HA-hsd" secondAttribute="trailing" constant="20" symbolic="YES" id="Div-iu-NSN"/>
+                                        <constraint firstItem="sx0-HA-hsd" firstAttribute="centerY" secondItem="0h3-g2-m6S" secondAttribute="centerY" id="cun-g3-BuS"/>
+                                    </constraints>
+                                </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CeldaOcurrencia" id="LhA-2W-cqc" customClass="HistoricoTableViewCell" customModule="cronoTask" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="58" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LhA-2W-cqc" id="dbY-LR-rkx">
                                             <frame key="frameInset" width="375" height="44"/>
@@ -324,7 +346,7 @@
                             <constraint firstItem="GVa-dF-bl2" firstAttribute="centerX" secondItem="oab-Vb-NRf" secondAttribute="centerX" id="FfJ-jg-V6h"/>
                             <constraint firstItem="DHI-TO-Tzd" firstAttribute="top" secondItem="BHh-ib-QSM" secondAttribute="bottom" id="Kfp-8k-Kcv"/>
                             <constraint firstAttribute="trailing" secondItem="BHh-ib-QSM" secondAttribute="trailing" id="MgD-rC-WUB"/>
-                            <constraint firstItem="jf0-KL-yuw" firstAttribute="top" secondItem="JeX-dB-hbH" secondAttribute="bottom" constant="36.5" id="SLi-BQ-vox"/>
+                            <constraint firstItem="jf0-KL-yuw" firstAttribute="top" secondItem="JeX-dB-hbH" secondAttribute="bottom" constant="8" symbolic="YES" id="SLi-BQ-vox"/>
                             <constraint firstAttribute="trailing" secondItem="jf0-KL-yuw" secondAttribute="trailing" id="eaa-h2-vLb"/>
                             <constraint firstItem="BHh-ib-QSM" firstAttribute="leading" secondItem="oab-Vb-NRf" secondAttribute="leading" id="ey5-Zd-SZh"/>
                             <constraint firstItem="DHI-TO-Tzd" firstAttribute="top" secondItem="GVa-dF-bl2" secondAttribute="bottom" constant="16" id="i4O-CV-Pic"/>
@@ -335,6 +357,8 @@
                     </view>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
+                        <outlet property="lblTarea" destination="sR6-py-9L2" id="m5Q-Nj-jBK"/>
+                        <outlet property="lblTiempoTotal" destination="sx0-HA-hsd" id="5b7-sZ-FoE"/>
                         <outlet property="tabla" destination="jf0-KL-yuw" id="RXb-rd-0mI"/>
                     </connections>
                 </viewController>

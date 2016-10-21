@@ -121,12 +121,10 @@ func pararCronometro() {
         celda.estado = .seleccionada
         
         if volviendoDeAddTarea  {
-            //ocurrenciaActual = Ocurrencia() // caso de que se haya creado una nueva tarea
-            //Recien añadida la tarea ponemos los contadores a cero
-            relojTiempoTotal = Reloj()
-            lblPrimerContador.text = relojTiempoTotal.tiempo
-            lblSegundoContador.text = relojTiempoTotal.tiempo
-            volviendoDeAddTarea = false
+          ocurrenciaActual = Ocurrencia()
+          lblPrimerContador.text = ocurrenciaActual.reloj.tiempo
+          lblSegundoContador.text = ocurrenciaActual.reloj.tiempo
+          volviendoDeAddTarea = false
         } else if volviendoDeAddOcurrencia {
             let descrTarea = bbdd.tareas[indexPath.row].descripcion // La descripción será única
             if let id = bbdd.idParaTarea(descrip: descrTarea) {
@@ -142,6 +140,14 @@ func pararCronometro() {
                         pararCronometro()
                         cronometrando = false
                     } else { // no se estaba cronometrando
+                            // Si es la primera vez ponemos fecha a la ocurrencia y actualizamos idTask.
+                      if ocurrenciaActual.reloj.aCero(){
+                        let descrTarea = bbdd.tareas[indexPath.row].descripcion // La descripción será única
+                        if let id = bbdd.idParaTarea(descrip: descrTarea) {
+                          ocurrenciaActual = Ocurrencia(idTask:id)
+                          ocurrenciaActual.actualizarFecha()
+                        }
+                      }
                             iniciarCronometro()
                             cronometrando = true
                     }
@@ -342,14 +348,8 @@ extension ViewController: MGSwipeTableCellDelegate {
                 if !ocurrenciaActual.reloj.aCero() {
                     if ocurrenciaActual.idTask != nil {
                         self.bbdd.addOcurrencia(ocurrenciaActual)
-                    } else { // es la primera vez que se añade la ocurrencia y todavía no tiene idTask.
-                        if let indice = self.tabla.indexPath(for: cell)?.row {
-                            let descripcionTarea = self.bbdd.tareas[indice].descripcion
-                            if let id = bbdd.idParaTarea(descrip: descripcionTarea) {
-                                ocurrenciaActual.idTask = id
-                                self.bbdd.addOcurrencia(ocurrenciaActual)
-                            }
-                        }
+                    } else {
+                      // La ocurrencia siempre tiene que llegar con idTask
                     }
                     volviendoDeAddOcurrencia = true
                      if let indice = self.tabla.indexPath(for: cell) {

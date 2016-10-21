@@ -146,15 +146,18 @@ class TaskDatabase {
     }
     
     func idParaTarea(descrip: String) -> String? {
-      // Primero buscamos en el array de tareas
-        var encontradoEnArray = false
+      // Primero buscamos en la caché: el array de tareas
+      
         for tarea in self.tareas {
             if tarea.descripcion == descrip {
-                encontradoEnArray = true
+              if tarea.idTarea != nil {
                 return tarea.idTarea
+              } else {
+                break
+              }
             }
         }
-        if !encontradoEnArray {
+       // y si no estaba lo buscamos en la base de datos.
             if let database = FMDatabase(path: self.databasePath) {
                 if database.open() {
                     let selectSQL = "SELECT ID FROM TASKS WHERE DESCRIPCION = '\(descrip)'"
@@ -165,7 +168,7 @@ class TaskDatabase {
                     database.close()
                 }
             }
-        }
+      
         return nil
     }
     

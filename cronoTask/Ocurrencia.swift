@@ -43,6 +43,10 @@ class Ocurrencia {
         self.hora = hora
         self.reloj = Reloj(tiempo: tiempo)
     }
+  
+  func actualizarFecha() {
+    self.fecha = Fecha().fecha
+  }
     
     // Al resetear una ocurrencia ponemos su reloj a cero y la fecha y hora se actualizan a la actual.
     func resetearOcurrencia() {
@@ -88,4 +92,10 @@ class Ocurrencia {
         }
         return relojTotal.tiempo
     }
+  
+  class func printOcurrencias(_ ocurrencias:[Ocurrencia]) {
+    for ocurrencia in ocurrencias {
+      print("Ocurrencia de fecha \(ocurrencia.fecha), idTask:\(ocurrencia.idTask), tiempo: \(ocurrencia.reloj.tiempo)")
+    }
+  }
 }

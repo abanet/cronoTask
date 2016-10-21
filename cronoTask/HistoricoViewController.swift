@@ -41,7 +41,11 @@ class HistoricoViewController: UIViewController {
             return
         }
         totalOcurrencias = totalOcurrencias.reversed() // quedarán de más reciente a menos
+      print("todas las ocurrencias:")
+      Ocurrencia.printOcurrencias(totalOcurrencias)
         ocurrenciasPorFecha = Ocurrencia.categorizarOcurrencias(totalOcurrencias)
+      
+      
         
         lblTarea.text = literalTarea
         lblTiempoTotal.text = Ocurrencia.acumuladoTodasOcurrencias(totalOcurrencias)

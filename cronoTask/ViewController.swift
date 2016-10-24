@@ -38,6 +38,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var relojTiempoTotal: Reloj = Reloj()
     var volviendoDeAddTarea = false
     var volviendoDeAddOcurrencia = false
+    var volviendoDeBorrarTarea = false
     var renombrandoTarea = false
     
    var startTime = TimeInterval()
@@ -136,7 +137,7 @@ func pararCronometro() {
             }
             volviendoDeAddOcurrencia = false
             
-        } else if indiceCronometroFuncionando.row == indexPath.row { // se ha pulsado sobre la misma entrada
+        } else if indiceCronometroFuncionando.row == indexPath.row && !volviendoDeBorrarTarea { // se ha pulsado sobre la misma entrada
             
                     if cronometrando {
                         pararCronometro()
@@ -147,6 +148,8 @@ func pararCronometro() {
                     }
             
         } else { // se ha pulsado sobre una celda no seleccionada
+            
+            volviendoDeBorrarTarea = false
             
             pararCronometro()
             cronometrando = false
@@ -306,11 +309,13 @@ extension ViewController: MGSwipeTableCellDelegate {
                                               preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel))
                 let action = UIAlertAction(title: "Ok".localized, style: .default) { [unowned self] action in
+                    self.volviendoDeBorrarTarea = true
                     self.indiceCronometroFuncionando = self.tabla.indexPath(for: cell)! // Al hacer un swipe sobre la celda el cronómetro que estaba funcionando tiene que perder el foco.
                     let tarea = self.bbdd.tareas[indice]
                     self.bbdd.tareas.remove(at: indice)
                     self.tabla.reloadData()
                     _ = self.bbdd.removeTask(tarea: tarea)
+                    
                     DispatchQueue.main.async {
                         // llevarla al row-1 (si existe) y no hacer scroll.
                         var nuevoIndicePosicionamientoTrasBorrado = IndexPath(row: 0, section: 0)
@@ -337,7 +342,7 @@ extension ViewController: MGSwipeTableCellDelegate {
              // se ha desplazado la celda de izquiera a derecha. Botones de Reset e Historial
             switch index {
             case 0:
-                print("Presionado botón de Añadir ")
+                print("Presionado botón de Añadir / Save ")
                 // Añadir ocurrencia a la base de datos y poner el reloj a cero
                 if !ocurrenciaActual.reloj.aCero() {
                     if ocurrenciaActual.idTask != nil {
@@ -348,6 +353,7 @@ extension ViewController: MGSwipeTableCellDelegate {
                             if let id = bbdd.idParaTarea(descrip: descripcionTarea) {
                                 ocurrenciaActual.idTask = id
                                 self.bbdd.addOcurrencia(ocurrenciaActual)
+                                ocurrenciaActual.saved = true
                             }
                         }
                     }

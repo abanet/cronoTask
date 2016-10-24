@@ -38,6 +38,8 @@ class HistoricoViewController: UIViewController {
         
         totalOcurrencias = bbdd.leerOcurrencias(idTask: idTarea)
         guard totalOcurrencias.count > 0 else {
+            lblTarea.text = ""
+            lblTiempoTotal.text = ""
             return
         }
         totalOcurrencias = totalOcurrencias.reversed() // quedarán de más reciente a menos

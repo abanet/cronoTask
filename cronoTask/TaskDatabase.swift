@@ -150,10 +150,13 @@ class TaskDatabase {
         var encontradoEnArray = false
         for tarea in self.tareas {
             if tarea.descripcion == descrip {
-                encontradoEnArray = true
-                return tarea.idTarea
+                if let idEncontrado = tarea.idTarea {
+                    encontradoEnArray = true
+                    return idEncontrado
+                }
             }
         }
+            
         if !encontradoEnArray {
             if let database = FMDatabase(path: self.databasePath) {
                 if database.open() {
@@ -205,7 +208,10 @@ class TaskDatabase {
             }
         }
     }
+    
+    //
     // MARK: Tratamiento de las Ocurrencias
+    //
     
     // Graba una Ocurrencia a la base de datos
     func addOcurrencia(_ ocu: Ocurrencia) {
@@ -224,12 +230,16 @@ class TaskDatabase {
         }
     }
     // Graba el array de ocurrencias a la base de datos
-    func grabarOcurrenciasBBDD() {
+    func grabarOcurrenciasNotSaveBBDD() {
         for (_ , unaOcurrencia) in self.ocurrencias {
-            addOcurrencia(unaOcurrencia)
+            if !unaOcurrencia.saved {
+             unaOcurrencia.saved = true
+             addOcurrencia(unaOcurrencia)
+            }
         }
     }
     
+
     // Elimina las ocurrencias asociadas a una tarea concreta.
     func removeOcurrencias(idTask id:String) {
             if let database = FMDatabase(path: self.databasePath) {

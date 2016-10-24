@@ -13,6 +13,7 @@ class Ocurrencia {
     var fecha: String
     var hora: String
     var reloj: Reloj
+    var saved: Bool = false
     
     init() {
         self.reloj = Reloj()

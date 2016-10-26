@@ -74,7 +74,7 @@ class Reloj {
             self.tipo = TipoReloj.horaMinutosSegundos
         }
         self.tiempo = ""
-        self.tiempo = generarCadenaTiempoCompletadaConCeros(h: horas, m: minutos, s: segundos, c: centesimas, deTipo: self.tipo)
+        self.tiempo = generarCadenaTiempoCompletadaConCeros(h: horas, m: minutos, s: segundos, c: centesimas)
     }
     
     // Poner reloj a cero
@@ -118,11 +118,11 @@ class Reloj {
             }
         
         // Generamos la nueva cadena
-        self.tiempo = generarCadenaTiempoCompletadaConCeros(h: horas,m: minutos,s: segundos,c: centesimas, deTipo:self.tipo)
+        self.tiempo = generarCadenaTiempoCompletadaConCeros(h: horas,m: minutos,s: segundos,c: centesimas)
         self.actualizaTiemposReloj()
     }
     
-    private func generarCadenaTiempoCompletadaConCeros(h:Int,m:Int,s:Int,c:Int, deTipo tipo: TipoReloj) ->String {
+    private func generarCadenaTiempoCompletadaConCeros(h:Int,m:Int,s:Int,c:Int) ->String {
         // Generamos la nueva cadena
         let horasCompletadas, minutosCompletados, segundosCompletados, centesimasCompletadas: String
         
@@ -143,7 +143,7 @@ class Reloj {
         } else { centesimasCompletadas = "\(c)" }
         
         var resultado: String
-        if tipo == .horaMinutosSegundos {
+        if h > 0 { // si hay horas el formato será de horas, minutos y segundos.
             resultado = "\(horasCompletadas):\(minutosCompletados):\(segundosCompletados)"
         } else {
             resultado = "\(minutosCompletados):\(segundosCompletados),\(centesimasCompletadas)"

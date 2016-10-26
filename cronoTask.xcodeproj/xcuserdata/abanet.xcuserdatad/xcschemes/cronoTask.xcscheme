@@ -38,6 +38,16 @@
                ReferencedContainer = "container:cronoTask.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "C08E6BAC1DBFEAAA003EA307"
+               BuildableName = "cronoTaskTests2.xctest"
+               BlueprintName = "cronoTaskTests2"
+               ReferencedContainer = "container:cronoTask.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

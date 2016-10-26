@@ -122,7 +122,8 @@ func pararCronometro() {
         celda.estado = .seleccionada
         
         if volviendoDeAddTarea  {
-            //ocurrenciaActual = Ocurrencia() // caso de que se haya creado una nueva tarea
+           // caso de que se haya creado una nueva tarea
+            ocurrenciaActual = Ocurrencia()
             //Recien añadida la tarea ponemos los contadores a cero
             relojTiempoTotal = Reloj()
             lblPrimerContador.text = relojTiempoTotal.tiempo
@@ -143,6 +144,12 @@ func pararCronometro() {
                         pararCronometro()
                         cronometrando = false
                     } else { // no se estaba cronometrando
+                            // si el reloj de la ocurrencia actual está a cero es que es la primera vez que se va a cronometrar. Esa es la fecha de la ocurrencia
+                        if ocurrenciaActual.reloj.aCero() {
+                            let unaFecha = Fecha()
+                            ocurrenciaActual.fecha = unaFecha.fecha
+                            ocurrenciaActual.hora = unaFecha.hora
+                        }
                             iniciarCronometro()
                             cronometrando = true
                     }
@@ -166,7 +173,8 @@ func pararCronometro() {
                     relojTiempoTotal = Reloj.sumar(reloj1: ocurrenciaActual.reloj, reloj2: Reloj(tiempo: acumulado))
                     lblSegundoContador.text = relojTiempoTotal.tiempo
                 } else {
-                    lblSegundoContador.text = ocurrenciaActual.reloj.tiempo
+                    relojTiempoTotal = ocurrenciaActual.reloj
+                    lblSegundoContador.text = relojTiempoTotal.tiempo
                 }
             }
             
@@ -210,6 +218,10 @@ func pararCronometro() {
     
     @IBAction func btnCrearNuevaTareaPulsado(_ sender: AnyObject) {
         self.renombrandoTarea = false
+        // asegurar de qeu se guarda la ocurrencia que estuviera seleccionada (de existir alguna tarea seleccionada)
+        if let indice = tabla.indexPathForSelectedRow {
+            self.tableView(self.tabla, didDeselectRowAt: indice)
+        }
     }
     
 } // class ViewController

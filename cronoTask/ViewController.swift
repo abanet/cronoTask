@@ -144,7 +144,7 @@ func pararCronometro() {
                         pararCronometro()
                         cronometrando = false
                     } else { // no se estaba cronometrando
-                            // si el reloj de la ocurrencia actual está a cero es que es la primera vez que se va a cronometrar. Esa es la fecha de la ocurrencia
+                        // si el reloj de la ocurrencia actual está a cero es que es la primera vez que se va a cronometrar. Esa es la fecha de la ocurrencia
                         if ocurrenciaActual.reloj.aCero() {
                             let unaFecha = Fecha()
                             ocurrenciaActual.fecha = unaFecha.fecha

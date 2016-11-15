@@ -187,10 +187,9 @@
 			isa = PBXGroup;
 			children = (
 				C056D99D1DA2BA7A00F234EB /* Clases Externas */,
-				C0C7AA641D9AAFDC00060885 /* bbdd */,
+				C0C7AA641D9AAFDC00060885 /* Modelo */,
 				C0A5E1F01D905F4D00B66568 /* AppDelegate.swift */,
 				C032570A1D995E220023BD42 /* Configuracion.swift */,
-				C0C7AA8D1D9AD5FE00060885 /* Fecha.swift */,
 				C056D99E1DA2BABC00F234EB /* Pantalla Principal */,
 				C056D9A01DA2BAE500F234EB /* Pantalla Nueva Tarea */,
 				C056D99F1DA2BACD00F234EB /* Pantalla Historico */,
@@ -205,15 +204,16 @@
 			path = cronoTask;
 			sourceTree = "<group>";
 		};
-		C0C7AA641D9AAFDC00060885 /* bbdd */ = {
+		C0C7AA641D9AAFDC00060885 /* Modelo */ = {
 			isa = PBXGroup;
 			children = (
 				C0C7AA5C1D9AAC9A00060885 /* Tarea.swift */,
 				C0C7AA5E1D9AACAC00060885 /* Ocurrencia.swift */,
 				C0E488D11D9D572600892214 /* Reloj.swift */,
 				C0C7AA621D9AAFCD00060885 /* TaskDatabase.swift */,
+				C0C7AA8D1D9AD5FE00060885 /* Fecha.swift */,
 			);
-			name = bbdd;
+			name = Modelo;
 			sourceTree = "<group>";
 		};
 		C0C7AA651D9ACD2900060885 /* Frameworks */ = {
@@ -610,6 +610,7 @@
 				C08E6BB61DBFEAAA003EA307 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C0A5E1E81D905F4D00B66568 /* Build configuration list for PBXProject "cronoTask" */ = {
 			isa = XCConfigurationList;

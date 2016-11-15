@@ -16,12 +16,7 @@ enum EstadoCelda {
 
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-  
-  // Base de datos
-    var bbdd: TaskDatabase!
-    
-
-    
+ 
   // Tabla que contiene los cronómetros
   @IBOutlet weak var tabla: UITableView!
  
@@ -41,24 +36,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var volviendoDeBorrarTarea = false
     var renombrandoTarea = false
     
-   var startTime = TimeInterval()
-   var timer = Timer()
+
+    var timer:Timer?
    
 
   
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+    print("VIEW DID LOAD")
     self.tabla.delegate = self
     self.tabla.dataSource = self
-    self.bbdd.delegate = self
+    TaskDatabase.shared.delegate = self
     
-//    self.tableView(self.tabla, didSelectRowAt: indiceCronometroFuncionando)
-//    if bbdd.tareas.count > 0, let acumulado = bbdd.tareas[indiceCronometroFuncionando.row].tiempoAcumulado {
-//        relojTiempoTotal = Reloj(tiempo: acumulado)
-//        lblSegundoContador.text = relojTiempoTotal.tiempo
-//    }
   }
 
   
@@ -68,14 +58,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
 // MARK: Funciones que manejan el timer de la app.
 func iniciarCronometro() {
+    print("Iniciando timer")
     let aSelector : Selector = #selector(ViewController.updateTime)
-    timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: aSelector, userInfo: nil, repeats: true)
-    startTime = Date.timeIntervalSinceReferenceDate
+    self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: aSelector, userInfo: nil, repeats: true)
+    RunLoop.main.add(self.timer!, forMode: .commonModes)
 }
   
 func pararCronometro() {
-    timer.invalidate()
-  }
+    print("Invalidando Timer")
+    self.timer?.invalidate()
+}
 
   
   func updateTime(){
@@ -83,10 +75,6 @@ func pararCronometro() {
     self.relojTiempoTotal.incrementarTiempoUnaCentesima()
     self.lblPrimerContador.text = "\(ocurrenciaActual.reloj.tiempo)"
     self.lblSegundoContador.text = "\(relojTiempoTotal.tiempo)"
-    
-//    lblHoras.text = strMinutos
-//    lblMinutos.text = strSegundos
-//    lblSegundos.text = strFracciones
   }
 
 
@@ -97,7 +85,7 @@ func pararCronometro() {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return bbdd.tareas.count
+            return TaskDatabase.shared.tareas.count
     }
     
     
@@ -110,7 +98,7 @@ func pararCronometro() {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "celda")! as! TaskTableViewCell
         cell.delegate = self
-        cell.lblTarea.text = bbdd.tareas[indexPath.row].descripcion
+        cell.lblTarea.text = TaskDatabase.shared.tareas[indexPath.row].descripcion
         
         return cell
     }
@@ -130,8 +118,8 @@ func pararCronometro() {
             lblSegundoContador.text = relojTiempoTotal.tiempo
             volviendoDeAddTarea = false
         } else if volviendoDeAddOcurrencia {
-            let descrTarea = bbdd.tareas[indexPath.row].descripcion // La descripción será única
-            if let id = bbdd.idParaTarea(descrip: descrTarea) {
+            let descrTarea = TaskDatabase.shared.tareas[indexPath.row].descripcion // La descripción será única
+            if let id = TaskDatabase.shared.idParaTarea(descrip: descrTarea) {
                 ocurrenciaActual = Ocurrencia(idTask:id) // se añadió una ocurrencia y al volver tienen que actualizarse los relojes.
                 lblPrimerContador.text = ocurrenciaActual.reloj.tiempo
                 lblSegundoContador.text = relojTiempoTotal.tiempo
@@ -161,19 +149,20 @@ func pararCronometro() {
             pararCronometro()
             cronometrando = false
             self.indiceCronometroFuncionando = indexPath
-            let descrTarea = bbdd.tareas[indexPath.row].descripcion // La descripción será única
-            if let id = bbdd.idParaTarea(descrip: descrTarea) {
-                if let ocurrenciaTareaSeleccionada = bbdd.ocurrencias[id] {
+            let descrTarea = TaskDatabase.shared.tareas[indexPath.row].descripcion // La descripción será única
+            if let identificador = TaskDatabase.shared.idParaTarea(descrip: descrTarea) {
+                if let ocurrenciaTareaSeleccionada = TaskDatabase.shared.ocurrencias[identificador] {
                     ocurrenciaActual = ocurrenciaTareaSeleccionada
                 } else {
-                    ocurrenciaActual = Ocurrencia(idTask:id)
+                    ocurrenciaActual = Ocurrencia(idTask:identificador)
                 }
                  lblPrimerContador.text = ocurrenciaActual.reloj.tiempo
-                if let acumulado = bbdd.tareas[indexPath.row].tiempoAcumulado {
+                if let acumulado = TaskDatabase.shared.tareas[indexPath.row].tiempoAcumulado {
                     relojTiempoTotal = Reloj.sumar(reloj1: ocurrenciaActual.reloj, reloj2: Reloj(tiempo: acumulado))
                     lblSegundoContador.text = relojTiempoTotal.tiempo
                 } else {
-                    relojTiempoTotal = ocurrenciaActual.reloj
+                    //relojTiempoTotal = ocurrenciaActual.reloj // Está igualando los punteros!!!
+                    relojTiempoTotal = ocurrenciaActual.reloj.copy() as! Reloj
                     lblSegundoContador.text = relojTiempoTotal.tiempo
                 }
             }
@@ -188,10 +177,10 @@ func pararCronometro() {
         celda.estado = .noSeleccionada
         
         // Guardamos la ocurrencia de la que venimos
-        let descrTarea = bbdd.tareas[indexPath.row].descripcion // La descripción será única
-        if let id = bbdd.idParaTarea(descrip: descrTarea) {
+        let descrTarea = TaskDatabase.shared.tareas[indexPath.row].descripcion // La descripción será única
+        if let id = TaskDatabase.shared.idParaTarea(descrip: descrTarea) {
             let ocurrencia = Ocurrencia(idTask: id, tiempo: self.lblPrimerContador.text!)
-            bbdd.ocurrencias[id] = ocurrencia
+            TaskDatabase.shared.ocurrencias[id] = ocurrencia
         }
     }
     
@@ -210,7 +199,7 @@ func pararCronometro() {
             
             if self.renombrandoTarea {
                 destinoVC.renombrando = true
-                destinoVC.nombreInicial = bbdd.tareas[(tabla.indexPathForSelectedRow?.row)!].descripcion
+                destinoVC.nombreInicial = TaskDatabase.shared.tareas[(tabla.indexPathForSelectedRow?.row)!].descripcion
             } 
             
         }
@@ -243,7 +232,7 @@ extension ViewController: writeValueBackDelegate {
         
         print("Recibiendo por el protocolo la tarea \(value)")
         let task: Tarea = Tarea(descripcion: value.sinEspaciosExtremos)
-        if bbdd.existeTarea(t: task) {
+        if TaskDatabase.shared.existeTarea(t: task) {
             // Informar de que la tarea ya existe
             let alert = UIAlertController(title: "TareaExiste".localized,
                                           message: String.localizedStringWithFormat(NSLocalizedString("MensajeTareaExiste",comment:""),task.descripcion),
@@ -259,14 +248,14 @@ extension ViewController: writeValueBackDelegate {
             if renombrandoTarea {
                 // renombrar la tarea
                 if let nombreAnteriorTarea = nombreInicial {
-                    if let tareaAntigua = bbdd.tareaConDescripcion(nombreInicial!) {
-                        bbdd.renombrarTarea(tareaAntigua, anteriorNombre: nombreAnteriorTarea, nuevoNombre:value)
+                    if let tareaAntigua = TaskDatabase.shared.tareaConDescripcion(nombreInicial!) {
+                        TaskDatabase.shared.renombrarTarea(tareaAntigua, anteriorNombre: nombreAnteriorTarea, nuevoNombre:value)
                     }
                 }
             } else {
                 // Añadiendo tarea
                 volviendoDeAddTarea = true
-                bbdd.tareas.insert(task, at: 0) // la insertamos al comienzo del array. Insertar antes de añadir a la base de datos.
+                TaskDatabase.shared.tareas.insert(task, at: 0) // la insertamos al comienzo del array. Insertar antes de añadir a la base de datos.
                 self.tabla.reloadData()
                 indiceCronometroFuncionando = IndexPath(row:0, section:0)
                 self.tabla.selectRow(at: indiceCronometroFuncionando, animated: true, scrollPosition: UITableViewScrollPosition.top) // cronómetro parado y seleccionada la primera celda (nueva tarea)
@@ -274,8 +263,8 @@ extension ViewController: writeValueBackDelegate {
                 
                 self.deseleccionarCeldasTabla() // para evitar que queden selecciones marcadas
                 self.tableView(self.tabla, didSelectRowAt: IndexPath(row:0, section:0))
-                bbdd.addTask(tarea: task)  // insertamos en la base de datos
-                print("tareas: \(bbdd.tareas)")
+               TaskDatabase.shared.addTask(tarea: task)  // insertamos en la base de datos
+                print("tareas: \(TaskDatabase.shared.tareas)")
             }
             }
     }
@@ -304,6 +293,7 @@ extension ViewController: protocoloActualizarBBDD {
 // MARK: MGSwipeTableCellDelegate
 extension ViewController: MGSwipeTableCellDelegate {
     func swipeTableCell(_ cell: MGSwipeTableCell!, tappedButtonAt index: Int, direction: MGSwipeDirection, fromExpansion: Bool) -> Bool {
+        
         if cronometrando {
             cronometrando = false
             pararCronometro()
@@ -315,7 +305,7 @@ extension ViewController: MGSwipeTableCellDelegate {
            
             
             if let indice = self.tabla.indexPath(for: cell)?.row {
-                let descripcionTarea = self.bbdd.tareas[indice].descripcion
+                let descripcionTarea = TaskDatabase.shared.tareas[indice].descripcion
                 let alert = UIAlertController(title: "Borrar Tarea".localized,
                                               message: String.localizedStringWithFormat(NSLocalizedString("mensajeBorrarTarea",comment:""),descripcionTarea),
                                               preferredStyle: .alert)
@@ -323,10 +313,10 @@ extension ViewController: MGSwipeTableCellDelegate {
                 let action = UIAlertAction(title: "Ok".localized, style: .default) { [unowned self] action in
                     self.volviendoDeBorrarTarea = true
                     self.indiceCronometroFuncionando = self.tabla.indexPath(for: cell)! // Al hacer un swipe sobre la celda el cronómetro que estaba funcionando tiene que perder el foco.
-                    let tarea = self.bbdd.tareas[indice]
-                    self.bbdd.tareas.remove(at: indice)
+                    let tarea = TaskDatabase.shared.tareas[indice]
+                    TaskDatabase.shared.tareas.remove(at: indice)
                     self.tabla.reloadData()
-                    _ = self.bbdd.removeTask(tarea: tarea)
+                    _ = TaskDatabase.shared.removeTask(tarea: tarea)
                     
                     DispatchQueue.main.async {
                         // llevarla al row-1 (si existe) y no hacer scroll.
@@ -358,13 +348,14 @@ extension ViewController: MGSwipeTableCellDelegate {
                 // Añadir ocurrencia a la base de datos y poner el reloj a cero
                 if !ocurrenciaActual.reloj.aCero() {
                     if ocurrenciaActual.idTask != nil {
-                        self.bbdd.addOcurrencia(ocurrenciaActual)
+                        TaskDatabase.shared.addOcurrencia(ocurrenciaActual)
+                        TaskDatabase.shared.tareas = TaskDatabase.shared.leerTareas() // Actualizamos las tareas para que incorpore la última ocurrencias insertada.
                     } else { // es la primera vez que se añade la ocurrencia y todavía no tiene idTask.
                         if let indice = self.tabla.indexPath(for: cell)?.row {
-                            let descripcionTarea = self.bbdd.tareas[indice].descripcion
-                            if let id = bbdd.idParaTarea(descrip: descripcionTarea) {
-                                ocurrenciaActual.idTask = id
-                                self.bbdd.addOcurrencia(ocurrenciaActual)
+                            let descripcionTarea = TaskDatabase.shared.tareas[indice].descripcion
+                            if let identificador = TaskDatabase.shared.idParaTarea(descrip: descripcionTarea) {
+                                ocurrenciaActual.idTask = identificador
+                                TaskDatabase.shared.addOcurrencia(ocurrenciaActual)
                                 ocurrenciaActual.saved = true
                             }
                         }
@@ -381,8 +372,7 @@ extension ViewController: MGSwipeTableCellDelegate {
                 if let indice = self.tabla.indexPath(for: cell)?.row {
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let historicoVC = storyboard.instantiateViewController(withIdentifier: "HistoricoVC") as! HistoricoViewController
-                    historicoVC.bbdd = self.bbdd
-                    historicoVC.literalTarea = bbdd.tareas[indice].descripcion
+                    historicoVC.literalTarea = TaskDatabase.shared.tareas[indice].descripcion
                     self.present(historicoVC, animated: true, completion: nil)
                 }
                 

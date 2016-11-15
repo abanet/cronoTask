@@ -24,26 +24,17 @@ enum TipoReloj {
 
 // Estructura de tiempos:
 //      00:00,00 No se ha llegado a 60 minutos
-//      00:00:00 Cuando se pasan los 60 minutos. // TODO
+
 
 class Reloj {
     
     var tipo: TipoReloj = TipoReloj.minutosSegundosDecimas
-    var tiempo: String {
-        didSet {
-            tipo = tipoReloj()
-            horas = horasInt()
-            minutos = minutosInt()
-            segundos = segundosInt()
-            centesimas = centesimasInt()
-        }
-    }
+    var tiempo: String
     
-    
-    private var centesimas: Int = 0
-    private var segundos: Int = 0
-    private var minutos: Int = 0
-    private var horas: Int = 0
+    var centesimas: Int = 0
+    var segundos: Int = 0
+    var minutos: Int = 0
+    var horas: Int = 0
     
     init() {
         self.tiempo = "00:00,00" // Estado inicial de un reloj nuevo
@@ -92,13 +83,7 @@ class Reloj {
         return suma == 0
     }
     
-    func actualizaTiemposReloj() {
-        tipo = tipoReloj()
-        horas = horasInt()
-        minutos = minutosInt()
-        segundos = segundosInt()
-        centesimas = centesimasInt()
-    }
+
     
     func incrementarTiempoUnaCentesima() {
             centesimas = centesimas + 1
@@ -119,7 +104,8 @@ class Reloj {
         
         // Generamos la nueva cadena
         self.tiempo = generarCadenaTiempoCompletadaConCeros(h: horas,m: minutos,s: segundos,c: centesimas)
-        self.actualizaTiemposReloj()
+        tipo = tipoReloj()
+
     }
     
     private func generarCadenaTiempoCompletadaConCeros(h:Int,m:Int,s:Int,c:Int) ->String {
@@ -233,4 +219,11 @@ class Reloj {
         return relojFinal
     }
     
+}
+
+extension Reloj: NSCopying {
+    func copy(with zone: NSZone? = nil) -> Any {
+        let relojCopia = Reloj(horas: self.horas, minutos: self.minutos, segundos: self.segundos, centesimas: self.centesimas)
+        return relojCopia
+    }
 }

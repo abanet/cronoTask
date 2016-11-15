@@ -11,7 +11,7 @@ import XCTest
 
 class cronoTaskTests2: XCTestCase {
     
-    var reloj = Reloj(tiempo:"59:59:59")
+    var reloj = Reloj(horas:1, minutos: 53, segundos: 13, centesimas: 99)
     
     override func setUp() {
         super.setUp()
@@ -26,10 +26,10 @@ class cronoTaskTests2: XCTestCase {
     
     func siguienteClick() {
         reloj.incrementarTiempoUnaCentesima()
-        XCTAssert(reloj.tiempo == "01:00:00")
+        XCTAssert(reloj.tiempo == "01:53:4")
     }
     
-    func tipoDeReloj() {
-        XCTAssert(reloj.tipo == TipoReloj.minutosSegundosDecimas)
-    }
+   
+    
+    
 }

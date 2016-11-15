@@ -16,24 +16,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     
     // Conexión a la base de datos de la app
-    let mainViewController = window!.rootViewController as! ViewController
-    mainViewController.bbdd = TaskDatabase()
+    TaskDatabase.shared.crearBbdd()
     
     return true
   }
 
   func applicationWillResignActive(_ application: UIApplication) {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    // guardamos el momento actual en el que se sale del primer plano si se está cronometrando.
+    print("RESIGN ACTIVE")
+    let mainViewController = window!.rootViewController as! ViewController
+    if mainViewController.cronometrando {
+        let tiempoResignacion = Date()
+        print("tiempo de Resignación: \(tiempoResignacion)")
+        UserDefaults.standard.set(tiempoResignacion, forKey: "claveTiempo")
+        UserDefaults.standard.set(true, forKey: "cronometrando")
+    } else {
+        UserDefaults.standard.set(false, forKey: "cronometrando")
+    }
   }
 
   func applicationDidEnterBackground(_ application: UIApplication) {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     
-//    let mainViewController = window!.rootViewController as! ViewController
-//    mainViewController.bbdd.grabarOcurrenciasBBDD()
-//    mainViewController.timer.invalidate()
+
 
   }
 
@@ -41,18 +47,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
   }
 
-  func applicationDidBecomeActive(_ application: UIApplication) {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-  }
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        // Si cuando se salió se estaba cronometrando hay que acualizar el tiempo de la ocurrencia actual
+        if UserDefaults.standard.bool(forKey: "cronometrando") {
+            let mainViewController = window!.rootViewController as! ViewController
+            if mainViewController.cronometrando {
+                
+                let tiempoWillResignActiva = UserDefaults.standard.object(forKey: "claveTiempo") as! Date
+                let ahora = Date()
+                let diferencia = Int(ahora.timeIntervalSince(tiempoWillResignActiva))
+                print("DID BECOME ACTIVE con tiempo: \(diferencia)")
+                let horas = diferencia/3600
+                let minutos = (diferencia/60)%60
+                let segundos = diferencia % 60
+                
+                let reloj = Reloj(horas:horas, minutos:minutos, segundos: segundos, centesimas: 0)
+                let relojFinal = Reloj.sumar(reloj1: reloj, reloj2:mainViewController.ocurrenciaActual.reloj)
+                let relojTiempoTotal = Reloj.sumar(reloj1: reloj, reloj2: mainViewController.relojTiempoTotal)
+                
+                mainViewController.ocurrenciaActual.reloj = relojFinal
+                mainViewController.relojTiempoTotal = relojTiempoTotal
+                
+            }
+        }
+    }
 
   func applicationWillTerminate(_ application: UIApplication) {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 
     // Si la aplicación termina grabamos las ocurrencias no grabadas a la base de datos.
-    let mainViewController = window!.rootViewController as! ViewController
-    mainViewController.bbdd.grabarOcurrenciasNotSaveBBDD()
+    TaskDatabase.shared.grabarOcurrenciasNotSaveBBDD()
+    TaskDatabase.shared.cerrarBBDD()
   }
 
-  
 }
 

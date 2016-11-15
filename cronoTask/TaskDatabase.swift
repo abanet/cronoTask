@@ -13,11 +13,14 @@ protocol protocoloActualizarBBDD {
 }
 
 class TaskDatabase {
+    static let shared: TaskDatabase = TaskDatabase()
     
     let databaseName = "CronoTask.db"
     let databasePath: String
     var tareas: [Tarea] = [Tarea]()
     var ocurrencias: [String:Ocurrencia] = [String:Ocurrencia]() // diccionario que mantiene los acumulados de ocurrencias.
+    
+    let queue: FMDatabaseQueue!
     
     var delegate: protocoloActualizarBBDD?
     
@@ -26,11 +29,14 @@ class TaskDatabase {
     // Si ya existe una base de datos se obtienen las tareas que pueda contener.
      init() {
         // Ruta de la base de datos
-        let filemgr = FileManager.default
         let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         databasePath = documentsPath.appending("/\(databaseName)")
+        queue = FMDatabaseQueue(path: databasePath)
         print("Base de datos: \(databasePath)")
-        
+    }
+
+    func crearBbdd() {
+        let filemgr = FileManager.default
         // Creación de la base de datos o recuperación de las tareas si ya existía
         if !filemgr.fileExists(atPath: databasePath){
             //No existe la base de datos. Creamos la base de datos.
@@ -46,7 +52,7 @@ class TaskDatabase {
                     if !taskDB.executeStatements(sql_crear_ocurrencias) {
                         print("Error: \(taskDB.lastErrorMessage())")
                     }
-                    taskDB.close()
+                taskDB.close()
                 }
             }
         } else {
@@ -57,7 +63,6 @@ class TaskDatabase {
             }
         }
     }
-
     // MARK: Tratamiento de las tareas
     
     // ¿Existe una tarea con esa misma descripcion en la base de datos?
@@ -84,15 +89,17 @@ class TaskDatabase {
     func addTask(tarea:Tarea) {
         if let database = FMDatabase(path: self.databasePath) {
             if database.open() {
+                queue.inDatabase { database in
                 let insertSQL = "INSERT INTO TASKS (DESCRIPCION, FECHA, HORA, ULTIMAVEZ) VALUES ('\(tarea.descripcion)', '\(tarea.fechaCreacion)', '\(tarea.horaCreacion)', '\(tarea.fechaUltimaVezUtilizada)')"
                 print("addTask: \(insertSQL)")
-                let resultado = database.executeUpdate(insertSQL, withArgumentsIn: nil)
-                if !resultado {
-                    print("Error: \(database.lastErrorMessage())")
+                let resultado = database?.executeUpdate(insertSQL, withArgumentsIn: nil)
+                if !resultado! {
+                    print("Error: \(database?.lastErrorMessage())")
                 } else {
                     //delegate?.actualizarBBDD()
                     print("Tarea añadida")
                     
+                }
                 }
             }
         }
@@ -115,6 +122,7 @@ class TaskDatabase {
                     delegate?.actualizarBBDD()
                     print("Tarea eliminada")
                 }
+                
             }
         }
     }
@@ -126,16 +134,18 @@ class TaskDatabase {
         var arrayResultado = [Tarea]()
         if let database = FMDatabase(path: self.databasePath) {
             if database.open() {
+                queue.inDatabase { database in
                 let selectSQL = "SELECT ID, DESCRIPCION, FECHA, HORA, ULTIMAVEZ FROM TASKS"
-                let resultados: FMResultSet? = database.executeQuery(selectSQL, withArgumentsIn: nil)
+                let resultados: FMResultSet? = database?.executeQuery(selectSQL, withArgumentsIn: nil)
                 while resultados?.next() == true {
                     let tarea: Tarea = Tarea(id: resultados!.string(forColumn: "ID"),
                                                   descripcion: resultados!.string(forColumn: "DESCRIPCION")!,
                                                   fecha: resultados!.string(forColumn: "FECHA"),
                                                   hora: resultados!.string(forColumn: "HORA"),
                                                   fechaUltimaVez: resultados!.string(forColumn: "ULTIMAVEZ"))
-                    tarea.tiempoAcumulado = calcularTiempoAcumulado(idTask: tarea.idTarea!)
+                    tarea.tiempoAcumulado = self.calcularTiempoAcumulado(idTask: tarea.idTarea!)
                     arrayResultado.append(tarea)
+                }
                 }
             } else {
                 // problemas al abrir la base de datos
@@ -160,12 +170,19 @@ class TaskDatabase {
         if !encontradoEnArray {
             if let database = FMDatabase(path: self.databasePath) {
                 if database.open() {
+                    var resultadoID: String?
+                    queue.inDatabase { database in
                     let selectSQL = "SELECT ID FROM TASKS WHERE DESCRIPCION = '\(descrip)'"
-                    let resultado: FMResultSet? = database.executeQuery(selectSQL, withArgumentsIn: nil)
-                    if resultado!.next() {
-                        return resultado!.string(forColumn: "ID")
+                    let resultado: FMResultSet? = database?.executeQuery(selectSQL, withArgumentsIn: nil)
+                    
+                    if resultado?.next() != nil {
+                        resultadoID = resultado!.string(forColumn: "ID")
+                    } else {
+                        resultadoID = nil
+                        }
                     }
-                    database.close()
+                    return resultadoID
+                    
                 }
             }
         }
@@ -189,6 +206,7 @@ class TaskDatabase {
                         print("Tarea modificada.")
                         delegate?.actualizarBBDD()
                     }
+                    
                 }
             }
         } else {
@@ -217,15 +235,18 @@ class TaskDatabase {
     func addOcurrencia(_ ocu: Ocurrencia) {
         if let database = FMDatabase(path: self.databasePath) {
             if database.open() {
+                queue.inDatabase { database in
                 let insertSQL = "INSERT INTO OCURRENCIAS (IDTASK, FECHA, HORA, TIEMPO) VALUES ('\(ocu.idTask!)', '\(ocu.fecha)', '\(ocu.hora)', '\(ocu.reloj.tiempo)')"
                 print("addOcurrencia: \(insertSQL)")
-                let resultado = database.executeUpdate(insertSQL, withArgumentsIn: nil)
-                if !resultado {
-                    print("Error: \(database.lastErrorMessage())")
+                let resultado = database?.executeUpdate(insertSQL, withArgumentsIn: nil)
+                if !resultado! {
+                    print("Error: \(database?.lastErrorMessage())")
                 } else {
                     print("Ocurrencia añadida")
                     
                 }
+                }
+                
             }
         }
     }
@@ -251,6 +272,7 @@ class TaskDatabase {
                     } else {
                         print("Ocurrencia eliminada")
                     }
+                    
                 }
             }
         }
@@ -270,6 +292,7 @@ class TaskDatabase {
                                              tiempo: resultados!.string(forColumn: "TIEMPO"))
                     arrayResultado.append(ocurrencia)
                 }
+                
             } else {
                 // problemas al abrir la base de datos
             }
@@ -289,5 +312,13 @@ class TaskDatabase {
             relojFinal = Reloj.sumar(reloj1: relojFinal, reloj2:unaOcurrencia.reloj)
         }
         return relojFinal.tiempo
+    }
+    
+    func cerrarBBDD() {
+        if let database = FMDatabase(path: self.databasePath) {
+            if database.open() {
+                database.close()
+            }
+        }
     }
 }

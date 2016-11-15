@@ -14,9 +14,7 @@ class HistoricoViewController: UIViewController {
     
     @IBOutlet weak var lblTarea: UILabel!
     @IBOutlet weak var lblTiempoTotal: UILabel!
-    
-    // Base de datos
-    var bbdd: TaskDatabase!
+
     var literalTarea: String!
     var totalOcurrencias = [Ocurrencia]()
     var ocurrenciasPorFecha: [[Ocurrencia]]?
@@ -29,14 +27,14 @@ class HistoricoViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        guard let idTarea = bbdd.idParaTarea(descrip: literalTarea) else {
+        guard let idTarea = TaskDatabase.shared.idParaTarea(descrip: literalTarea) else {
             return
         }
-        bbdd.delegate = self
+        TaskDatabase.shared.delegate = self
         
         //las ocurrencias a mostrar son las almacenadas en la base de datos.
         
-        totalOcurrencias = bbdd.leerOcurrencias(idTask: idTarea)
+        totalOcurrencias = TaskDatabase.shared.leerOcurrencias(idTask: idTarea)
         guard totalOcurrencias.count > 0 else {
             lblTarea.text = ""
             lblTiempoTotal.text = ""

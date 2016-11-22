@@ -90,15 +90,7 @@ class NuevaTareaViewController: UIViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+   
 
  // MARK: Botones del formulario
     @IBAction func cancelarCreacionTarea(_ sender: AnyObject) {
@@ -112,7 +104,7 @@ class NuevaTareaViewController: UIViewController {
             if !trimmedString.isEmpty {
                 print("Enviando tarea \(txtNuevaTarea.text) al delegado")
                 self.dismiss(animated: true) // eliminamos antes de ir al delegado el controlador ya que en writeValueBack puede que lancemos un alert.
-                delegate?.writeValueBack(value: descripcion, renombrando: false, nombreInicial: self.nombreInicial)
+                delegate?.writeValueBack(value: descripcion, renombrando: renombrando, nombreInicial: self.nombreInicial)
                 return
             }
         }

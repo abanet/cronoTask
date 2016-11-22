@@ -15,6 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     
+    // Activamos estadísticas
+    GATracker.setup(tid: "UA-87681030-1") // id de GA para cronoTask (cuenta alberto.banet)
+    GATracker.sharedInstance.screenView(screenName: "Sesiones Abiertas cronoTask", customParameters: nil)
     // Conexión a la base de datos de la app
     TaskDatabase.shared.crearBbdd()
     
@@ -36,10 +39,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 
   func applicationDidEnterBackground(_ application: UIApplication) {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    print("applicationDidEnterBackground")
     
-
+    // Por ahora para grabar el usuario tiene que almacenar con save.
+    // Si la aplicación termina grabamos las ocurrencias no grabadas a la base de datos.
+    //TaskDatabase.shared.grabarOcurrenciasNotSaveBBDD()
+    //TaskDatabase.shared.cerrarBBDD()
 
   }
 
@@ -74,10 +80,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func applicationWillTerminate(_ application: UIApplication) {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-
-    // Si la aplicación termina grabamos las ocurrencias no grabadas a la base de datos.
-    TaskDatabase.shared.grabarOcurrenciasNotSaveBBDD()
-    TaskDatabase.shared.cerrarBBDD()
+    print("applicationWillTerminate")
+    
   }
 
 }

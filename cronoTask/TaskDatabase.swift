@@ -20,19 +20,16 @@ class TaskDatabase {
     var tareas: [Tarea] = [Tarea]()
     var ocurrencias: [String:Ocurrencia] = [String:Ocurrencia]() // diccionario que mantiene los acumulados de ocurrencias.
     
-    let queue: FMDatabaseQueue!
+    var queue: FMDatabaseQueue!
     
     var delegate: protocoloActualizarBBDD?
     
-    // Init de la base de datos
-    // Si no existe un fichero CronoTask.db se crea y se crea la estructura de la base de datos.
-    // Si ya existe una base de datos se obtienen las tareas que pueda contener.
      init() {
         // Ruta de la base de datos
         let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         databasePath = documentsPath.appending("/\(databaseName)")
-        queue = FMDatabaseQueue(path: databasePath)
-        print("Base de datos: \(databasePath)")
+
+        //print("Base de datos: \(databasePath)")
     }
 
     func crearBbdd() {
@@ -62,6 +59,9 @@ class TaskDatabase {
                 self.tareas = self.leerTareas()
             }
         }
+        
+        // 22/11/2016 : lo teníamos en el init y eso creaba la base de datos vacia.
+        queue = FMDatabaseQueue(path: databasePath)
     }
     // MARK: Tratamiento de las tareas
     
@@ -98,7 +98,7 @@ class TaskDatabase {
                 } else {
                     //delegate?.actualizarBBDD()
                     print("Tarea añadida")
-                    
+                    GATracker.sharedInstance.event(category: "Tareas", action: "Nueva Tarea", label:"\(tarea.descripcion)", customParameters: nil)
                 }
                 }
             }
@@ -212,6 +212,7 @@ class TaskDatabase {
         } else {
             // cambiamos el nombre en el array
             renombrarTareaEnArray(anteriorNombre: anteriorNombre, nuevoNombre: nuevoNombre)
+            delegate?.actualizarBBDD()
         }
     }
     

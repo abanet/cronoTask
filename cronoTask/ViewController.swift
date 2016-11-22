@@ -230,6 +230,13 @@ extension ViewController: writeValueBackDelegate {
             pararCronometro()
         }
         
+        // Si se entra a renombrar y se deja igual no hay que hacer nada
+        if let sellamaba = nombreInicial {
+            if renombrando && sellamaba==value {
+                // no hacer nada
+                return
+            }
+        }
         print("Recibiendo por el protocolo la tarea \(value)")
         let task: Tarea = Tarea(descripcion: value.sinEspaciosExtremos)
         if TaskDatabase.shared.existeTarea(t: task) {

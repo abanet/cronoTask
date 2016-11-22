@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C02387891DDF1E78006B15CA /* GATracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02387881DDF1E78006B15CA /* GATracker.swift */; };
 		C03257091D995B5F0023BD42 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03257081D995B5F0023BD42 /* TaskTableViewCell.swift */; };
 		C032570B1D995E220023BD42 /* Configuracion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C032570A1D995E220023BD42 /* Configuracion.swift */; };
 		C056D99A1DA2A67D00F234EB /* HistoricoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C056D9991DA2A67D00F234EB /* HistoricoViewController.swift */; };
@@ -50,6 +51,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C02387881DDF1E78006B15CA /* GATracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GATracker.swift; sourceTree = "<group>"; };
 		C03257081D995B5F0023BD42 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		C032570A1D995E220023BD42 /* Configuracion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Configuracion.swift; path = ../Configuracion.swift; sourceTree = "<group>"; };
 		C056D9991DA2A67D00F234EB /* HistoricoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoricoViewController.swift; sourceTree = "<group>"; };
@@ -118,6 +120,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C02387871DDF19C9006B15CA /* Estadisticas */ = {
+			isa = PBXGroup;
+			children = (
+				C02387881DDF1E78006B15CA /* GATracker.swift */,
+			);
+			name = Estadisticas;
+			sourceTree = "<group>";
+		};
 		C056D99D1DA2BA7A00F234EB /* Clases Externas */ = {
 			isa = PBXGroup;
 			children = (
@@ -186,9 +196,10 @@
 		C0A5E1EF1D905F4D00B66568 /* cronoTask */ = {
 			isa = PBXGroup;
 			children = (
+				C0A5E1F01D905F4D00B66568 /* AppDelegate.swift */,
+				C02387871DDF19C9006B15CA /* Estadisticas */,
 				C056D99D1DA2BA7A00F234EB /* Clases Externas */,
 				C0C7AA641D9AAFDC00060885 /* Modelo */,
-				C0A5E1F01D905F4D00B66568 /* AppDelegate.swift */,
 				C032570A1D995E220023BD42 /* Configuracion.swift */,
 				C056D99E1DA2BABC00F234EB /* Pantalla Principal */,
 				C056D9A01DA2BAE500F234EB /* Pantalla Nueva Tarea */,
@@ -386,6 +397,7 @@
 				C0C7AA851D9ACEBE00060885 /* FMDatabase.m in Sources */,
 				C0E8A3FF1D99756F0054C0B0 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,
 				C0C7AA8F1D9AD5FE00060885 /* Fecha.swift in Sources */,
+				C02387891DDF1E78006B15CA /* GATracker.swift in Sources */,
 				C0E8A3FB1D9975240054C0B0 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				C032570B1D995E220023BD42 /* Configuracion.swift in Sources */,
 				C0C7AA891D9ACEBE00060885 /* FMResultSet.m in Sources */,

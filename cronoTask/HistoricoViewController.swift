@@ -28,6 +28,8 @@ class HistoricoViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         guard let idTarea = TaskDatabase.shared.idParaTarea(descrip: literalTarea) else {
+            lblTarea.text = ""
+            lblTiempoTotal.text = ""
             return
         }
         TaskDatabase.shared.delegate = self

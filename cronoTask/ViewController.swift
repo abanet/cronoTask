@@ -97,6 +97,7 @@ func pararCronometro() {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "celda")! as! TaskTableViewCell
+        cell.estado = EstadoCelda.noSeleccionada // para evitar que al reutilizar celdas estas vengan con el estado de seleccionadas.
         cell.delegate = self
         cell.lblTarea.text = TaskDatabase.shared.tareas[indexPath.row].descripcion
         
@@ -322,7 +323,6 @@ extension ViewController: MGSwipeTableCellDelegate {
                     self.indiceCronometroFuncionando = self.tabla.indexPath(for: cell)! // Al hacer un swipe sobre la celda el cronómetro que estaba funcionando tiene que perder el foco.
                     let tarea = TaskDatabase.shared.tareas[indice]
                     TaskDatabase.shared.tareas.remove(at: indice)
-                    self.tabla.reloadData()
                     _ = TaskDatabase.shared.removeTask(tarea: tarea)
                     
                     DispatchQueue.main.async {
@@ -338,6 +338,9 @@ extension ViewController: MGSwipeTableCellDelegate {
                             self.lblPrimerContador.text = "--:--,--"
                             self.lblSegundoContador.text = "--:--,--"
                         }
+                        // 13-12-2016 intento arreglar selección de varias filas al salir de borrar
+                        self.indiceCronometroFuncionando = IndexPath(row: nuevoIndicePosicionamientoTrasBorrado.row, section: nuevoIndicePosicionamientoTrasBorrado.section)
+                        self.tabla.reloadData() // 13-12-2016 la llamada estaba fuera del main.async y causaba que aparecieran varias celdas seleccionadas.
                     }
                     
                 }
@@ -356,7 +359,8 @@ extension ViewController: MGSwipeTableCellDelegate {
                 if !ocurrenciaActual.reloj.aCero() {
                     if ocurrenciaActual.idTask != nil {
                         TaskDatabase.shared.addOcurrencia(ocurrenciaActual)
-                        TaskDatabase.shared.tareas = TaskDatabase.shared.leerTareas() // Actualizamos las tareas para que incorpore la última ocurrencias insertada.
+                        //Comentado 12-12-2016 Buscando error que ocurre al 
+                        //TaskDatabase.shared.tareas = TaskDatabase.shared.leerTareas() // Actualizamos las tareas para que incorpore la última ocurrencias insertada.
                     } else { // es la primera vez que se añade la ocurrencia y todavía no tiene idTask.
                         if let indice = self.tabla.indexPath(for: cell)?.row {
                             let descripcionTarea = TaskDatabase.shared.tareas[indice].descripcion
@@ -377,6 +381,7 @@ extension ViewController: MGSwipeTableCellDelegate {
             case 1:
                 print("Presionado botón de Historial")
                 if let indice = self.tabla.indexPath(for: cell)?.row {
+                    print("--Buscando historial para índice: \(indice)")
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let historicoVC = storyboard.instantiateViewController(withIdentifier: "HistoricoVC") as! HistoricoViewController
                     historicoVC.literalTarea = TaskDatabase.shared.tareas[indice].descripcion

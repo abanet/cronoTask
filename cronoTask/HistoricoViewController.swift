@@ -90,7 +90,7 @@ extension HistoricoViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         let acumulado = Ocurrencia.acumuladoOcurrenciasSeccion(ocurrenciasPorFecha![section])
-        return "Acumulado -> \(acumulado)"
+        return "Total -> \(acumulado)"
     }
     
     func crearVistaHeaderTabla() {

@@ -50,18 +50,20 @@ class TaskDatabase {
                         print("Error: \(taskDB.lastErrorMessage())")
                     }
                 taskDB.close()
+                // 22/11/2016 : lo teníamos en el init y eso creaba la base de datos vacia.
+                queue = FMDatabaseQueue(path: databasePath)
                 }
             }
         } else {
             // La base de datos existe.
             if let taskDB = FMDatabase(path: databasePath) {
+                // 22/11/2016 : lo teníamos en el init y eso creaba la base de datos vacia.
+                queue = FMDatabaseQueue(path: databasePath)
                 taskDB.logsErrors = true
                 self.tareas = self.leerTareas()
             }
         }
         
-        // 22/11/2016 : lo teníamos en el init y eso creaba la base de datos vacia.
-        queue = FMDatabaseQueue(path: databasePath)
     }
     // MARK: Tratamiento de las tareas
     

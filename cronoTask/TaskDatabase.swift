@@ -17,18 +17,18 @@ class TaskDatabase {
     
     let databaseName = "CronoTask.db"
     let databasePath: String
-    var tareas: [Tarea] = [Tarea]()
+    var tareas: [Tarea]!
     var ocurrencias: [String:Ocurrencia] = [String:Ocurrencia]() // diccionario que mantiene los acumulados de ocurrencias.
     
     var queue: FMDatabaseQueue!
     
     var delegate: protocoloActualizarBBDD?
     
-     init() {
+    private init() {
         // Ruta de la base de datos
         let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         databasePath = documentsPath.appending("/\(databaseName)")
-
+        tareas = [Tarea]()
         //print("Base de datos: \(databasePath)")
     }
 
@@ -107,27 +107,40 @@ class TaskDatabase {
         }
     }
     
+    func addTaskArray(_ t: Tarea){
+            tareas.insert(t, at:0)
+    }
     
     // Eliminar Tarea
-    // TODO: eliminar las ocurrencias asociadas a dicha tarea
-    func removeTask(tarea:Tarea)->Bool {
-        if let id = tarea.idTarea { //si no hay identificador se está intentando borrar una tarea que aún no ha sido grabada.
-        if let database = FMDatabase(path: self.databasePath) {
-            if database.open() {
-                let deleteSQL = "DELETE FROM TASKS WHERE ID = '\(id)'"
-                let resultado = database.executeUpdate(deleteSQL, withArgumentsIn: nil)
-                if !resultado {
-                    print("Error: \(database.lastErrorMessage())")
-                    return false
-                } else {
-                    removeOcurrencias(idTask: id)
-                    delegate?.actualizarBBDD()
-                    print("Tarea eliminada")
-                }
-                
-            }
+    func removeTask(tarea:Tarea, at indice: Int)->Bool {
+        // El identificador puede venir en la tarea. Si es una tarea nueva y su id nunca ha sido recuperada lo intentamos obtener en este momento de la base de datos.
+        var deleteSQL = "Instruccion de borrado"
+        if let id = tarea.idTarea {
+            deleteSQL = "DELETE FROM TASKS WHERE ID = '\(id)'"
+        } else { // cogemos el id de la tabla de tareas
+            deleteSQL = "DELETE FROM TASKS WHERE DESCRIPCION = '\(tarea.descripcion)'"
+
         }
-    }
+        
+        // eliminamos la tarea de la base de datos
+            if let database = FMDatabase(path: self.databasePath) {
+                if database.open() {
+                    let resultado = database.executeUpdate(deleteSQL, withArgumentsIn: nil)
+                    if !resultado {
+                        print("Error: \(database.lastErrorMessage())")
+                        return false
+                    } else {
+                        tareas.remove(at: indice) // borrado del array
+                        if let id = tarea.idTarea {
+                            removeOcurrencias(idTask: id)
+                        }
+                        delegate?.actualizarBBDD()
+                        print("Tarea eliminada")
+                    }
+                
+                }
+            }
+        
         return true
     }
     

@@ -263,14 +263,16 @@ extension ViewController: writeValueBackDelegate {
             } else {
                 // Añadiendo tarea
                 volviendoDeAddTarea = true
-                TaskDatabase.shared.tareas.insert(task, at: 0) // la insertamos al comienzo del array. Insertar antes de añadir a la base de datos.
+                TaskDatabase.shared.addTaskArray(task)
+                 // la insertamos al comienzo del array. Insertar antes de añadir a la base de datos.
                 self.tabla.reloadData()
                 indiceCronometroFuncionando = IndexPath(row:0, section:0)
                 self.tabla.selectRow(at: indiceCronometroFuncionando, animated: true, scrollPosition: UITableViewScrollPosition.top) // cronómetro parado y seleccionada la primera celda (nueva tarea)
-                self.tabla.cellForRow(at: indiceCronometroFuncionando)?.setSelected(true, animated: true)
                 
-                self.deseleccionarCeldasTabla() // para evitar que queden selecciones marcadas
-                self.tableView(self.tabla, didSelectRowAt: IndexPath(row:0, section:0))
+                self.tabla.cellForRow(at: indiceCronometroFuncionando)?.setSelected(true, animated: true)
+                //13-12-2016: No queremos que quede seleccionada al salir de crear tarea
+                //self.deseleccionarCeldasTabla() // para evitar que queden selecciones marcadas
+                //self.tableView(self.tabla, didSelectRowAt: IndexPath(row:0, section:0))
                TaskDatabase.shared.addTask(tarea: task)  // insertamos en la base de datos
                 print("tareas: \(TaskDatabase.shared.tareas)")
             }
@@ -320,27 +322,33 @@ extension ViewController: MGSwipeTableCellDelegate {
                 alert.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel))
                 let action = UIAlertAction(title: "Ok".localized, style: .default) { [unowned self] action in
                     self.volviendoDeBorrarTarea = true
+                    // 13-12-2016: seguramente no haga falta calcular un índice de cronómetro funcionando y se puede iniciar a -1,-1
                     self.indiceCronometroFuncionando = self.tabla.indexPath(for: cell)! // Al hacer un swipe sobre la celda el cronómetro que estaba funcionando tiene que perder el foco.
                     let tarea = TaskDatabase.shared.tareas[indice]
-                    TaskDatabase.shared.tareas.remove(at: indice)
-                    _ = TaskDatabase.shared.removeTask(tarea: tarea)
+                    
+                    // Para borrar bien la tarea hay que eliminarla primero de la bbdd y después del array.
+                    // Ya que para borrar de la bbdd si la tarea todavía no tiene id lo vamos a coger del array de tareas.
+                    _ = TaskDatabase.shared.removeTask(tarea: tarea, at: indice)
+                    //TaskDatabase.shared.tareas.remove(at: indice)
                     
                     DispatchQueue.main.async {
+                        self.tabla.reloadData() // 13-12-2016 la llamada estaba fuera del main.async y causaba que aparecieran varias celdas seleccionadas.
                         // llevarla al row-1 (si existe) y no hacer scroll.
                         var nuevoIndicePosicionamientoTrasBorrado = IndexPath(row: 0, section: 0)
                         if self.indiceCronometroFuncionando.row > 1 { // se borra de la 3 en adelante
                             nuevoIndicePosicionamientoTrasBorrado = IndexPath(row: self.indiceCronometroFuncionando.row - 1, section: 0)
                         }
                         if self.tabla.numberOfRows(inSection: 0) > 0 {
-                            self.tabla.selectRow(at: nuevoIndicePosicionamientoTrasBorrado, animated: true, scrollPosition: UITableViewScrollPosition.none)
-                            self.tableView(self.tabla, didSelectRowAt: nuevoIndicePosicionamientoTrasBorrado)
+                            // 13-12-2016 al salir de borrar no hace falta que quede ninguna marcada
+                            //self.tabla.selectRow(at: nuevoIndicePosicionamientoTrasBorrado, animated: true, scrollPosition: UITableViewScrollPosition.none)
+                            //self.tableView(self.tabla, didSelectRowAt: nuevoIndicePosicionamientoTrasBorrado)
                         } else {
-                            self.lblPrimerContador.text = "--:--,--"
-                            self.lblSegundoContador.text = "--:--,--"
+                            self.lblPrimerContador.text = "00:00,00"
+                            self.lblSegundoContador.text = "00:00,00"
                         }
                         // 13-12-2016 intento arreglar selección de varias filas al salir de borrar
                         self.indiceCronometroFuncionando = IndexPath(row: nuevoIndicePosicionamientoTrasBorrado.row, section: nuevoIndicePosicionamientoTrasBorrado.section)
-                        self.tabla.reloadData() // 13-12-2016 la llamada estaba fuera del main.async y causaba que aparecieran varias celdas seleccionadas.
+                        
                     }
                     
                 }
@@ -351,7 +359,7 @@ extension ViewController: MGSwipeTableCellDelegate {
             }
             
         } else {
-             // se ha desplazado la celda de izquiera a derecha. Botones de Reset e Historial
+             // se ha desplazado la celda de izquierda a derecha. Botones de Reset e Historial
             switch index {
             case 0:
                 print("Presionado botón de Añadir / Save ")

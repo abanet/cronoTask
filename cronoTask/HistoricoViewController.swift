@@ -93,6 +93,13 @@ extension HistoricoViewController: UITableViewDataSource {
         return "Total -> \(acumulado)"
     }
     
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let headerViewRect = tableView.rectForHeader(inSection: section)
+//        let headerView = UIView(frame: headerViewRect)
+//        headerView.backgroundColor = CronoTaskColores.backgroundCell
+//        return headerView
+//    }
+    
     func crearVistaHeaderTabla() {
         let vista = UIView(frame: CGRect(x: 0, y: 0, width: 800, height: 100))
         let texto = UILabel(frame: CGRect(x:0, y:0, width:200, height:50))
